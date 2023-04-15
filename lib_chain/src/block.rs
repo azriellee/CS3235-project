@@ -37,13 +37,62 @@ impl MerkleTree {
         if txs.len() == 0 {
             panic!("create_merkel_tree get empty Transaction Vector.");
         }
-        // Please fill in the blank
-        todo!();
+
+        // In MerkleTree.hashes, each level contains a list of transaction hashes
+        // E.g. 4 transactions, level 1:4, level 2:2, level 3:1
+
+        let mut hashes: Vec<Vec<String>> = Vec::new();
+        
+        // In level 1, convert each transaction into hashes
+        let mut init_hashes = Vec::new();
+        
+        for tx in txs.iter() {
+            init_hashes.push(tx.gen_hash());
+        }
+
+        hashes.push(init_hashes);
+
+        // Subsequent levels, hash for every 2 hashes
+        loop {
+            let mut curr_level: Vec<String> = Vec::new();
+            let last_level = hashes.len() - 1;
+            let no_of_leaf = hashes[last_level].len();
+            let no_of_iterations = ((no_of_leaf / 2) as f32).ceil() as i32;
+
+            for i in 0..no_of_iterations {
+                let leaf1 = hashes[last_level].get((i * 2) as usize).unwrap();
+                let leaf2 = hashes[last_level].get((i * 2 + 1) as usize).unwrap_or_else(|| leaf1);
+
+                let hash = Self::gen_hash_strings(leaf1, leaf2);
+                curr_level.push(hash);
+            }
+
+            hashes.push(curr_level);
+            
+            // do-while loop
+            if no_of_iterations == 1 {
+                break;
+            }
+        }
+
+        // Finally, initalize merkle tree
+        let merkle_tree = MerkleTree{hashes};
+        let root = merkle_tree.hashes[merkle_tree.hashes.len() - 1][0].clone();
+        
+        (root, merkle_tree)
         
     }
 
     // Please fill in the blank
     // Depending on your implementation, you may need additional functions here.
+
+    fn gen_hash_strings (s1: &String, s2: &String) -> String {
+        let s = format!("{}{}", s1, s2);
+        let mut hasher = Sha256::new();
+        hasher.update(s);
+
+        format!("{:x}", hasher.finalize())
+    }
     
 }
 
