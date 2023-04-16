@@ -69,8 +69,53 @@ impl Miner {
         // If any of the threads finds a solution, other threads should stop.
         // Additionally, if the cancellation_token is set to true, all threads should stop.
         // The purpose of the cancellation_token is to allow the miner to stop the computation when other nodes have already solved the exact same puzzle.
-        todo!();
-        
+        let mut miner = miner_p.lock().unwrap();
+        miner.is_running = true;
+        miner.leading_zero_len = leading_zero_len;
+        miner.thread_count = thread_count;
+        drop(miner);
+
+        fn generate_hash(p: String, nonce_len: &u16, thread_seed: u64) -> (String, String) {
+            let mut rng = Pcg32::seed_from_u64(thread_seed);
+            let nonce_string = Alphanumeric.sample_string(&mut rng, *nonce_len as usize);
+            let combined_string = format!("{}{}",nonce_string, p);
+            let mut hasher = Sha256::new();
+            hasher.update(combined_string.as_bytes());
+            let result = hasher.finalize();
+            let hex_string = result.iter().map(|b| format!("{:02x}", b)).collect::<String>();
+            (nonce_string, hex_string)
+        }
+
+        let mut threads = Vec::new();
+        for i in 0..thread_count {
+            let cancel = cancellation_token.clone();
+            let p = puzzle.clone();
+            let thread_handle = thread::spawn(move || {
+                let mut seed = thread_0_seed + i as u64;
+                while !*cancel.read().unwrap() {
+                    let nonce_and_hash = generate_hash(p.clone(), &nonce_len, seed);
+                    if nonce_and_hash.1.starts_with(&"0".repeat(leading_zero_len as usize)) {
+                        let solution = PuzzleSolution {
+                            puzzle: p.clone(),
+                            nonce: nonce_and_hash.0,
+                            hash: nonce_and_hash.1,
+                        };
+                        return Some(solution);
+                    }
+                    seed += thread_count as u64;
+                }
+                None
+            });
+            threads.push(thread_handle);
+        }
+        for t in threads {
+            if let Some(solution) = t.join().unwrap() {
+                let mut miner = miner_p.lock().unwrap();
+                miner.is_running = false;
+                return Some(solution);
+            }
+        }
+        None
     } 
     
     /// Get status information of the miner for debug printing.
@@ -78,9 +123,10 @@ impl Miner {
         // Please fill in the blank
         // For debugging purpose, you can return any dictionary of strings as the status of the miner. 
         // It should be displayed in the Client UI eventually.
-        todo!();
-        
+        let mut status = BTreeMap::new();
+        status.insert(String::from("is_running"), self.is_running.to_string());
+        status.insert(String::from("thread_count"), self.thread_count.to_string());
+        status.insert(String::from("leading_zero_len"), self.leading_zero_len.to_string());
+        status
     }
 }
-
-

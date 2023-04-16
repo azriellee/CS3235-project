@@ -79,7 +79,24 @@ mod tests {
     #[test]
     fn test_miner_additional() {
         // Please fill in the blank
-        
+        let miner_p = Arc::new(Mutex::new(Miner::new()));
+        let puzzle = "RANDOM_STRING_ANYTHING".to_owned();
+        let cancellation_token = Arc::new(RwLock::new(false));
+        let solution = Miner::solve_puzzle(
+            miner_p,
+            puzzle.clone(),
+            16, 5, 10, 43,  
+            cancellation_token
+        ).unwrap();
+
+        let PuzzleSolution { puzzle, nonce, hash } = solution;
+        let mut hasher = Sha256::new();
+        hasher.update(&nonce);
+        hasher.update(&puzzle);
+        let result = hasher.finalize();
+        let generated_hash: String = format!("{:x}", result);
+        assert!(generated_hash.starts_with("0") && generated_hash == hash);
+        println!("HASH: {}\nNONCE: {}\nPUZZLE: {}", hash, nonce, puzzle);
     }
 
 }
