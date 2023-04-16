@@ -7,9 +7,16 @@
 /// The longest path in the BlockTree is the main chain. It is the chain from the root to the working_block_id.
 
 use core::panic;
-use std::{collections::{BTreeMap, HashMap, HashSet}, convert};
+use std::{collections::{BTreeMap, HashMap, HashSet}, convert, str::FromStr};
+use base64ct::{Base64, Encoding};
+use rsa::{pkcs1::DecodeRsaPublicKey, pkcs1v15::VerifyingKey};
 use serde::{Serialize, Deserialize};
+use serde_json::json;
 use sha2::{Sha256, Digest, digest::block_buffer::Block};
+use rsa::signature::{Verifier};
+
+const PUBLIC_KEY_BEGIN: &str = "-----BEGIN RSA PUBLIC KEY-----\n";
+const PUBLIC_KEY_END: &str = "-----END RSA PUBLIC KEY-----\n";
 
 pub type UserId = String;
 pub type BlockId = String;
@@ -86,7 +93,7 @@ impl MerkleTree {
     // Please fill in the blank
     // Depending on your implementation, you may need additional functions here.
 
-    fn gen_hash_strings (s1: &String, s2: &String) -> String {
+    fn gen_hash_strings(s1: &String, s2: &String) -> String {
         let s = format!("{}{}", s1, s2);
         let mut hasher = Sha256::new();
         hasher.update(s);
@@ -151,8 +158,36 @@ impl Transaction {
         // Please fill in the blank
         // verify the signature using the sender_id as the public key (you might need to change the format into PEM)
         // You can look at the `verify` function in `bin_wallet` for reference. They should have the same functionality.
-        todo!();
-        
+        let msg: [&String; 3] = [&self.sender, &self.receiver, &self.message];
+        let msg_json: String = json!(msg).to_string();
+
+        // Make sender public key string into RSA public key
+        let public_key = Self::generate_pub_key_pem(&self.sender.as_str());
+        let verifying_key = VerifyingKey::<Sha256>::new(public_key);
+
+        // Retrieve signature into RSA
+        let signature = Base64::decode_vec(&self.sig).unwrap();
+        let verify_signature = rsa::signature::Signature::from_bytes(&signature).unwrap();
+
+        // Verify result
+        let verify_result = verifying_key.verify(msg_json.as_bytes(), &verify_signature);
+
+        return match verify_result {
+            Ok(_) => true,
+            Err(_) => false
+        }
+    }
+
+    // Converts public key string into RSA Public Key with PEM format
+    fn generate_pub_key_pem(public_key: &str) -> rsa::RsaPublicKey {
+        let key = public_key.chars()
+            .collect::<Vec<char>>()
+            .chunks(64)
+            .map(|c| c.iter().collect::<String>())
+            .collect::<Vec<String>>()
+            .join("\n") + "\n";
+
+        rsa::RsaPublicKey::from_pkcs1_pem(format!("{}{}{}", PUBLIC_KEY_BEGIN, key, PUBLIC_KEY_END).as_str()).unwrap()
     }
 }
 
