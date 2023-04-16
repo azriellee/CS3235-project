@@ -264,6 +264,8 @@ impl BlockTree {
     /// (e.g., working_block_id, finalized_block_id, finalized_balance_map, finalized_tx_ids, block_depth, children_map, all_blocks, etc)
     pub fn add_block(&mut self, block: BlockNode, leading_zero_len: u16) -> () {
         // Please fill in the blank
+        // 1. Check if nonce exists, and leading zero is the same in block_id
+        // 2. Create a struct puzzle with the block, serialize and concat with nonce, check if block id is correct
         todo!();
         
     }
@@ -371,8 +373,25 @@ impl BlockNode {
     /// 3. The merkle root in the block header is indeed the merkle root of the transactions in the block.
     pub fn validate_block(&self, leading_zero_len: u16) -> (bool, BlockId) {
         // Please fill in the blank
-        todo!();
-        
+        // Check if the block_id starting zeros match with leading_zero_len
+        if !self.header.block_id.starts_with(&"0".repeat(leading_zero_len.into())) {
+            return (false, self.header.block_id.clone());
+        }
+
+        // Serialize a puzzle, concat with nonce and compare hash. Return with bool and computed hash
+        let puzzle = Puzzle {
+            parent: self.header.parent.clone(),
+            merkle_root: self.header.merkle_root.clone(),
+            reward_receiver: self.header.reward_receiver.clone()
+        };
+
+        let concated_puzzle = format!("{}{}", self.header.nonce, serde_json::to_string(&puzzle).unwrap());
+        let mut hasher = Sha256::new();
+        hasher.update(concated_puzzle);
+        let result = hasher.finalize();
+        let hash: String = format!("{:x}", result);
+
+        ((hash == self.header.block_id.clone()), hash)
     }
 }
 
