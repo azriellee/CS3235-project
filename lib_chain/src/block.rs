@@ -374,9 +374,10 @@ impl BlockTree {
 
     /// Get the block node by the block id if exists. Otherwise, return None.
     pub fn get_block(&self, block_id: BlockId) -> Option<BlockNode> {
-        // Please fill in the blank
-        todo!();
+        self.all_blocks.get(&block_id).and_then(|block| return Some(block.clone()));
+        self.orphans.get(&block_id).and_then(|block| return Some(block.clone()));
         
+        None
     }
 
     /// Get the finalized blocks on the longest path after the given block id, from the oldest to the most recent.
@@ -384,15 +385,44 @@ impl BlockTree {
     /// If it is not the case, the function will panic (i.e. we do not consider inconsistent block tree caused by attacks in this project)
     pub fn get_finalized_blocks_since(&self, since_block_id: BlockId) -> Vec<BlockNode> {
         // Please fill in the blank
-        todo!();
-        
+        if (!self.finalized_block_id.contains(&since_block_id)) {
+            panic!("we do not consider inconsistent block tree caused by attacks in this project");
+        }
+
+        let mut finalized_blocks: Vec<BlockNode> = vec![];
+
+        let mut block_iterator: &BlockNode = self.all_blocks.get(&self.finalized_block_id.to_string()).unwrap();
+        loop {
+            finalized_blocks.push(block_iterator.clone());
+
+            if since_block_id != block_iterator.header.block_id.to_string() {
+                break;
+            }
+            block_iterator = &self.all_blocks.get(&block_iterator.header.parent.to_string()).unwrap();
+        }
+        finalized_blocks.reverse();
+
+        finalized_blocks
     }
 
     /// Get the pending transactions on the longest chain that are confirmed but not finalized.
     pub fn get_pending_finalization_txs(&self) -> Vec<Transaction> {
-        // Please fill in the blank
-        todo!();
-        
+        let mut pending_txs: Vec<Transaction> = vec![];
+
+        let mut block_iterator: &BlockNode = self.all_blocks.get(&self.working_block_id.to_string()).unwrap();
+        loop {
+            for tx in block_iterator.transactions_block.transactions.iter() {
+                pending_txs.push(tx.clone());
+            }
+
+            block_iterator = &self.all_blocks.get(&block_iterator.header.parent.to_string()).unwrap();
+
+            if &self.finalized_block_id == &block_iterator.header.block_id.to_string() {
+                break;
+            }
+        }
+
+        pending_txs
     }
 
     /// Get status information of the BlockTree for debug printing.
@@ -400,9 +430,17 @@ impl BlockTree {
         // Please fill in the blank
         // For debugging purpose, you can return any dictionary of strings as the status of the BlockTree. 
         // It should be displayed in the Client UI eventually.
-        todo!();
-        
+        let mut statuses: BTreeMap<String, String> = BTreeMap::new();
+        statuses.insert("root_id".to_string(), self.root_id.to_string());
+        statuses.insert("finalized_block_id".to_string(), self.finalized_block_id.to_string());
+        statuses.insert("finalized_block_id_depth".to_string(), self.block_depth.get(&self.finalized_block_id).unwrap().to_string());
+        statuses.insert("working_block_id".to_string(), self.working_block_id.to_string());
+        statuses.insert("working_block_id_depth".to_string(), self.block_depth.get(&self.working_block_id).unwrap().to_string());
+        statuses.insert("no_of_orphans".to_string(), self.orphans.len().to_string());
+
+        statuses
     }
+    
 }
 
 /// The struct representing a puzzle for the miner to solve. The puzzle is to find a nonce such that when concatenated
