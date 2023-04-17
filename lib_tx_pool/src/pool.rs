@@ -46,8 +46,19 @@ impl TxPool {
     /// It returns true if the transaction satisfies the conditions above and is successfully added to the pool, and false otherwise.
     pub fn add_tx(&mut self, tx: Transaction) -> bool {
         // Please fill in the blank
-        todo!();
-        
+        let tx_id = tx.gen_hash();
+        if self.pool_tx_map.contains_key(&tx_id) || self.removed_tx_ids.contains(&tx_id) {
+            return false;
+        }
+        if self.pool_tx_ids.len() >= MAX_TX_POOL {
+            return false;
+        }
+        if !tx.verify_sig() {
+            return false;
+        }
+        self.pool_tx_ids.push(tx_id.clone());
+        self.pool_tx_map.insert(tx_id.clone(), tx);
+        true
     }
 
     /// Deleting a tx from the pool. This function is used by remove_txs_from_finalized_blocks and some unit tests.
@@ -55,8 +66,20 @@ impl TxPool {
     /// If the transaction does not exist in the pool, make sure it is added to removed_tx_ids.
     pub fn del_tx(&mut self, tx_id: TxId) -> () {
         // Please fill in the blank
-        todo!();
-        
+        if !self.pool_tx_map.contains_key(&tx_id) {
+            self.removed_tx_ids.insert(tx_id.clone());
+            return;
+        }
+        let mut index = 0;
+        for i in 0..self.pool_tx_ids.len() {
+            if self.pool_tx_ids[i] == tx_id {
+                index = i;
+                break;
+            }
+        }
+        self.removed_tx_ids.insert(tx_id.clone());
+        self.pool_tx_ids.remove(index);
+        self.pool_tx_map.remove(&tx_id);
     }
 
 
@@ -66,15 +89,36 @@ impl TxPool {
     ///                    It is used to filter out those transactions on the longest chain but hasn't been finalized yet.
     pub fn filter_tx(&self, max_count: u16, excluding_txs: & Vec<Transaction>) -> Vec<Transaction> {
         // Please fill in the blank
-        todo!();
-        
+        let mut tx_list: Vec<Transaction> = Vec::new();
+        let mut txid_to_exclude: HashSet<TxId> = HashSet::new();
+
+        for t in excluding_txs.iter() {
+            txid_to_exclude.insert(t.gen_hash());
+        }
+
+        for (tx_id, tx) in self.pool_tx_map.iter() {
+            if tx_list.len() >= max_count as usize {
+                break;
+            }
+            if txid_to_exclude.contains(tx_id) {
+                continue;
+            }
+            tx_list.push(tx.clone());
+        }
+        tx_list
     }
 
     /// Remove transactions from the pool given a list of finalized blocks. Update last_finalized_block_id as the last block in the list.
     pub fn remove_txs_from_finalized_blocks(&mut self, finalized_blocks: &Vec<BlockNode>) {
         // Please fill in the blank
-        todo!();
-        
+        for block in finalized_blocks {
+            for tx in block.transactions_block.transactions.iter() {
+                self.del_tx(tx.gen_hash());
+            }
+        }
+        if let Some(last_block) = finalized_blocks.last() {
+            self.last_finalized_block_id = last_block.header.block_id.clone();
+        }
     }
 
     /// Get status information of the tx_pool for debug printing.
@@ -82,8 +126,25 @@ impl TxPool {
         // Please fill in the blank
         // For debugging purpose, you can return any dictionary of strings as the status of the tx_pool. 
         // It should be displayed in the Client UI eventually.
-        todo!();
-        
+        let mut status = BTreeMap::new();
+        let mut tx_ids = String::new();
+        let mut removed_ids = String::new();
+
+        status.insert("last finalized block id".to_string(), self.last_finalized_block_id.clone());
+
+        for id in self.pool_tx_ids.iter() {
+            tx_ids += id;
+            tx_ids += " ";
+        }
+        status.insert("transaction ids".to_string(), tx_ids);
+
+        for id in self.removed_tx_ids.iter() {
+            removed_ids += id;
+            removed_ids += " ";
+        }
+        status.insert("removed ids".to_string(), removed_ids);
+
+        status
     }
 }
 
