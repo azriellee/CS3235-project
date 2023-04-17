@@ -8,11 +8,11 @@
 // However, you can run it directly from the command line to test it.
 // You can see detailed instructions in the comments below.
 
-
 mod wallet;
 use std::fs;
 use std::io;
 use std::io::Write;
+use std::os::linux::raw;
 use serde::{Serialize, Deserialize};
 
 /// Read a string from a file (help with debugging)
@@ -76,31 +76,84 @@ fn main() {
     // bin_wallet has only one optional argument: the path to the seccomp policy file
     // If the argument is provided, bin_wallet will read and apply the seccomp policy at the beginning of the program
     // Otherwise, it will proceed to the normal execution
+    
+    /* TODO!!!!!
     let maybe_policy_path = std::env::args().nth(1);
     if let Some(policy_path) = maybe_policy_path {
         // Please fill in the blank
         // If the first param is provided, read the seccomp config and apply it
         
     }
+    */
 
     // The main logic of the bin_wallet starts here
     // It reads IPC calls from stdin and write IPC responses to stdout in a loop.
     // The first IPC call is always the Initialize call with the wallet data provided.
     // After that, there can be arbitrary number of SignRequest, VerifyRequest, and GetUserInfo calls.
     // Eventually, the Quit call will be received and the program will exit.
-    use wallet::Wallet;
-    // Please fill in the blank
-    todo!();
     
-    println!("{}\n", serde_json::to_string(&IPCMessageResp::Quitting).unwrap());
+    //use serde_json::Result;
+    use wallet::Wallet;
+    //println!("StartCheck");
+    let mut raw_data = String::new();
+    //let mut parsedInput : IPCMessageReq = serde_json::from_str(rawData)?; 
+    let mut looptheinput : bool = true;
+    let user_wallet : Wallet;
+
+    //Initialise
+    io::stdin().read_line(&mut raw_data).expect("wtf");
+    let parsed_input : IPCMessageReq = serde_json::from_str(raw_data.as_str()).unwrap(); 
+    match parsed_input {
+        IPCMessageReq::Initialize(init_info) => {
+            user_wallet = serde_json::from_str(&init_info.as_str()).unwrap();
+            println!("{}", serde_json::to_string(&IPCMessageResp::Initialized).unwrap());
+        }
+        _ => return, //Terminate if first thing is not an IPCMessageReq::Initialize();
+    }
+    
+    while looptheinput {
+        //Read the damn input. Expected to fit IPCMessageReq.
+        //println!("Reading In Progress...\n");
+        raw_data = "".to_string();
+        io::stdin().read_line(&mut raw_data).expect("wtf");
+        //println!("What is read: \n{}\n", raw_data);
+        let parsed_input : IPCMessageReq = serde_json::from_str(raw_data.as_str()).unwrap(); 
+        //println!("Matching In Progress...\n");
+        //Does the matching.
+        match parsed_input {
+            IPCMessageReq::GetUserInfo => {
+                //println!("Executing GetUserInfo\n");
+                let user_name = user_wallet.get_user_name();
+                let user_id = user_wallet.get_user_id();
+                println!("{}", serde_json::to_string(&IPCMessageResp::UserInfo(user_name, user_id)).unwrap());
+            }
+            IPCMessageReq::SignRequest(first_string) => {
+                let signature = user_wallet.sign(first_string.as_str());
+                println!("{}", serde_json::to_string(&IPCMessageResp::SignResponse(first_string, signature)).unwrap());
+            }
+            IPCMessageReq::VerifyRequest(data_string, signature_string) => {
+                let is_correct : bool = user_wallet.verify(data_string.as_str(), signature_string.as_str());
+                println!("{}", serde_json::to_string(&IPCMessageResp::VerifyResponse(is_correct, data_string)).unwrap());
+            }
+            IPCMessageReq::Quit => {
+                looptheinput = false;
+                println!("{}\n", serde_json::to_string(&IPCMessageResp::Quitting).unwrap());
+            }
+            _ => println!("Ayyo shen me the faq?\n"),
+        }
+
+    }
+ 
+    // Please fill in the blank
+    //todo!();
+    
+    
 }
 
 #[cfg(test)]
 mod test {
     use crate::{wallet::Wallet, write_string_to_file, IPCMessageReq, IPCMessageResp, read_string_from_file};
 
-    
-    
     /// This test generates a new wallet and writes it to a file.
     #[test]
     fn generate_new_wallet() {
@@ -112,7 +165,7 @@ mod test {
     /// This test reads a wallet from a file and uses it to sign and verify a message.
     #[test]
     fn test_bin_wallet_signing_and_verifying() {
-        let bin_wallet: Wallet = serde_json::from_str(&read_string_from_file("../tests/_secrets/Wallet.0.json")).unwrap();
+        let bin_wallet: Wallet = serde_json::from_str(&read_string_from_file("../tests/_secrets/Wallet.A.json")).unwrap();
         println!("Private key Pem:\n{}\n", bin_wallet.priv_key_pem);
         println!("Public key Pem:\n{}\n", bin_wallet.pub_key_pem);
         let msg = "hello world";
