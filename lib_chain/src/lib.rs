@@ -151,7 +151,15 @@ mod tests {
     fn blocktree_additional_test() {
         // Please fill in the blank
         // You can add your own json files and read them for testing
-        
+        let mut default_btree = BlockTree::new();
+        // print current pwd
+        println!("current dir: {:?}", std::env::current_dir());
+        for i in vec![3,3,3,3,3,3] {
+            // read block from "./testdata/add_block_basic__{i}.json"
+            let block_json = read_string_from_file(&format!("./testdata/add_blocks_basic__{}.json", i));
+            let block_node = serde_json::from_str::<BlockNode>(&block_json).unwrap();
+            default_btree.add_block(block_node, 5);
+        }
     }
 
 }

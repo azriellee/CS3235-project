@@ -264,9 +264,110 @@ impl BlockTree {
     /// (e.g., working_block_id, finalized_block_id, finalized_balance_map, finalized_tx_ids, block_depth, children_map, all_blocks, etc)
     pub fn add_block(&mut self, block: BlockNode, leading_zero_len: u16) -> () {
         // Please fill in the blank
-        // 1. Check if nonce exists, and leading zero is the same in block_id
-        // 2. Create a struct puzzle with the block, serialize and concat with nonce, check if block id is correct
-        todo!();
+        // 1,2 checks with validate_block()
+        let is_correct_puzzle: bool = block.validate_block(leading_zero_len).0;
+        if !is_correct_puzzle {
+            return;
+        }
+
+        // 3 check if block exists in all_blocks
+        if self.all_blocks.contains_key(&block.header.block_id) || self.orphans.contains_key(&block.header.block_id) {
+           return; 
+        }
+
+        // 4 Verify each signature
+        for tx in block.transactions_block.transactions.iter() {
+            if !tx.verify_sig() {
+                return;
+            }
+        }
+
+        // 5 If parent is unknown, add to orphan
+        // Else, add to parent, checks if there is any orphans. If have, remove orphan and add_block recursively
+        if !(self.all_blocks.contains_key(&block.header.parent)) {
+            self.orphans.insert(block.header.block_id.clone(), block.clone());
+            return;
+        }
+
+        // 6 Check for any duplicate transactions in ancestor blocks. use transaction id
+        // 7 Check if have enough balance to pay for transaction.
+        // Check transactions in finalized_tx
+        if block.transactions_block.transactions.iter().all(|tx| self.finalized_tx_ids.contains(&tx.sig)) {
+            return;
+        }
+
+        // Clone the balances from finalized_balance
+        let mut balances: HashMap<UserId, i64> = self.finalized_balance_map.clone();
+
+        let all_blocks = self.all_blocks.clone();
+        let mut block_iterator: &BlockNode = all_blocks.get(&block.header.parent).unwrap();
+        let mut last_block: &BlockNode = block_iterator; // to update the finalize
+        while block_iterator.header.block_id != self.finalized_block_id {
+            // Check transaction and balance
+            let block_iterator_transactions: &Vec<Transaction> = &block_iterator.transactions_block.transactions;
+
+            for tx in block_iterator_transactions.iter() {
+                if block.transactions_block.transactions.contains(tx) {
+                    return;
+                }
+
+                let amount = tx.message.split(" ").collect::<Vec<&str>>()[1].trim_start_matches('$').parse::<i64>().unwrap();
+                balances.insert(tx.sender.to_string(), balances.get(&tx.sender).unwrap_or_else(|| &0) - amount);
+                balances.insert(tx.receiver.to_string(), balances.get(&tx.receiver).unwrap_or_else(|| &0) + amount);
+            }
+            let reward_receiver_id: &String = &block_iterator.header.reward_receiver.to_string();
+            balances.insert(reward_receiver_id.to_string(), balances.get(&reward_receiver_id.to_string()).unwrap_or_else(|| &0) + 10);
+
+            last_block = block_iterator;
+            block_iterator = all_blocks.get(&block_iterator.header.parent).unwrap();
+        }
+
+        // In current block, check if each sender do not have negative value
+        for tx in block.transactions_block.transactions.iter() {
+            let amount = tx.message.split(" ").collect::<Vec<&str>>()[1].trim_start_matches('$').parse::<i64>().unwrap();
+            balances.insert(tx.sender.to_string(), balances.get(&tx.sender).unwrap_or_else(|| &0) - amount);
+            balances.insert(tx.receiver.to_string(), balances.get(&tx.receiver).unwrap_or_else(|| &0) + amount);
+
+            if balances.get(&tx.sender).unwrap() < &0 {
+                return;
+            }
+        }
+
+        // Update required fields
+        self.all_blocks.insert(block.header.block_id.to_string(), block.clone());
+        let has_children = self.children_map.get_mut(&block.header.parent);
+        match has_children {
+            Some(parent) => parent.push(block.header.block_id.to_string()),
+            None => { self.children_map.insert(block.header.block_id.to_string(), vec![]); () },
+        };
+        let depth: u64 = self.block_depth.get(&block.header.parent).unwrap().clone() + 1;
+        self.block_depth.insert(block.header.block_id.to_string(), depth);
+
+        // update working block if new block depth > working_block depth
+        if &depth > self.block_depth.get(&self.working_block_id).unwrap() {
+            self.working_block_id = block.header.block_id.to_string();
+
+            // if depth > 6, update the finalized info using the last block
+            if depth > 6 {
+                self.finalized_block_id = last_block.header.block_id.clone().to_string();
+                for tx in last_block.transactions_block.transactions.iter() {
+                    self.finalized_tx_ids.insert(tx.sig.clone());
+                    let amount = tx.message.split(" ").collect::<Vec<&str>>()[1].trim_start_matches('$').parse::<i64>().unwrap();
+                    self.finalized_balance_map.insert(tx.sender.to_string(), self.finalized_balance_map.get(&tx.sender).unwrap_or_else(|| &0) - amount);
+                    self.finalized_balance_map.insert(tx.receiver.to_string(), self.finalized_balance_map.get(&tx.receiver).unwrap_or_else(|| &0) + amount);
+                }
+                let reward_receiver_balance = self.finalized_balance_map.get(&last_block.header.reward_receiver.to_string()).unwrap_or_else(|| &0);
+                self.finalized_balance_map.insert(last_block.header.reward_receiver.to_string(), reward_receiver_balance + 10);
+            }
+        }
+
+        // 5.5 Check for any orphans having same parent then add_block recursively
+        for (o_id, o_node) in self.orphans.clone().iter() {
+            if o_node.header.parent == block.header.block_id {
+                let orphan = self.orphans.remove(o_id).unwrap();
+                self.add_block(orphan, leading_zero_len);
+            }
+        }
         
     }
 
