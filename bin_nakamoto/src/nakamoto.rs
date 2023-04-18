@@ -101,8 +101,29 @@ impl Nakamoto {
         // Start necessary threads that read from and write to FIFO channels provided by the network.
         // Start necessary thread(s) to control the miner.
         // Return the Nakamoto instance that holds pointers to the chain, the miner, the network and the tx pool.
-        todo!();
-        
+        let user_Chain : BlockTree = serde_json::from_str(&chain_str.as_str()).unwrap();
+        let user_TxPool : TxPool = serde_json::from_str(&tx_pool_str.as_str()).unwrap();
+        let user_Config : NetAddress = serde_json::from_str(&config_str.as_str()).unwrap(); 
+        let user_Miner : Miner = Miner::new();
+        let (
+            network_p,
+            upd_block_in_rx, //Unused
+            upd_trans_in_rx, //Unused
+            block_out_tx, //Unused
+            trans_tx,
+            req_block_id_out_tx, //Unused
+        ) = P2PNetwork::create(user_Config, vec![]);
+        let chain_p = Arc::new(Mutex::new(user_Chain));
+        let miner_p = Arc::new(Mutex::new(user_Miner)); 
+        let tx_pool_p  = Arc::new(Mutex::new(user_TxPool)); 
+
+        Nakamoto {
+            chain_p,
+            miner_p,
+            tx_pool_p,
+            network_p,
+            trans_tx,
+        }
     }
 
     /// Get the status of the network as a dictionary of strings. For debugging purpose.
@@ -142,6 +163,17 @@ impl Nakamoto {
     pub fn get_serialized_txpool(&self) -> String {
         let tx_pool = self.tx_pool_p.lock().unwrap().clone();
         serde_json::to_string_pretty(&tx_pool).unwrap()
+    }
+
+    //Past this point are functions I made myself. Correctness now sits on the fence.
+
+    pub fn get_block(&self, address : String) -> String {
+        let the_block = self.chain_p.lock().unwrap().clone().get_block(address).unwrap();
+        serde_json::to_string_pretty(&the_block).unwrap()
+    }
+
+    pub fn get_balance(&self, address : String) -> i64 {
+        return self.chain_p.lock().unwrap().clone().get_balance(address);
     }
 }
 

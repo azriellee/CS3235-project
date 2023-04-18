@@ -8,9 +8,10 @@
 /// However, you can also run it directly from the command line to test it.
 /// You can see detailed instructions in the comments below.
 
-
 mod nakamoto;
-use lib_chain::block::{Transaction, Signature};
+use lib_chain::block::{Transaction, Signature, BlockTree}; 
+use lib_tx_pool::pool::{TxPool}; 
+use lib_network::netchannel::{NetAddress};
 use nakamoto::Nakamoto;
 
 use std::collections::BTreeMap;
@@ -111,7 +112,76 @@ fn main() {
     // Please fill in the blank
     // Loop over stdin and handle IPC messages
     
+    //use serde_json::Result;
+    
+    println!("StartCheck!!");
+    let mut raw_data = String::new();
+    let mut looptheinput : bool = true;
+    let nakamoto_node : Nakamoto;
 
+    //Initialise
+    io::stdin().read_line(&mut raw_data).expect("wtf");
+    let parsed_input : IPCMessageReq = serde_json::from_str(raw_data.as_str()).unwrap(); 
+    match parsed_input {
+        IPCMessageReq::Initialize(chain_info, tx_info, config_info) => {
+            nakamoto_node = Nakamoto::create_nakamoto(chain_info, tx_info, config_info);
+            println!("{}", serde_json::to_string(&IPCMessageResp::Initialized).unwrap());
+        }
+        _ => return, //Terminate if first thing is not an IPCMessageReq::Initialize(x,y,z);
+    }
+    
+    while looptheinput {
+        //Read the damn input. Expected to fit IPCMessageReq.
+        //println!("Reading In Progress...\n");
+        raw_data = "".to_string();
+        io::stdin().read_line(&mut raw_data).expect("wtf");
+        //println!("What is read: \n{}\n", raw_data);
+        let parsed_input : IPCMessageReq = serde_json::from_str(raw_data.as_str()).unwrap(); 
+        //println!("Matching In Progress...\n");
+        //Does the matching.
+        match parsed_input {
+            IPCMessageReq::RequestChainStatus => {
+                let azrielwhentreathdl = nakamoto_node.get_chain_status();
+                println!("{}", serde_json::to_string(&IPCMessageResp::ChainStatus(azrielwhentreathdl)).unwrap());
+            }
+            IPCMessageReq::RequestMinerStatus => {
+                let chuagaetheosgod = nakamoto_node.get_miner_status();
+                println!("{}", serde_json::to_string(&IPCMessageResp::MinerStatus(chuagaetheosgod)).unwrap());
+            }
+            IPCMessageReq::RequestNetStatus => {
+                let bencosplayaspekoraasajoke = nakamoto_node.get_network_status();
+                println!("{}", serde_json::to_string(&IPCMessageResp::MinerStatus(bencosplayaspekoraasajoke)).unwrap());
+            }
+            IPCMessageReq::RequestTxPoolStatus => {
+                let prateekfanclub = nakamoto_node.get_txpool_status();
+                println!("{}", serde_json::to_string(&IPCMessageResp::MinerStatus(prateekfanclub)).unwrap());
+            }
+            IPCMessageReq::GetAddressBalance(user_id) => {
+                let user_balance = nakamoto_node.get_balance(user_id);
+                println!("{}", serde_json::to_string(&IPCMessageResp::AddressBalance(user_id, user_balance)).unwrap());
+            }
+            IPCMessageReq::PublishTx(data, signature) => {
+                // ???
+                println!("{}", serde_json::to_string(&IPCMessageResp::PublishTxDone).unwrap());
+            }
+            IPCMessageReq::RequestBlock(block_id) => {
+                let acertainblock = nakamoto_node.get_block(block_id);
+                println!("{}", serde_json::to_string(&IPCMessageResp::BlockData(acertainblock)).unwrap());
+            }
+            IPCMessageReq::RequestStateSerialization => {
+                let chain_info = nakamoto_node.get_serialized_chain();
+                let txpool_info = nakamoto_node.get_serialized_txpool();
+                println!("{}", serde_json::to_string(&IPCMessageResp::StateSerialization(chain_info, txpool_info)).unwrap());
+            }
+            IPCMessageReq::Quit => {
+                looptheinput = false;
+                println!("{}", serde_json::to_string(&IPCMessageResp::Quitting).unwrap());
+            }
+            _ => {
+                println!("{}", serde_json::to_string(&IPCMessageResp::Notify(raw_data)).unwrap()); //?????
+            }
+        }    
+    }
 }
 
 

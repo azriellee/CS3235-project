@@ -385,7 +385,7 @@ impl BlockTree {
     /// If it is not the case, the function will panic (i.e. we do not consider inconsistent block tree caused by attacks in this project)
     pub fn get_finalized_blocks_since(&self, since_block_id: BlockId) -> Vec<BlockNode> {
         // Please fill in the blank
-        if !self.finalized_block_id.contains(&since_block_id) {
+        if (!self.finalized_block_id.contains(&since_block_id)) {
             panic!("we do not consider inconsistent block tree caused by attacks in this project");
         }
 
@@ -441,6 +441,12 @@ impl BlockTree {
         statuses
     }
     
+    //Used in nakamoto.rs
+    pub fn get_balance(&self, address : String) -> i64 {
+        let bal = self.finalized_balance_map.get(&address).unwrap();
+        return bal.clone();
+    }
+
 }
 
 /// The struct representing a puzzle for the miner to solve. The puzzle is to find a nonce such that when concatenated
@@ -533,4 +539,3 @@ impl BlockNode {
         ((hash == self.header.block_id.clone()), hash)
     }
 }
-
