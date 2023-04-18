@@ -13,7 +13,7 @@ use lib_chain::block::{BlockNode, Transaction, BlockId, TxId};
 use crate::netchannel::*;
 use std::collections::{HashMap, BTreeMap, HashSet};
 use std::convert;
-use std::net::TcpListener;
+use std::net::{TcpListener, TcpStream};
 use std::sync::mpsc::{Receiver, Sender};
 use std::thread;
 use std::sync::{mpsc, Arc, Mutex};
@@ -62,8 +62,42 @@ impl P2PNetwork {
         // 6. create threads to listen to messages from neighbors
         // 7. create threads to distribute received messages (send to channels or broadcast to neighbors)
         // 8. return the created P2PNetwork instance and the mpsc channels
-        todo!();
-        
+
+        let network = P2PNetwork {
+            send_msg_count: 0,
+            recv_msg_count: 0,
+            address,
+            neighbors,
+        };
+
+        let (send_block, recv_block) = mpsc::channel::<BlockNode>(); //send & receive blocks from the network
+        let (send_tx, recv_tx) = mpsc::channel::<Transaction>(); //send & receive transactions from the network
+        let (send_block_request, recv_block_request) = mpsc::channel::<BlockId>(); //request block from the network
+
+        let p2p_network_mutex = Arc::new(Mutex::new(network));
+
+        let local_addr = format!("{}:{}", address.ip, address.port);
+        let listener = TcpListener::bind(local_addr).unwrap();
+
+        //step 3 here, dont really know what to implement, for loop accepts TCP connections automatically
+        std::thread::spawn(move || {
+            for stream in listener.incoming() {
+                match stream {
+                    Ok(stream) => {
+                    }
+                    Err(e) => {
+                        eprintln!("Error accepting incoming connection: {}", e);
+                    }
+                }
+            }
+        });
+
+        for neighbour in neighbors.iter() {
+            let neighbour_addr = format!("{}:{}", neighbour.ip, neighbour.port);
+            let mut stream = TcpStream::connect(neighbour_addr);
+
+        }
+
     }
 
     /// Get status information of the P2PNetwork for debug printing.
