@@ -21,7 +21,7 @@ use crossterm::{
 };
 
 use std::fs::File;
-use std::io::{self, Read, Write, BufReader, BufRead};
+use std::io::{self, Read, Write, BufReader, BufRead, BufWriter};
 use std::process::{Command, Stdio};
 use std::collections::BTreeMap;
 use std::time::SystemTime;
@@ -124,20 +124,44 @@ fn main() {
     //                         The bot commands are executed by the client in the order they are read from the file or the named pipe. 
     //                         The bot commands should be executed in a separate thread so that the UI thread can still be responsive.
     // Please fill in the blank
+
+    //WIP, to figure out bin_wallet first.
     // - Create bin_nakamoto process:  Command::new("./target/debug/bin_nakamoto")...
+    let nakamoto_out = Command::new("./target/debug/bin_nakamoto").arg("").output().expect("Failed to execute bin_nakamoto");
+
     // - Create bin_wallet process:  Command::new("./target/debug/bin_wallet")...
+    let bin_wallet_seccomp_details : String = "".to_string();
+    let wallet_child = Command::new("./target/debug/bin_wallet").arg(bin_wallet_seccomp_details)
+    .stdin(Stdio::piped())
+    .stdout(Stdio::piped())
+    .spawn()
+    .expect("Failed to execute bin_wallet as child process");
+
     // - Get stdin and stdout of those processes
+    let wallet_child_stdout = wallet_child.stdout.expect("Failed to get wallet_child stdout");
+    let wallet_child_stdin = wallet_child.stdin.expect("Failed to get wallet_child stdin");
+    
+    let wallet_reader = BufReader::new(wallet_child_stdout);
+    let mut wallet_writer = BufWriter::new(wallet_child_stdin);
+
+
+
     // - Create buffer readers if necessary
     // - Send initialization requests to bin_nakamoto and bin_wallet
     
 
+    //No idea if this is the right place to get the input, or if this is even the input. 
+    //For now this implementation only sends the first line.
+    let wallet_input_file = File::open("./tests/cli_test_wallet/test_stdio.input").unwrap();
+    let wallet_input_reader = BufReader::new(wallet_input_file);
+    if let Some(Ok(bin_wallet_init_msg)) = wallet_input_reader.lines().next() {
+        wallet_writer.write(bin_wallet_init_msg.as_bytes());
+    }
 
     let client_seccomp_path = std::env::args().nth(1).expect("Please specify client seccomp path");
     // Please fill in the blank
     // sandboxing the bin_client (For part B). Leave it blank for part A.
     
-
-
 
     let user_name: String;
     let user_id: String;
