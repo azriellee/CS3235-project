@@ -14,7 +14,7 @@ lib_network = { path = "../lib_network" }
 lib_miner = { path = "../lib_miner" }
 lib_chain = { path = "../lib_chain" }
 lib_tx_pool = { path = "../lib_tx_pool" }
-
+sha2 = "0.10.6"
 seccompiler = {version = "0.3.0", features = ["json"]}
 serde = { version = "1.0", features = ["derive", "rc"] }
 serde_json = "1.0"

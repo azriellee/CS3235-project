@@ -26,7 +26,6 @@ pub struct TxPool {
     pub last_finalized_block_id: BlockId
 }
 
-
 impl TxPool {
     /// Create a new transaction pool
     pub fn new () -> TxPool {

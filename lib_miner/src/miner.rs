@@ -51,6 +51,17 @@ impl Miner {
         }
     }
     
+    pub fn generate_hash(p: String, nonce_len: &u16, thread_seed: u64) -> (String, String) {
+        let mut rng = Pcg32::seed_from_u64(thread_seed);
+        let nonce_string = Alphanumeric.sample_string(&mut rng, *nonce_len as usize);
+        let combined_string = format!("{}{}",nonce_string, p);
+        let mut hasher = Sha256::new();
+        hasher.update(combined_string.as_bytes());
+        let result = hasher.finalize();
+        let hex_string = result.iter().map(|b| format!("{:02x}", b)).collect::<String>();
+        (nonce_string, hex_string)
+    }
+
     /// The method to solve a puzzle with specified number of threads and difficulty levels.
     /// This method is a function on the class (without `self` as the 1st argument). The first parameter is a smart pointer to a miner instance.
     /// - `miner_p`: the smart pointer to the miner instance
@@ -75,17 +86,6 @@ impl Miner {
         miner.thread_count = thread_count;
         drop(miner);
 
-        fn generate_hash(p: String, nonce_len: &u16, thread_seed: u64) -> (String, String) {
-            let mut rng = Pcg32::seed_from_u64(thread_seed);
-            let nonce_string = Alphanumeric.sample_string(&mut rng, *nonce_len as usize);
-            let combined_string = format!("{}{}",nonce_string, p);
-            let mut hasher = Sha256::new();
-            hasher.update(combined_string.as_bytes());
-            let result = hasher.finalize();
-            let hex_string = result.iter().map(|b| format!("{:02x}", b)).collect::<String>();
-            (nonce_string, hex_string)
-        }
-
         let mut threads = Vec::new();
         for i in 0..thread_count {
             let cancel = cancellation_token.clone();
@@ -93,7 +93,7 @@ impl Miner {
             let thread_handle = thread::spawn(move || {
                 let mut seed = thread_0_seed + i as u64;
                 while !*cancel.read().unwrap() {
-                    let nonce_and_hash = generate_hash(p.clone(), &nonce_len, seed);
+                    let nonce_and_hash = Miner::generate_hash(p.clone(), &nonce_len, seed);
                     if nonce_and_hash.1.starts_with(&"0".repeat(leading_zero_len as usize)) {
                         let solution = PuzzleSolution {
                             puzzle: p.clone(),

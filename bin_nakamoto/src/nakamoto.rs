@@ -10,12 +10,13 @@ use std::sync::mpsc::Sender;
 use std::{thread, time::Duration};
 use std::sync::{Arc, Mutex, RwLock};
 use serde::{Deserialize, Serialize};
-use lib_chain::block::{BlockTree, Puzzle, Transactions, MerkleTree, BlockNode, BlockNodeHeader, Transaction};
+use lib_chain::block::{BlockTree, Puzzle, Transactions, MerkleTree, BlockNode, BlockNodeHeader, Transaction, BlockId};
 use lib_miner::miner::{Miner, PuzzleSolution};
 use lib_tx_pool::pool::TxPool;
 use lib_network::p2pnetwork::{P2PNetwork};
 use lib_network::netchannel::{NetAddress};
 use std::collections::{HashMap, BTreeMap};
+use sha2::{Sha256, Digest}; //might remove if they say donnid check the correctness of a solution found by another node
 
 type UserId = String;
 
@@ -50,13 +51,34 @@ pub struct Config {
 fn create_puzzle(chain_p: Arc<Mutex<BlockTree>>, tx_pool_p: Arc<Mutex<TxPool>>, tx_count: u16, reward_receiver: UserId) -> (String, BlockNode) {
     // Please fill in the blank
     // Filter transactions from tx_pool and get the last node of the longest chain.
-    
+    // tx_count corresponds to max_count of filter_txs in TxPool
 
+    // hi @chuawei i need help with the blocks stuff
+    // 1. I think must delete the tx from tx_pool that is already in finalised blocks, but not sure how to get finalised blocks from chain_p.
+    // after that can just use the "remove_txs_from_finalized_blocks" function in tx_pool
+    // 2. Not very sure how to get the last node of the longest chain also
+
+    let tx_pool = tx_pool_p.lock().unwrap();
+    let block_chain = chain_p.lock().unwrap();
+    let mut excluding_tx = Vec::new();
+    let node_of_longest_chain: BlockId; //need help initialising this
+    for tx_id in block_chain.finalized_tx_ids.iter() {
+        let tx = tx_pool.pool_tx_map[tx_id];
+        excluding_tx.push(tx);
+    }
+    for tx_id in tx_pool.removed_tx_ids.iter() {
+        let tx = tx_pool.pool_tx_map[tx_id];
+        excluding_tx.push(tx);
+    }
+    let unfinalised_tx = tx_pool.filter_tx(tx_count, &excluding_tx);
+    let (merkle_root, merkle_tree) = MerkleTree::create_merkle_tree(unfinalised_tx);
     // build the puzzle
     let puzzle = Puzzle {
         // Please fill in the blank
         // Create a puzzle with the block_id of the parent node and the merkle root of the transactions.
-        
+        parent: node_of_longest_chain,
+        merkle_root,
+        reward_receiver,
     };
     let puzzle_str = serde_json::to_string(&puzzle).unwrap().to_owned();
 
@@ -65,7 +87,18 @@ fn create_puzzle(chain_p: Arc<Mutex<BlockTree>>, tx_pool_p: Arc<Mutex<TxPool>>, 
     // Leave the nonce and the block_id empty (to be filled after solving the puzzle).
     // The timestamp can be set to any positive interger.
     // In the end, it returns  (puzzle_str, pre_block);
-    
+
+    let pre_block_header: BlockNodeHeader; //need help initilaising this
+    let pre_block_transactions: Transactions = Transactions { 
+        merkle_tree, 
+        transactions: excluding_tx, 
+    };
+    let pre_block: BlockNode = BlockNode {
+        header: pre_block_header,
+        transactions_block: pre_block_transactions,
+    };
+
+    (puzzle_str, pre_block)
 }
 
 /// The struct to represent the Nakamoto instance.
@@ -101,6 +134,21 @@ impl Nakamoto {
         // Start necessary threads that read from and write to FIFO channels provided by the network.
         // Start necessary thread(s) to control the miner.
         // Return the Nakamoto instance that holds pointers to the chain, the miner, the network and the tx pool.
+
+        //verify solution that is found by another node
+        fn verify_solution(block: BlockNode, puzzle: String, difficulty: u16) -> bool {
+            let solution = block.header.nonce;
+            let combined_string = format!({}{},solution, puzzle);
+            let mut hasher = Sha256::new();
+            hasher.update(combined_string.as_bytes());
+            let result = hasher.finalize();
+            let hex_string = result.iter().map(|b| format!("{:02x}", b)).collect::<String>();
+            if(hex_string.starts_with(&"0".repeat(difficulty as usize))) {
+                return true;
+            }
+            return false;
+        }
+
         let user_config : Config = serde_json::from_str(&config_str.as_str()).unwrap(); 
         let user_chain : BlockTree = serde_json::from_str(&chain_str.as_str()).unwrap();
         let user_txPool : TxPool = serde_json::from_str(&tx_pool_str.as_str()).unwrap();
@@ -109,6 +157,7 @@ impl Nakamoto {
             leading_zero_len: user_config.difficulty_leading_zero_len,
             is_running: false 
         };
+        let cancellation_token = Arc::new(RwLock::new(false));
         let (network_p, block_rx, trans_rx, block_tx, trans_tx, blockid_tx)
              = P2PNetwork::create(user_config.addr, user_config.neighbors);
 
@@ -117,15 +166,20 @@ impl Nakamoto {
         let tx_pool_p  = Arc::new(Mutex::new(user_txPool));
 
         let nakamoto = Nakamoto { chain_p, miner_p, network_p, tx_pool_p, trans_tx };
+        let (puzzle, block) = create_puzzle(chain_p, tx_pool_p, user_config.max_tx_in_one_block, user_config.mining_reward_receiver);
 
+        //when receive a block, check if the solution found by another node satisfies the solution?
         thread::spawn(move || {
             loop {
                 let block_result = block_rx.recv();
+                let cancellation_token_clone = cancellation_token.clone();
                 match block_result {
                     Ok(block) => { 
                         chain_p.lock().unwrap().add_block(block, user_config.difficulty_leading_zero_len);
+                        block_tx.send(block);
                         let pending_txs = chain_p.lock().unwrap().get_pending_finalization_txs();
                         tx_pool_p.lock().unwrap().filter_tx(user_config.max_tx_in_one_block, &pending_txs);
+                        *cancellation_token_clone.write().unwrap() = verify_solution(block, puzzle, user_config.difficulty_leading_zero_len_acc);
                     },
                     Err(_) => { continue; },
                 }
@@ -149,6 +203,31 @@ impl Nakamoto {
         });
 
         // need thread to control miner
+
+        let miner_thread = thread::spawn(move || {
+            loop {
+                let cancellation_token_clone = cancellation_token.clone();
+                let solution = Miner::solve_puzzle(
+                    miner_p, 
+                    puzzle, 
+                    user_config.nonce_len, 
+                    user_config.difficulty_leading_zero_len, 
+                    user_config.miner_thread_count, 
+                    user_config.miner_thread_0_seed, 
+                    cancellation_token.clone()
+                );
+                match solution {
+                    Some(PuzzleSolution { puzzle, nonce, hash }) => {
+                        println!("Solution Found! HASH: {}\nNONCE: {}\nPUZZLE: {}", hash, nonce, puzzle);
+                    }, //solution found
+                    None => {println!("Solution found by another miner");}
+                };
+                *cancellation_token_clone.write().unwrap() = false; //set cancellation token back to false to solve next puzzle
+                (puzzle, block) = create_puzzle(chain_p, tx_pool_p, user_config.max_tx_in_one_block, user_config.mining_reward_receiver);
+                //above is to create a new puzzle once a solution is found
+            }
+
+        });
 
         nakamoto
     }
