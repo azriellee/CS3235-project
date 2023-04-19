@@ -103,8 +103,8 @@ impl Nakamoto {
         // Return the Nakamoto instance that holds pointers to the chain, the miner, the network and the tx pool.
         let user_Chain : BlockTree = serde_json::from_str(&chain_str.as_str()).unwrap();
         let user_TxPool : TxPool = serde_json::from_str(&tx_pool_str.as_str()).unwrap();
-        let user_Config : NetAddress = serde_json::from_str(&config_str.as_str()).unwrap(); 
-        let user_Miner : Miner = Miner::new();
+        let user_Config : Config = serde_json::from_str(&config_str.as_str()).unwrap(); 
+        let user_Miner : Miner = Miner::new(); // do i initialise here or later on?
         let (
             network_p,
             upd_block_in_rx, //Unused
@@ -112,7 +112,7 @@ impl Nakamoto {
             block_out_tx, //Unused
             trans_tx,
             req_block_id_out_tx, //Unused
-        ) = P2PNetwork::create(user_Config, vec![]);
+        ) = P2PNetwork::create(user_Config.addr, user_Config.neighbors);
         let chain_p = Arc::new(Mutex::new(user_Chain));
         let miner_p = Arc::new(Mutex::new(user_Miner)); 
         let tx_pool_p  = Arc::new(Mutex::new(user_TxPool)); 
