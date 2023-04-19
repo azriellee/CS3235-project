@@ -11,12 +11,15 @@
 
 use lib_chain::block::{BlockNode, Transaction, BlockId, TxId};
 use crate::netchannel::*;
+use std::borrow::Borrow;
 use std::collections::{HashMap, BTreeMap, HashSet};
-use std::convert;
+use std::time::Duration;
+use std::{convert, sync};
 use std::net::{TcpListener, TcpStream};
 use std::sync::mpsc::{Receiver, Sender};
 use std::thread;
-use std::sync::{mpsc, Arc, Mutex};
+use std::sync::{Arc, Mutex};
+use crate::p2pnetwork::NetMessage::*;
 
 /// The struct to represent statistics of a peer-to-peer network.
 pub struct P2PNetwork {
@@ -46,9 +49,9 @@ impl P2PNetwork {
     /// 5. Sender<BlockId>: write to this FIFO channel to request a block from the network.
     pub fn create(address: NetAddress, neighbors: Vec<NetAddress>) -> (
         Arc<Mutex<P2PNetwork>>,
-        Receiver<BlockNode>, 
+        Receiver<BlockNode>, //when client send to you, put this inside Sender
         Receiver<Transaction>, 
-        Sender<BlockNode>, 
+        Sender<BlockNode>, //when program send to you, use receiver to get message and broadcast
         Sender<Transaction>,
         Sender<BlockId>
     ) {
@@ -63,6 +66,7 @@ impl P2PNetwork {
         // 7. create threads to distribute received messages (send to channels or broadcast to neighbors)
         // 8. return the created P2PNetwork instance and the mpsc channels
 
+        // 1 P2P network interface
         let network = P2PNetwork {
             send_msg_count: 0,
             recv_msg_count: 0,
@@ -70,33 +74,132 @@ impl P2PNetwork {
             neighbors,
         };
 
-        let (send_block, recv_block) = mpsc::channel::<BlockNode>(); //send & receive blocks from the network
-        let (send_tx, recv_tx) = mpsc::channel::<Transaction>(); //send & receive transactions from the network
-        let (send_block_request, recv_block_request) = mpsc::channel::<BlockId>(); //request block from the network
-
+        let network_address = network.address.clone();
+        let network_neighbors = network.neighbors.clone();
         let p2p_network_mutex = Arc::new(Mutex::new(network));
 
-        let local_addr = format!("{}:{}", address.ip, address.port);
+        // 2 mpsc channel
+        let (process_block_sender, process_block_recv) = sync::mpsc::channel::<BlockNode>();
+        let (process_tx_sender, process_tx_recv) = sync::mpsc::channel::<Transaction>();
+        let (relay_block_sender, relay_block_recv) = sync::mpsc::channel::<BlockNode>();
+        let (relay_tx_sender, relay_tx_recv) = sync::mpsc::channel::<Transaction>();
+        let (req_id_sender, req_id_recv) = sync::mpsc::channel::<BlockId>();
+
+        // 3 incoming TCP connection
+        let local_addr = format!("{}:{}", network_address.ip, network_address.port);
         let listener = TcpListener::bind(local_addr).unwrap();
 
-        //step 3 here, dont really know what to implement, for loop accepts TCP connections automatically
-        std::thread::spawn(move || {
+        let lock_recv = Arc::clone(&p2p_network_mutex);
+        let _listen_handler = thread::spawn(move || {
             for stream in listener.incoming() {
+                let block_sender: Sender<BlockNode> = process_block_sender.clone();
+                let tx_sender: Sender<Transaction> = process_tx_sender.clone();
+                // let id_sender: Sender<BlockId> = req_id_sender.clone();
+
+                let lock_recv = Arc::clone(&lock_recv);
+
                 match stream {
                     Ok(stream) => {
-                    }
-                    Err(e) => {
-                        eprintln!("Error accepting incoming connection: {}", e);
-                    }
+                        // 6. create threads to listen to messages from neighbors
+                        let mut neighbor = NetChannelTCP::from_stream(stream);
+                        thread::spawn(move || {
+                            loop {
+                                let msg = neighbor.read_msg().unwrap();
+                                lock_recv.lock().unwrap().recv_msg_count += 1;
+                                match msg {
+                                    BroadcastBlock(node) => { block_sender.send(node).unwrap(); },
+                                    BroadcastTx(tx) => { tx_sender.send(tx).unwrap(); },
+                                    RequestBlock(id) => { },
+                                    Unknown(debug_msg) => { println!("{}", debug_msg); }
+                                }    
+                            }
+                        });
+                    },
+                    Err(_) => { println!("Incoming connection failed"); }
                 }
             }
         });
 
-        for neighbour in neighbors.iter() {
-            let neighbour_addr = format!("{}:{}", neighbour.ip, neighbour.port);
-            let mut stream = TcpStream::connect(neighbour_addr);
+        // 4 Create TCP connection
+        let mut outgoing_neighbors: Vec<NetChannelTCP> = vec![];
+        let mut outgoing_neighbors2: Vec<NetChannelTCP> = vec![];
 
-        }
+        // for neighbor in network_neighbors.iter() {
+        //     let neighbor_tcp_result = NetChannelTCP::from_addr(neighbor);
+        //     match neighbor_tcp_result {
+        //         Ok(mut neighbor_tcp) => {
+        //             outgoing_neighbors.push(neighbor_tcp.clone_channel());
+        //             outgoing_neighbors2.push(neighbor_tcp.clone_channel());
+        //         },
+        //         Err(_) => { println!("Error connecting to {}:{}", neighbor.ip, neighbor.port); },
+        //     }
+        // }
+
+        thread::scope(|s| {
+            s.spawn(|| {
+                for neighbor in network_neighbors.iter() {
+                    let neighbor_tcp_result = NetChannelTCP::from_addr(neighbor);
+                    match neighbor_tcp_result {
+                        Ok(mut neighbor_tcp) => {
+                            outgoing_neighbors.push(neighbor_tcp.clone_channel());
+                            outgoing_neighbors2.push(neighbor_tcp.clone_channel());
+                        },
+                        Err(_) => {
+                            println!("Retrying connection to {}:{}...", neighbor.ip, neighbor.port);
+                            continue;
+                        },
+                    }
+                }
+            });
+        });
+
+        // 7 Distribute messages
+        let lock = Arc::clone(&p2p_network_mutex);
+        thread::spawn(move || {
+            loop {
+                // recv_timeout will get an error every 10 seconds when nothing is received
+                let msg_result = relay_block_recv.recv_timeout(Duration::from_secs(10));
+                let msg: BlockNode;
+                match msg_result {
+                    Ok(node) => { msg = node; },
+                    Err(_) => { continue; },
+                }
+
+                let cloned_neighbors: Vec<NetChannelTCP> = outgoing_neighbors.iter_mut().map(|n| n.clone_channel()).collect();
+                for mut n in cloned_neighbors.into_iter() {
+                    let msg_clone = msg.clone();
+                    let lock = Arc::clone(&lock);
+                    thread::spawn(move || {
+                        lock.lock().unwrap().send_msg_count += 1;
+                        n.write_msg(NetMessage::BroadcastBlock(msg_clone));
+                    });
+                }
+            }
+        });
+
+        let lock2 = Arc::clone(&p2p_network_mutex);
+        thread::spawn(move || {
+            loop {
+                let msg_result = relay_tx_recv.recv_timeout(Duration::from_secs(10));
+                let msg: Transaction;
+                match msg_result {
+                    Ok(tx) => { msg = tx; },
+                    Err(_) => { continue; },
+                }
+
+                let cloned_neighbors: Vec<NetChannelTCP> = outgoing_neighbors2.iter_mut().map(|n| n.clone_channel()).collect();
+                for mut n in cloned_neighbors.into_iter() {
+                    let msg_clone = msg.clone();
+                    let lock2 = Arc::clone(&lock2);
+                    thread::spawn(move || {
+                        lock2.lock().unwrap().send_msg_count += 1;
+                        n.write_msg(NetMessage::BroadcastTx(msg_clone));
+                    });
+                }
+            }
+        });
+
+        (p2p_network_mutex, process_block_recv, process_tx_recv, relay_block_sender, relay_tx_sender, req_id_sender)
 
     }
 

@@ -9,11 +9,12 @@
 // You can also look at the unit tests in ./lib.rs to understand the expected behavior of the NetChannelTCP.
 
 
+use std::time::Duration;
 use std::{io::BufRead};
 use lib_chain::block::{BlockNode, Transaction, BlockId};
 use std::{hash::Hash};
 use serde::{Serialize, Deserialize};
-use std::net::{TcpStream};
+use std::net::{TcpStream, SocketAddr};
 use std::io::{Read, Write};
 use std::io::BufReader;
 
@@ -59,7 +60,8 @@ impl NetChannelTCP {
     /// Return an error string if the connection fails.
     pub fn from_addr(addr: &NetAddress) -> Result<Self,String> {
         // Please fill in the blank
-        let stream_result = TcpStream::connect(format!("{}:{}", addr.ip, addr.port));
+        let socket_addr: SocketAddr = format!("{}:{}", addr.ip, addr.port).parse().unwrap();
+        let stream_result = TcpStream::connect_timeout(&socket_addr, Duration::from_secs(60));
         match stream_result {
             Ok(stream) => {
                 let reader = BufReader::new(stream.try_clone().unwrap());
@@ -82,7 +84,6 @@ impl NetChannelTCP {
     /// This is useful if you have multiple threads dealing with reading and writing to the TCP channel.
     pub fn clone_channel(&mut self) -> Self {
         // Please fill in the blank
-        // REQUIRE TESTING
         let stream = self.stream.try_clone().unwrap();
         let reader = BufReader::new(stream.try_clone().unwrap());
         Self{stream, reader}
@@ -93,7 +94,6 @@ impl NetChannelTCP {
     /// Otherwise, parse the line as a NetMessage and return it.
     pub fn read_msg(&mut self) -> Option<NetMessage> {
         // Please fill in the blank
-        // REQUIRE TESTING
         let mut msg = String::new();
         self.reader.read_line(&mut msg).unwrap();
 
@@ -104,7 +104,8 @@ impl NetChannelTCP {
     /// The message is serialized to a one-line JSON string and a newline is appended in the end.
     pub fn write_msg(&mut self, msg: NetMessage) -> () {
         // Please fill in the blank
-        self.stream.write(serde_json::to_string(&msg).unwrap().as_bytes()).unwrap();
+        let string = format!("{}\n", serde_json::to_string(&msg).unwrap());
+        self.stream.write(string.as_bytes()).unwrap();
         self.stream.flush().unwrap();
     }
 }

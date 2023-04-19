@@ -23,7 +23,7 @@ mod tests {
     /// Test the NetChannelTCP by creating a fake node that echo messages and connecting to it.
     #[test]
     fn test_net_channel() {
-        let fake_node1 = TcpListener::bind("127.0.0.1:9014").unwrap();
+        let fake_node1 = TcpListener::bind("0.0.0.0:9014").unwrap();
         let _fake_node1_handle = thread::spawn(move || {
             for stream in fake_node1.incoming() {
                 println!("--- fake_node1 INCOMING STREAM ---");
@@ -42,8 +42,14 @@ mod tests {
                 }
             }
         });
-        let mut net_channel = NetChannelTCP::from_addr(&NetAddress { ip: "127.0.0.1".to_owned(), port: 9014 }).unwrap();
+        let net_channel_result = NetChannelTCP::from_addr(&NetAddress { ip: "127.0.0.1".to_owned(), port: 9014 });
+        let mut net_channel;
+        match net_channel_result {
+            Ok(nc) => { net_channel = nc },
+            Err(_) => { panic!("test") },
+        }
         net_channel.write_msg(NetMessage::Unknown("hello".to_owned()));
+        
         let msg = net_channel.read_msg().unwrap();
         println!("[Main thread] [Received] {:?}", &msg);
         assert!(msg == NetMessage::Unknown("hello".to_owned()));
