@@ -150,7 +150,8 @@ impl Nakamoto {
     pub fn publish_tx(&mut self, transaction: Transaction) -> () {
         // Please fill in the blank
         // Add the transaction to the transaction pool and send it to the broadcast channel
-        
+        self.tx_pool_p.lock().unwrap().add_tx(transaction);
+        self.trans_tx.send(transaction);
     }
 
     /// Get the serialized chain as a json string. 
