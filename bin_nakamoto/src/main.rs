@@ -117,7 +117,7 @@ fn main() {
     println!("StartCheck!!");
     let mut raw_data = String::new();
     let mut looptheinput : bool = true;
-    let nakamoto_node : Nakamoto;
+    let mut nakamoto_node : Nakamoto;
 
     //Initialise
     io::stdin().read_line(&mut raw_data).expect("wtf");
@@ -160,8 +160,9 @@ fn main() {
                 let user_balance = nakamoto_node.get_balance(user_id);
                 println!("{}", serde_json::to_string(&IPCMessageResp::AddressBalance(user_id, user_balance)).unwrap());
             }
-            IPCMessageReq::PublishTx(data, signature) => {
-                // ???
+            IPCMessageReq::PublishTx(data, info) => {
+                let transaction : Transaction = serde_json::from_str(info.as_str()).unwrap();
+                nakamoto_node.publish_tx(transaction);
                 println!("{}", serde_json::to_string(&IPCMessageResp::PublishTxDone).unwrap());
             }
             IPCMessageReq::RequestBlock(block_id) => {
