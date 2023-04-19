@@ -101,29 +101,56 @@ impl Nakamoto {
         // Start necessary threads that read from and write to FIFO channels provided by the network.
         // Start necessary thread(s) to control the miner.
         // Return the Nakamoto instance that holds pointers to the chain, the miner, the network and the tx pool.
-        let user_Chain : BlockTree = serde_json::from_str(&chain_str.as_str()).unwrap();
-        let user_TxPool : TxPool = serde_json::from_str(&tx_pool_str.as_str()).unwrap();
-        let user_Config : NetAddress = serde_json::from_str(&config_str.as_str()).unwrap(); 
-        let user_Miner : Miner = Miner::new();
-        let (
-            network_p,
-            upd_block_in_rx, //Unused
-            upd_trans_in_rx, //Unused
-            block_out_tx, //Unused
-            trans_tx,
-            req_block_id_out_tx, //Unused
-        ) = P2PNetwork::create(user_Config, vec![]);
-        let chain_p = Arc::new(Mutex::new(user_Chain));
-        let miner_p = Arc::new(Mutex::new(user_Miner)); 
-        let tx_pool_p  = Arc::new(Mutex::new(user_TxPool)); 
+        let user_config : Config = serde_json::from_str(&config_str.as_str()).unwrap(); 
+        let user_chain : BlockTree = serde_json::from_str(&chain_str.as_str()).unwrap();
+        let user_txPool : TxPool = serde_json::from_str(&tx_pool_str.as_str()).unwrap();
+        let user_miner : Miner = Miner { 
+            thread_count: user_config.miner_thread_count,
+            leading_zero_len: user_config.difficulty_leading_zero_len,
+            is_running: false 
+        };
+        let (network_p, block_rx, trans_rx, block_tx, trans_tx, blockid_tx)
+             = P2PNetwork::create(user_config.addr, user_config.neighbors);
 
-        Nakamoto {
-            chain_p,
-            miner_p,
-            tx_pool_p,
-            network_p,
-            trans_tx,
-        }
+        let chain_p = Arc::new(Mutex::new(user_chain));
+        let miner_p = Arc::new(Mutex::new(user_miner)); 
+        let tx_pool_p  = Arc::new(Mutex::new(user_txPool));
+
+        let nakamoto = Nakamoto { chain_p, miner_p, network_p, tx_pool_p, trans_tx };
+
+        thread::spawn(move || {
+            loop {
+                let block_result = block_rx.recv();
+                match block_result {
+                    Ok(block) => { 
+                        chain_p.lock().unwrap().add_block(block, user_config.difficulty_leading_zero_len);
+                        let pending_txs = chain_p.lock().unwrap().get_pending_finalization_txs();
+                        tx_pool_p.lock().unwrap().filter_tx(user_config.max_tx_in_one_block, &pending_txs);
+                    },
+                    Err(_) => { continue; },
+                }
+            }
+        });
+
+        thread::spawn(move || {
+            loop {
+                let tx_result = trans_rx.recv();
+                match tx_result {
+                    Ok(tx) => {
+                        let is_added: bool = tx_pool_p.lock().unwrap().add_tx(tx);
+                        if is_added {
+                            Self::publish_tx(&mut nakamoto, tx);
+                            trans_tx.send(tx);
+                        }
+                    }
+                    Err(_) => { continue; }
+                }
+            }
+        });
+
+        // need thread to control miner
+
+        nakamoto
     }
 
     /// Get the status of the network as a dictionary of strings. For debugging purpose.
