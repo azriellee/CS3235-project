@@ -54,8 +54,6 @@ fn create_puzzle(chain_p: Arc<Mutex<BlockTree>>, tx_pool_p: Arc<Mutex<TxPool>>, 
     // Filter transactions from tx_pool and get the last node of the longest chain.
     // tx_count corresponds to max_count of filter_txs in TxPool
 
-    let tx_pool = tx_pool_p.lock().unwrap();
-    let block_chain = chain_p.lock().unwrap();
     let mut unfinalised_tx: Vec<Transaction>;
 
     // Loop for every 0.5secs to see if there is any new transaction
@@ -63,19 +61,19 @@ fn create_puzzle(chain_p: Arc<Mutex<BlockTree>>, tx_pool_p: Arc<Mutex<TxPool>>, 
         let mut excluding_tx: Vec<Transaction> = Vec::new();
         
         // Get blocks that are already finalised 
-        for tx_id in block_chain.finalized_tx_ids.iter() {
-            let tx = tx_pool.pool_tx_map[tx_id].clone();
+        for tx_id in chain_p.lock().unwrap().finalized_tx_ids.iter() {
+            let tx = tx_pool_p.lock().unwrap().pool_tx_map[tx_id].clone();
             excluding_tx.push(tx);
         }
 
         // Get blocks that are already removed from the pool
-        for tx_id in tx_pool.removed_tx_ids.iter() {
-            let tx = tx_pool.pool_tx_map[tx_id].clone();
+        for tx_id in tx_pool_p.lock().unwrap().removed_tx_ids.iter() {
+            let tx = tx_pool_p.lock().unwrap().pool_tx_map[tx_id].clone();
             excluding_tx.push(tx);
         }
 
         // Get the transactions that are not included in finalised blocks or are already removed in tx_pool
-        unfinalised_tx = tx_pool.filter_tx(tx_count, &excluding_tx);
+        unfinalised_tx = tx_pool_p.lock().unwrap().filter_tx(tx_count, &excluding_tx);
 
         if unfinalised_tx.len() > 0 {
             break;
@@ -91,7 +89,7 @@ fn create_puzzle(chain_p: Arc<Mutex<BlockTree>>, tx_pool_p: Arc<Mutex<TxPool>>, 
         transactions: unfinalised_tx.clone(),
     };
     let new_blocknode_header = BlockNodeHeader {
-        parent: block_chain.working_block_id.to_string(),
+        parent: chain_p.lock().unwrap().working_block_id.to_string(),
         merkle_root: merkle_root.to_string(),
         timestamp: SystemTime::now().duration_since(UNIX_EPOCH).unwrap().as_secs(),
         block_id: String::new(),
@@ -105,7 +103,7 @@ fn create_puzzle(chain_p: Arc<Mutex<BlockTree>>, tx_pool_p: Arc<Mutex<TxPool>>, 
     
     // Create the puzzle
     let new_puzzle = Puzzle {
-        parent: block_chain.working_block_id.to_string(),
+        parent: chain_p.lock().unwrap().working_block_id.to_string(),
         merkle_root: merkle_root.to_string(),
         reward_receiver: reward_receiver.to_string(),
     };

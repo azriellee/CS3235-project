@@ -127,8 +127,8 @@ fn main() {
         _ => return, //Terminate if first thing is not an IPCMessageReq::Initialize(x,y,z);
     }
     
-    let mut has_exit : bool = true;
-    while has_exit {
+    let mut is_running : bool = true;
+    while is_running {
         // println!("Reading In Progress...");
         raw_data = "".to_string();
         io::stdin().read_line(&mut raw_data).expect("wtf"); //need handle err here
@@ -160,7 +160,7 @@ fn main() {
             }
             IPCMessageReq::PublishTx(data, sig) => {
                 let tx_info: Vec<String> = serde_json::from_str(&data).unwrap();
-                let tx_sig: String = serde_json::from_str(&sig).unwrap();
+                let tx_sig: String = sig;
 
                 let transaction = Transaction {
                     sender: tx_info[0].to_string(),
@@ -185,7 +185,7 @@ fn main() {
                 println!("{}", serde_json::to_string(&IPCMessageResp::StateSerialization(chain_info, txpool_info)).unwrap());
             }
             IPCMessageReq::Quit => {
-                has_exit = false;
+                is_running = false;
                 println!("{}", serde_json::to_string(&IPCMessageResp::Quitting).unwrap());
             }
             _ => {
