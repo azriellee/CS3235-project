@@ -86,7 +86,7 @@ impl TxPool {
     /// - `max_count`: the maximum number of transactions to be returned
     /// - `excluding_txs`: a list of transactions that should not be included in the returned list. 
     ///                    It is used to filter out those transactions on the longest chain but hasn't been finalized yet.
-    pub fn filter_tx(&self, max_count: u16, excluding_txs: & Vec<Transaction>) -> Vec<Transaction> {
+    pub fn filter_tx(&self, max_count: u16, excluding_txs: &Vec<Transaction>) -> Vec<Transaction> {
         // Please fill in the blank
         let mut tx_list: Vec<Transaction> = Vec::new();
         let mut txid_to_exclude: HashSet<TxId> = HashSet::new();

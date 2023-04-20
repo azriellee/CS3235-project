@@ -347,6 +347,8 @@ impl BlockTree {
         if &depth > self.block_depth.get(&self.working_block_id).unwrap() {
             self.working_block_id = block.header.block_id.to_string();
 
+            // TODO: If two paths have the same length, here we consider the one whose last block has the larger hash number as the longest path.
+
             // if depth > 6, update the finalized info using the last block
             if depth > 6 {
                 self.finalized_block_id = last_block.header.block_id.clone().to_string();
@@ -385,7 +387,7 @@ impl BlockTree {
     /// If it is not the case, the function will panic (i.e. we do not consider inconsistent block tree caused by attacks in this project)
     pub fn get_finalized_blocks_since(&self, since_block_id: BlockId) -> Vec<BlockNode> {
         // Please fill in the blank
-        if (!self.finalized_block_id.contains(&since_block_id)) {
+        if !self.finalized_block_id.contains(&since_block_id) {
             panic!("we do not consider inconsistent block tree caused by attacks in this project");
         }
 

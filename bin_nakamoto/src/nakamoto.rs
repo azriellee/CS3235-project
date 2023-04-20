@@ -6,17 +6,18 @@
 // The Nakamoto leverages lib_chain, lib_miner, lib_tx_pool and lib_network to implement the Nakamoto consensus algorithm.
 // You can see detailed instructions in the comments below.
 
+use core::time;
 use std::sync::mpsc::Sender;
 use std::{thread, time::Duration};
 use std::sync::{Arc, Mutex, RwLock};
 use serde::{Deserialize, Serialize};
-use lib_chain::block::{BlockTree, Puzzle, Transactions, MerkleTree, BlockNode, BlockNodeHeader, Transaction, BlockId};
+use lib_chain::block::{BlockTree, Puzzle, Transactions, MerkleTree, BlockNode, BlockNodeHeader, Transaction, BlockId, TxId};
 use lib_miner::miner::{Miner, PuzzleSolution};
 use lib_tx_pool::pool::TxPool;
 use lib_network::p2pnetwork::{P2PNetwork};
 use lib_network::netchannel::{NetAddress};
 use std::collections::{HashMap, BTreeMap};
-use sha2::{Sha256, Digest}; //might remove if they say donnid check the correctness of a solution found by another node
+use std::time::{SystemTime, UNIX_EPOCH};
 
 type UserId = String;
 
@@ -53,57 +54,71 @@ fn create_puzzle(chain_p: Arc<Mutex<BlockTree>>, tx_pool_p: Arc<Mutex<TxPool>>, 
     // Filter transactions from tx_pool and get the last node of the longest chain.
     // tx_count corresponds to max_count of filter_txs in TxPool
 
-    // hi @chuawei i need help with the blocks stuff
-    // 1. I think must delete the tx from tx_pool that is already in finalised blocks, but not sure how to get finalised blocks from chain_p.
-    // after that can just use the "remove_txs_from_finalized_blocks" function in tx_pool
-    // 2. Not very sure how to get the last node of the longest chain also
-
     let tx_pool = tx_pool_p.lock().unwrap();
     let block_chain = chain_p.lock().unwrap();
-    let mut excluding_tx = Vec::new();
-    let node_of_longest_chain: BlockId; //need help initialising this
-    for tx_id in block_chain.finalized_tx_ids.iter() {
-        let tx = tx_pool.pool_tx_map[tx_id];
-        excluding_tx.push(tx);
+    let mut unfinalised_tx: Vec<Transaction>;
+
+    // Loop for every 0.5secs to see if there is any new transaction
+    loop {
+        let mut excluding_tx: Vec<Transaction> = Vec::new();
+        
+        // Get blocks that are already finalised 
+        for tx_id in block_chain.finalized_tx_ids.iter() {
+            let tx = tx_pool.pool_tx_map[tx_id].clone();
+            excluding_tx.push(tx);
+        }
+
+        // Get blocks that are already removed from the pool
+        for tx_id in tx_pool.removed_tx_ids.iter() {
+            let tx = tx_pool.pool_tx_map[tx_id].clone();
+            excluding_tx.push(tx);
+        }
+
+        // Get the transactions that are not included in finalised blocks or are already removed in tx_pool
+        unfinalised_tx = tx_pool.filter_tx(tx_count, &excluding_tx);
+
+        if unfinalised_tx.len() > 0 {
+            break;
+        } else {
+            thread::sleep(time::Duration::from_millis(500));
+        }
     }
-    for tx_id in tx_pool.removed_tx_ids.iter() {
-        let tx = tx_pool.pool_tx_map[tx_id];
-        excluding_tx.push(tx);
-    }
-    let unfinalised_tx = tx_pool.filter_tx(tx_count, &excluding_tx);
-    let (merkle_root, merkle_tree) = MerkleTree::create_merkle_tree(unfinalised_tx);
-    // build the puzzle
-    let puzzle = Puzzle {
-        // Please fill in the blank
-        // Create a puzzle with the block_id of the parent node and the merkle root of the transactions.
-        parent: node_of_longest_chain,
-        merkle_root,
-        reward_receiver,
-    };
-    let puzzle_str = serde_json::to_string(&puzzle).unwrap().to_owned();
 
-    // Please fill in the blank
-    // Create a block node with the transactions and the merkle root.
-    // Leave the nonce and the block_id empty (to be filled after solving the puzzle).
-    // The timestamp can be set to any positive interger.
-    // In the end, it returns  (puzzle_str, pre_block);
-
-    let pre_block_header: BlockNodeHeader; //need help initilaising this
-    let pre_block_transactions: Transactions = Transactions { 
-        merkle_tree, 
-        transactions: excluding_tx, 
+    // Create the blocknode
+    let (merkle_root, merkle_tree) = MerkleTree::create_merkle_tree(unfinalised_tx.clone());
+    let new_transactions = Transactions {
+        merkle_tree,
+        transactions: unfinalised_tx.clone(),
     };
-    let pre_block: BlockNode = BlockNode {
-        header: pre_block_header,
-        transactions_block: pre_block_transactions,
+    let new_blocknode_header = BlockNodeHeader {
+        parent: block_chain.working_block_id.to_string(),
+        merkle_root: merkle_root.to_string(),
+        timestamp: SystemTime::now().duration_since(UNIX_EPOCH).unwrap().as_secs(),
+        block_id: String::new(),
+        nonce: String::new(),
+        reward_receiver: reward_receiver.to_string(),
     };
+    let new_blocknode = BlockNode {
+        header: new_blocknode_header,
+        transactions_block: new_transactions,
+    };
+    
+    // Create the puzzle
+    let new_puzzle = Puzzle {
+        parent: block_chain.working_block_id.to_string(),
+        merkle_root: merkle_root.to_string(),
+        reward_receiver: reward_receiver.to_string(),
+    };
+    let new_puzzle_json = serde_json::to_string(&new_puzzle).unwrap();
 
-    (puzzle_str, pre_block)
+    (new_puzzle_json, new_blocknode)
+
 }
 
 /// The struct to represent the Nakamoto instance.
 /// The Nakamoto instance contains the chain, the miner, the network and the tx pool as smart pointers.
 /// It also contains a FIFO channel for sending transactions to the Blockchain
+#[derive(Clone)] 
 pub struct Nakamoto {
     /// the chain (BlockTree)
     pub chain_p: Arc<Mutex<BlockTree>>,
@@ -135,20 +150,6 @@ impl Nakamoto {
         // Start necessary thread(s) to control the miner.
         // Return the Nakamoto instance that holds pointers to the chain, the miner, the network and the tx pool.
 
-        //verify solution that is found by another node
-        fn verify_solution(block: BlockNode, puzzle: String, difficulty: u16) -> bool {
-            let solution = block.header.nonce;
-            let combined_string = format!({}{},solution, puzzle);
-            let mut hasher = Sha256::new();
-            hasher.update(combined_string.as_bytes());
-            let result = hasher.finalize();
-            let hex_string = result.iter().map(|b| format!("{:02x}", b)).collect::<String>();
-            if(hex_string.starts_with(&"0".repeat(difficulty as usize))) {
-                return true;
-            }
-            return false;
-        }
-
         let user_config : Config = serde_json::from_str(&config_str.as_str()).unwrap(); 
         let user_chain : BlockTree = serde_json::from_str(&chain_str.as_str()).unwrap();
         let user_txPool : TxPool = serde_json::from_str(&tx_pool_str.as_str()).unwrap();
@@ -166,50 +167,72 @@ impl Nakamoto {
         let tx_pool_p  = Arc::new(Mutex::new(user_txPool));
 
         let nakamoto = Nakamoto { chain_p, miner_p, network_p, tx_pool_p, trans_tx };
-        let (puzzle, block) = create_puzzle(chain_p, tx_pool_p, user_config.max_tx_in_one_block, user_config.mining_reward_receiver);
 
-        //when receive a block, check if the solution found by another node satisfies the solution?
+        let chain_p_block = Arc::clone(&nakamoto.chain_p);
+        let tx_pool_p_block = Arc::clone(&nakamoto.tx_pool_p);
+        let block_tx_block = block_tx.clone();
+        // when receiving a block
         thread::spawn(move || {
             loop {
-                let block_result = block_rx.recv();
-                let cancellation_token_clone = cancellation_token.clone();
+                // recv_timeout will get an error every 10 seconds when nothing is received
+                let block_result = block_rx.recv_timeout(Duration::from_secs(10));
+                
                 match block_result {
                     Ok(block) => { 
-                        chain_p.lock().unwrap().add_block(block, user_config.difficulty_leading_zero_len);
-                        block_tx.send(block);
-                        let pending_txs = chain_p.lock().unwrap().get_pending_finalization_txs();
-                        tx_pool_p.lock().unwrap().filter_tx(user_config.max_tx_in_one_block, &pending_txs);
-                        *cancellation_token_clone.write().unwrap() = verify_solution(block, puzzle, user_config.difficulty_leading_zero_len_acc);
+                        // if the block already exists in our block tree, do not broadcast?
+                        let has_block_result = chain_p_block.lock().unwrap().get_block(block.header.block_id.to_string());
+                        match has_block_result {
+                            Some(_) => {},
+                            None => { continue; },
+                        }
+
+                        // get the last finalized block for removing finalized transactions
+                        let last_finalized_block_id = &chain_p_block.lock().unwrap().finalized_block_id;
+                        
+                        // add block to the blocktree, broadcasts block
+                        chain_p_block.lock().unwrap().add_block(block.clone(), user_config.difficulty_leading_zero_len);
+                        block_tx_block.send(block.clone());
+                        
+                        // Do I need to remove transactions (belonging to finalised block) on tx_pool? yes
+                        let newly_finalized_blocks = chain_p_block.lock().unwrap().get_finalized_blocks_since(last_finalized_block_id.to_string());
+                        tx_pool_p_block.lock().unwrap().remove_txs_from_finalized_blocks(&newly_finalized_blocks);
                     },
                     Err(_) => { continue; },
                 }
             }
         });
 
+        let mut nakamoto_clone = nakamoto.clone();
+        // when receiving a transaction
         thread::spawn(move || {
             loop {
-                let tx_result = trans_rx.recv();
+                // recv_timeout will get an error every 10 seconds when nothing is received
+                let tx_result = trans_rx.recv_timeout(Duration::from_secs(10));
                 match tx_result {
                     Ok(tx) => {
-                        let is_added: bool = tx_pool_p.lock().unwrap().add_tx(tx);
-                        if is_added {
-                            Self::publish_tx(&mut nakamoto, tx);
-                            trans_tx.send(tx);
-                        }
+                        // if the transaction already exists in our tx_pool, do not broadcast?
+                        nakamoto_clone.publish_tx(tx);
                     }
                     Err(_) => { continue; }
                 }
             }
         });
 
-        // need thread to control miner
+        let miner_p_puzzle = Arc::clone(&nakamoto.miner_p);
+        let chain_p_puzzle = Arc::clone(&nakamoto.chain_p);
+        let tx_pool_p_puzzle = Arc::clone(&nakamoto.tx_pool_p);
+        let block_tx_puzzle = block_tx.clone();
 
-        let miner_thread = thread::spawn(move || {
+        // create a miner to solve puzzle
+        let _miner_thread = thread::spawn(move || {
             loop {
+                // constantly creates a puzzle from tx pool
+                let (puzzle_json, mut block) = create_puzzle(chain_p_puzzle.clone(), tx_pool_p_puzzle.clone(), user_config.max_tx_in_one_block, user_config.mining_reward_receiver.to_string());
+
                 let cancellation_token_clone = cancellation_token.clone();
                 let solution = Miner::solve_puzzle(
-                    miner_p, 
-                    puzzle, 
+                    miner_p_puzzle.clone(), 
+                    puzzle_json.to_string(), 
                     user_config.nonce_len, 
                     user_config.difficulty_leading_zero_len, 
                     user_config.miner_thread_count, 
@@ -218,15 +241,17 @@ impl Nakamoto {
                 );
                 match solution {
                     Some(PuzzleSolution { puzzle, nonce, hash }) => {
+                        //solution found, update the block and broadcast
                         println!("Solution Found! HASH: {}\nNONCE: {}\nPUZZLE: {}", hash, nonce, puzzle);
-                    }, //solution found
+
+                        block.header.block_id = hash;
+                        block.header.nonce = nonce;
+                        block_tx_puzzle.send(block).unwrap();
+                    },
                     None => {println!("Solution found by another miner");}
                 };
                 *cancellation_token_clone.write().unwrap() = false; //set cancellation token back to false to solve next puzzle
-                (puzzle, block) = create_puzzle(chain_p, tx_pool_p, user_config.max_tx_in_one_block, user_config.mining_reward_receiver);
-                //above is to create a new puzzle once a solution is found
             }
-
         });
 
         nakamoto
@@ -256,8 +281,10 @@ impl Nakamoto {
     pub fn publish_tx(&mut self, transaction: Transaction) -> () {
         // Please fill in the blank
         // Add the transaction to the transaction pool and send it to the broadcast channel
-        self.tx_pool_p.lock().unwrap().add_tx(transaction);
-        self.trans_tx.send(transaction);
+        let is_added = self.tx_pool_p.lock().unwrap().add_tx(transaction.clone());
+        if is_added {
+            self.trans_tx.send(transaction);
+        }
     }
 
     /// Get the serialized chain as a json string. 
@@ -270,17 +297,6 @@ impl Nakamoto {
     pub fn get_serialized_txpool(&self) -> String {
         let tx_pool = self.tx_pool_p.lock().unwrap().clone();
         serde_json::to_string_pretty(&tx_pool).unwrap()
-    }
-
-    //Past this point are functions I made myself. Correctness now sits on the fence.
-
-    pub fn get_block(&self, address : String) -> String {
-        let the_block = self.chain_p.lock().unwrap().clone().get_block(address).unwrap();
-        serde_json::to_string_pretty(&the_block).unwrap()
-    }
-
-    pub fn get_balance(&self, address : String) -> i64 {
-        return self.chain_p.lock().unwrap().clone().get_balance(address);
     }
 }
 

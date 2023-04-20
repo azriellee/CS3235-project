@@ -124,34 +124,26 @@ impl P2PNetwork {
         let mut outgoing_neighbors: Vec<NetChannelTCP> = vec![];
         let mut outgoing_neighbors2: Vec<NetChannelTCP> = vec![];
 
-        // for neighbor in network_neighbors.iter() {
-        //     let neighbor_tcp_result = NetChannelTCP::from_addr(neighbor);
-        //     match neighbor_tcp_result {
-        //         Ok(mut neighbor_tcp) => {
-        //             outgoing_neighbors.push(neighbor_tcp.clone_channel());
-        //             outgoing_neighbors2.push(neighbor_tcp.clone_channel());
-        //         },
-        //         Err(_) => { println!("Error connecting to {}:{}", neighbor.ip, neighbor.port); },
-        //     }
-        // }
-
-        thread::scope(|s| {
-            s.spawn(|| {
-                for neighbor in network_neighbors.iter() {
-                    let neighbor_tcp_result = NetChannelTCP::from_addr(neighbor);
-                    match neighbor_tcp_result {
-                        Ok(mut neighbor_tcp) => {
-                            outgoing_neighbors.push(neighbor_tcp.clone_channel());
-                            outgoing_neighbors2.push(neighbor_tcp.clone_channel());
-                        },
-                        Err(_) => {
-                            println!("Retrying connection to {}:{}...", neighbor.ip, neighbor.port);
-                            continue;
-                        },
+        for neighbor in network_neighbors.iter() {
+            thread::scope(|s| {
+                s.spawn(|| {
+                    loop {
+                        let neighbor_tcp_result = NetChannelTCP::from_addr(neighbor);
+                        match neighbor_tcp_result {
+                            Ok(mut neighbor_tcp) => {
+                                outgoing_neighbors.push(neighbor_tcp.clone_channel());
+                                outgoing_neighbors2.push(neighbor_tcp.clone_channel());
+                                break;
+                            },
+                            Err(_) => {
+                                println!("Retrying connection to {}:{}...", neighbor.ip, neighbor.port);
+                                continue;
+                            },
+                        }
                     }
-                }
+                });
             });
-        });
+        }
 
         // 7 Distribute messages
         let lock = Arc::clone(&p2p_network_mutex);
@@ -165,6 +157,7 @@ impl P2PNetwork {
                     Err(_) => { continue; },
                 }
 
+                // 5 create threads for each TCP connection to send messages
                 let cloned_neighbors: Vec<NetChannelTCP> = outgoing_neighbors.iter_mut().map(|n| n.clone_channel()).collect();
                 for mut n in cloned_neighbors.into_iter() {
                     let msg_clone = msg.clone();
@@ -180,6 +173,7 @@ impl P2PNetwork {
         let lock2 = Arc::clone(&p2p_network_mutex);
         thread::spawn(move || {
             loop {
+                // recv_timeout will get an error every 10 seconds when nothing is received
                 let msg_result = relay_tx_recv.recv_timeout(Duration::from_secs(10));
                 let msg: Transaction;
                 match msg_result {
@@ -187,6 +181,7 @@ impl P2PNetwork {
                     Err(_) => { continue; },
                 }
 
+                // 5 create threads for each TCP connection to send messages
                 let cloned_neighbors: Vec<NetChannelTCP> = outgoing_neighbors2.iter_mut().map(|n| n.clone_channel()).collect();
                 for mut n in cloned_neighbors.into_iter() {
                     let msg_clone = msg.clone();
@@ -199,6 +194,7 @@ impl P2PNetwork {
             }
         });
 
+        // 8 return
         (p2p_network_mutex, process_block_recv, process_tx_recv, relay_block_sender, relay_tx_sender, req_id_sender)
 
     }
