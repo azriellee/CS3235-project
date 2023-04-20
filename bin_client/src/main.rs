@@ -238,7 +238,7 @@ fn main() {
     // - You should request for status update from bin_nakamoto periodically (every 500ms at least) to update the App (UI struct) accordingly.
     // - You can also create threads to read from stderr of bin_nakamoto/bin_wallet and add those lines to the UI (app.stderr_log) for easier debugging.
     
-
+    
 
     // UI thread. Modify it to suit your needs. 
     let app_ui_ref = app_arc.clone();

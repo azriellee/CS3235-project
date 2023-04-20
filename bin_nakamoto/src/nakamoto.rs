@@ -190,7 +190,15 @@ impl Nakamoto {
                         let last_finalized_block_id = &chain_p_block.lock().unwrap().finalized_block_id;
                         
                         // add block to the blocktree, broadcasts block
-                        chain_p_block.lock().unwrap().add_block(block.clone(), user_config.difficulty_leading_zero_len);
+                        let mut bt = chain_p.lock().unwrap();
+                        let initial_working_block = bt.working_block_id;
+                        bt.add_block(block.clone(), user_config.difficulty_leading_zero_len);
+                        let cur_working_block = bt.working_block_id;
+                        if(initial_working_block != cur_working_block) {
+                            let cancellation_token_clone = cancellation_token.clone();
+                            *cancellation_token_clone.write().unwrap() = true;
+                        }
+
                         block_tx_block.send(block.clone());
                         
                         // Do I need to remove transactions (belonging to finalised block) on tx_pool? yes
@@ -233,7 +241,6 @@ impl Nakamoto {
             loop {
                 // constantly creates a puzzle from tx pool
                 let (puzzle_json, mut block) = create_puzzle(chain_p_puzzle.clone(), tx_pool_p_puzzle.clone(), user_config.max_tx_in_one_block, user_config.mining_reward_receiver.to_string());
-
                 let cancellation_token_clone = cancellation_token.clone();
                 let solution = Miner::solve_puzzle(
                     miner_p_puzzle.clone(), 
