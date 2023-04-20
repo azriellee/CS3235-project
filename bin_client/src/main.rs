@@ -221,8 +221,8 @@ fn main() {
         user_name.clone(), 
         user_id.clone(), 
         "".to_string(), 
-        format!("SEND $100   // By {}", user_name))));
-
+        format!("SEND $100   // By {}", user_name)))
+    );
 
     // An enclosure func to generate signing requests when creating new transactions. 
     let create_sign_req = |sender: String, receiver: String, message: String| {
@@ -272,9 +272,10 @@ fn main() {
     // - You should request for status update from bin_nakamoto periodically (every 500ms at least) to update the App (UI struct) accordingly.
     // - You can also create threads to read from stderr of bin_nakamoto/bin_wallet and add those lines to the UI (app.stderr_log) for easier debugging.
     
+    
+    
     let bin_wallet_stdin_p = Arc::new(Mutex::new(wallet_child_stdin));
     let nakamoto_stdin_p = Arc::new(Mutex::new(nakamoto_child_stdin));
-        
 
     // UI thread. Modify it to suit your needs. 
     let app_ui_ref = app_arc.clone();
