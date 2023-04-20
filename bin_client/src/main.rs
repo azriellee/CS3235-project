@@ -265,15 +265,52 @@ fn main() {
             }
         });
     }
-
-
     // Please fill in the blank
     // - Spawn threads to read/write from/to bin_nakamoto/bin_wallet. (Through their piped stdin and stdout)
     // - You should request for status update from bin_nakamoto periodically (every 500ms at least) to update the App (UI struct) accordingly.
     // - You can also create threads to read from stderr of bin_nakamoto/bin_wallet and add those lines to the UI (app.stderr_log) for easier debugging.
     
-    
-    
+    //status update from bin_nakamoto
+    // wanted to spawn different threads for each update, however i was thinking that if i use the same stream, there might be a chance for data race? but i lazy create 4 diff streams for all lol
+    // e.g. my blocktree status accidentallyy updated with my network status? not sure if my understanding is right tho
+    let status_reader = BufReader::new(nakamoto_child_stdout);
+    thread::spawn(move || {
+        let tick_rate = Duration::from_millis(500);
+        loop {
+            //chain status update
+            let chain_status_req = serde_json::to_string(&IPCMessageReqNakamoto::RequestChainStatus).unwrap();
+            nakamoto_writer.write_all(chain_status_req.as_bytes());
+            let mut chain_status_reply = String::new();
+            status_reader.read_line(&mut chain_status_reply).expect("nakamoto data failed");
+            let parsed_reply = serde_json::from_str(chain_status_reply.as_str()).unwrap();
+            app_arc.lock().unwrap().blocktree_status = parsed_reply;
+
+            //network status update
+            let network_status_req = serde_json::to_string(&IPCMessageReqNakamoto::RequestNetStatus).unwrap();
+            nakamoto_writer.write_all(network_status_req.as_bytes());
+            let mut network_status_reply = String::new();
+            status_reader.read_line(&mut network_status_reply).expect("nakamoto data failed");
+            let parsed_reply = serde_json::from_str(network_status_reply.as_str()).unwrap();
+            app_arc.lock().unwrap().network_status = parsed_reply;
+
+            //miner status update
+            let miner_status_req = serde_json::to_string(&IPCMessageReqNakamoto::RequestMinerStatus).unwrap();
+            nakamoto_writer.write_all(miner_status_req.as_bytes());
+            let mut miner_status_reply = String::new();
+            status_reader.read_line(&mut miner_status_reply).expect("nakamoto data failed");
+            let parsed_reply = serde_json::from_str(miner_status_reply.as_str()).unwrap();
+            app_arc.lock().unwrap().miner_status = parsed_reply;
+
+            //tx pool status update
+            let txpool_status_req = serde_json::to_string(&IPCMessageReqNakamoto::RequestTxPoolStatus).unwrap();
+            nakamoto_writer.write_all(txpool_status_req.as_bytes());
+            let mut txpool_status_reply = String::new();
+            status_reader.read_line(&mut txpool_status_reply).expect("nakamoto data failed");
+            let parsed_reply = serde_json::from_str(txpool_status_reply.as_str()).unwrap();
+            app_arc.lock().unwrap().txpool_status = parsed_reply;
+        }
+    });
+
     let bin_wallet_stdin_p = Arc::new(Mutex::new(wallet_child_stdin));
     let nakamoto_stdin_p = Arc::new(Mutex::new(nakamoto_child_stdin));
 

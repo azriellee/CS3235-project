@@ -98,6 +98,7 @@ fn create_puzzle(chain_p: Arc<Mutex<BlockTree>>, tx_pool_p: Arc<Mutex<TxPool>>, 
         nonce: String::new(),
         reward_receiver: reward_receiver.to_string(),
     };
+  
     let new_blocknode = BlockNode {
         header: new_blocknode_header,
         transactions_block: new_transactions,
@@ -110,7 +111,6 @@ fn create_puzzle(chain_p: Arc<Mutex<BlockTree>>, tx_pool_p: Arc<Mutex<TxPool>>, 
         reward_receiver: reward_receiver.to_string(),
     };
     let new_puzzle_json = serde_json::to_string(&new_puzzle).unwrap();
-
     (new_puzzle_json, new_blocknode)
 
 }
@@ -198,6 +198,7 @@ impl Nakamoto {
                         if initial_working_block != cur_working_block {
                             *cancellation_token_clone.write().unwrap() = true;
                         }
+                        drop(bt);
                         block_tx_block.send(block.clone()).unwrap(); //possible err?
                         
                         // Do I need to remove transactions (belonging to finalised block) on tx_pool? yes
