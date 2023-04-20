@@ -125,40 +125,73 @@ fn main() {
     //                         The bot commands should be executed in a separate thread so that the UI thread can still be responsive.
     // Please fill in the blank
 
-    //WIP, to figure out bin_wallet first.
+    let args: Vec<String> = std::env::args().collect();
+    let num_args = args.len();
+
+    let client_seccomp_path = std::env::args().nth(1).expect("Please specify client seccomp path");
+    let nakamoto_config_path = std::env::args().nth(2).expect("Please specify nakamoto config path");
+    let nakamoto_seccomp_path = std::env::args().nth(3).expect("Please specify nakamoto seccomp path");
+    let wallet_config_path = std::env::args().nth(4).expect("Please specify wallet config path");
+    let wallet_seccomp_path = std::env::args().nth(5).expect("Please specify wallet seccomp path");
+
     // - Create bin_nakamoto process:  Command::new("./target/debug/bin_nakamoto")...
-    let nakamoto_out = Command::new("./target/debug/bin_nakamoto").arg("").output().expect("Failed to execute bin_nakamoto");
+    let nakamoto_child = Command::new("./target/debug/bin_nakamoto").arg(nakamoto_seccomp_path)
+    .stdin(Stdio::piped())
+    .stdout(Stdio::piped())
+    .spawn()
+    .expect("Failed to execute bin_nakamoto as child process");
 
     // - Create bin_wallet process:  Command::new("./target/debug/bin_wallet")...
-    let bin_wallet_seccomp_details : String = "".to_string();
-    let wallet_child = Command::new("./target/debug/bin_wallet").arg(bin_wallet_seccomp_details)
+    let wallet_child = Command::new("./target/debug/bin_wallet").arg(wallet_seccomp_path)
     .stdin(Stdio::piped())
     .stdout(Stdio::piped())
     .spawn()
     .expect("Failed to execute bin_wallet as child process");
 
     // - Get stdin and stdout of those processes
+    let nakamoto_child_stdout = nakamoto_child.stdout.expect("Failed to get wallet_child stdout");
+    let nakamoto_child_stdin = nakamoto_child.stdin.expect("Failed to get wallet_child stdin");
+    let nakamoto_reader = BufReader::new(nakamoto_child_stdout);
+    let mut nakamoto_writer = BufWriter::new(nakamoto_child_stdin);
+
     let wallet_child_stdout = wallet_child.stdout.expect("Failed to get wallet_child stdout");
     let wallet_child_stdin = wallet_child.stdin.expect("Failed to get wallet_child stdin");
-    
     let wallet_reader = BufReader::new(wallet_child_stdout);
     let mut wallet_writer = BufWriter::new(wallet_child_stdin);
 
 
-
     // - Create buffer readers if necessary
+
+
     // - Send initialization requests to bin_nakamoto and bin_wallet
-    
 
     //No idea if this is the right place to get the input, or if this is even the input. 
     //For now this implementation only sends the first line.
-    let wallet_input_file = File::open("./tests/cli_test_wallet/test_stdio.input").unwrap();
+    /* 
+    let wallet_input_file = File::open(wallet_config_path).unwrap();
     let wallet_input_reader = BufReader::new(wallet_input_file);
-    if let Some(Ok(bin_wallet_init_msg)) = wallet_input_reader.lines().next() {
-        wallet_writer.write(bin_wallet_init_msg.as_bytes());
+    if let Some(Ok(wallet_init_msg)) = wallet_input_reader.lines().next() {
+        wallet_writer.write(wallet_init_msg.as_bytes());
     }
+    */
+    let wallet_init_msg = fs::read_to_string(wallet_config_path).expect("Failed to read wallet.json");
+    let wallet_init_msg_serialised = serde_json::to_string(&IPCMessageReqWallet::Initialize(wallet_init_msg)).unwrap();
+    wallet_writer.write_all(wallet_init_msg_serialised.as_bytes());
 
-    let client_seccomp_path = std::env::args().nth(1).expect("Please specify client seccomp path");
+    let mut nakamoto_config_configpath = nakamoto_config_path;
+    nakamoto_config_configpath.push_str("/Config.json");
+    let mut nakamoto_config_blocktreepath = nakamoto_config_path;
+    nakamoto_config_blocktreepath.push_str("/BlockTree.json");
+    let mut nakamoto_config_txpoolpath = nakamoto_config_path;
+    nakamoto_config_txpoolpath.push_str("/TxPool.json");
+
+    let nakamoto_init_config_msg = fs::read_to_string(nakamoto_config_configpath).expect("Failed to read config.json");
+    let nakamoto_init_blocktree_msg = fs::read_to_string(nakamoto_config_blocktreepath).expect("Failed to read blocktree.json");
+    let nakamoto_init_txpool_msg = fs::read_to_string(nakamoto_config_txpoolpath).expect("Failed to read txpool.json");
+    let nakamoto_init_msg_serialised = serde_json::to_string(
+        &IPCMessageReqNakamoto::Initialize(nakamoto_init_blocktree_msg, nakamoto_init_txpool_msg, nakamoto_init_config_msg)).unwrap();
+    nakamoto_writer.write_all(nakamoto_init_msg_serialised.as_bytes());
+
     // Please fill in the blank
     // sandboxing the bin_client (For part B). Leave it blank for part A.
     
@@ -189,6 +222,7 @@ fn main() {
 
 
     if std::env::args().len() != 6 {
+        let bot_command_path = std::env::args().nth(6).expect("In what universe did you see this");
         // Then there must be 7 arguments provided. The last argument is the bot commands path
         // Please fill in the blank
         // Create a thread to read the bot commands from `bot_command_path`, execute those commands and update the UI
