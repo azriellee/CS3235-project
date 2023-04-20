@@ -189,14 +189,15 @@ impl Nakamoto {
                         let last_finalized_block_id = &chain_p_block.lock().unwrap().finalized_block_id;
                         
                         // add block to the blocktree, broadcasts block
-                        let mut bt = chain_p.lock().unwrap();
-                        let initial_working_block = bt.working_block_id.clone();
-                        bt.add_block(block.clone(), user_config.difficulty_leading_zero_len);
-                        let cur_working_block = bt.working_block_id.clone();
+                        let initial_working_block = chain_p.lock().unwrap().working_block_id.clone();
+                        chain_p.lock().unwrap().add_block(block.clone(), user_config.difficulty_leading_zero_len);
+                        block_tx_block.send(block.clone()).unwrap(); //possible err?
+
+                        // if the working block is updated while miner is solving (a new block), restart the miner
+                        let cur_working_block = chain_p.lock().unwrap().working_block_id.clone();
                         if initial_working_block != cur_working_block {
                             *cancellation_token_clone.write().unwrap() = true;
                         }
-                        block_tx_block.send(block.clone()).unwrap(); //possible err?
                         
                         // Do I need to remove transactions (belonging to finalised block) on tx_pool? yes
                         let newly_finalized_blocks = chain_p_block.lock().unwrap().get_finalized_blocks_since(last_finalized_block_id.to_string());
