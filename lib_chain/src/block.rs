@@ -346,8 +346,18 @@ impl BlockTree {
         let depth: u64 = self.block_depth.get(&block.header.parent).unwrap().clone() + 1;
         self.block_depth.insert(block.header.block_id.to_string(), depth);
 
-        // update working block if new block depth > working_block depth
+        // if new block depth > working_block depth, or two paths have same length, check whose block has larger hash number
+        let mut update_block: bool = false;
         if &depth > self.block_depth.get(&self.working_block_id).unwrap() {
+            update_block = true;
+        } else if &depth == self.block_depth.get(&self.working_block_id).unwrap() {
+            if block.header.block_id.to_string() > self.working_block_id {
+                update_block = true;
+            }
+        }
+
+        // update working block if needed
+        if update_block {
             self.working_block_id = block.header.block_id.to_string();
 
             // TODO: If two paths have the same length, here we consider the one whose last block has the larger hash number as the longest path.

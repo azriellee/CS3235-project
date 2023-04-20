@@ -200,16 +200,29 @@ fn main() {
     let user_id: String;
     // Please fill in the blank
     // Read the user info from wallet
-    
-
+    let mut wallet_reply = String::new();
+    wallet_reader.read_line(&mut wallet_reply).expect("Help how did getting wallet data fail");
+    assert!(wallet_reply == serde_json::to_string(&IPCMessageRespWallet::Initialized).unwrap(), "Help how did getting wallet data get the wrong thing");
+    wallet_reply = "".to_string();
+    let wallet_req = serde_json::to_string(&IPCMessageReqWallet::GetUserInfo).unwrap();
+    wallet_writer.write_all(wallet_req.as_bytes());
+    wallet_reader.read_line(&mut wallet_reply).expect("Help how did getting wallet data on the second take??");
+    let parsed_input : IPCMessageRespWallet = serde_json::from_str(wallet_reply.as_str()).unwrap(); 
+    match parsed_input {
+        IPCMessageRespWallet::UserInfo(x, y) => {
+            user_name = x;
+            user_id = y;
+        }
+        _ => return, //Terminate if its invalid
+    }
 
     // Create the Terminal UI app
     let app_arc = Arc::new(Mutex::new(app::App::new(
         user_name.clone(), 
         user_id.clone(), 
         "".to_string(), 
-        format!("SEND $100   // By {}", user_name))));
-
+        format!("SEND $100   // By {}", user_name)))
+    );
 
     // An enclosure func to generate signing requests when creating new transactions. 
     let create_sign_req = |sender: String, receiver: String, message: String| {
@@ -229,7 +242,28 @@ fn main() {
         // Notice that the `SleepMs(1000)` doesn't mean that the all threads in the whole process should sleep for 1000ms. It means that 
         // The next bot command that fakes the user interaction should be processed 1000ms later. 
         // It should not block the execution of any other threads or the main thread.
-        
+
+        let bot_command_file = File::open(bot_command_path).expect("failed to open bot_cmd_file");
+        let bot_command_reader = BufReader::new(bot_command_file);
+        thread::spawn(|| {
+            for bot_line in  bot_command_reader.lines() {
+                let bot_line = bot_line.expect("failed to read line");
+                let parsed_bot_cmd : BotCommand = serde_json::from_str(bot_line.as_str()).unwrap(); 
+                match parsed_bot_cmd {
+                    BotCommand::Send(receiver_user_id, transaction_message) => {
+                        let request = create_sign_req(user_id, receiver_user_id, transaction_message);
+                        //Add to Tx Pool
+                    }
+                    BotCommand::SleepMs(sleeptime) => {
+                        thread::sleep(Duration::from_millis(sleeptime));
+                        //good night
+                    }
+                    _ => {
+                        //Do nth
+                    }
+                }    
+            }
+        });
     }
 
 
@@ -239,6 +273,9 @@ fn main() {
     // - You can also create threads to read from stderr of bin_nakamoto/bin_wallet and add those lines to the UI (app.stderr_log) for easier debugging.
     
     
+    
+    let bin_wallet_stdin_p = Arc::new(Mutex::new(wallet_child_stdin));
+    let nakamoto_stdin_p = Arc::new(Mutex::new(nakamoto_child_stdin));
 
     // UI thread. Modify it to suit your needs. 
     let app_ui_ref = app_arc.clone();

@@ -112,15 +112,12 @@ fn main() {
     // Please fill in the blank
     // Loop over stdin and handle IPC messages
     
-    //use serde_json::Result;
-    
     println!("StartCheck!!");
     let mut raw_data = String::new();
-    let mut looptheinput : bool = true;
     let mut nakamoto_node : Nakamoto;
 
     //Initialise
-    io::stdin().read_line(&mut raw_data).expect("wtf");
+    io::stdin().read_line(&mut raw_data).expect("wtf"); //need handle err here
     let parsed_input : IPCMessageReq = serde_json::from_str(raw_data.as_str()).unwrap(); 
     match parsed_input {
         IPCMessageReq::Initialize(chain_info, tx_info, config_info) => {
@@ -130,44 +127,57 @@ fn main() {
         _ => return, //Terminate if first thing is not an IPCMessageReq::Initialize(x,y,z);
     }
     
-    while looptheinput {
-        //Read the damn input. Expected to fit IPCMessageReq.
-        //println!("Reading In Progress...\n");
+    let mut has_exit : bool = true;
+    while has_exit {
+        // println!("Reading In Progress...");
         raw_data = "".to_string();
-        io::stdin().read_line(&mut raw_data).expect("wtf");
+        io::stdin().read_line(&mut raw_data).expect("wtf"); //need handle err here
+
         //println!("What is read: \n{}\n", raw_data);
-        let parsed_input : IPCMessageReq = serde_json::from_str(raw_data.as_str()).unwrap(); 
-        //println!("Matching In Progress...\n");
+
+        let parsed_input: IPCMessageReq = serde_json::from_str(raw_data.as_str()).unwrap(); //need handle err here
         //Does the matching.
         match parsed_input {
             IPCMessageReq::RequestChainStatus => {
-                let azrielwhentreathdl = nakamoto_node.get_chain_status();
-                println!("{}", serde_json::to_string(&IPCMessageResp::ChainStatus(azrielwhentreathdl)).unwrap());
+                let status = nakamoto_node.get_chain_status();
+                println!("{}", serde_json::to_string(&IPCMessageResp::ChainStatus(status)).unwrap());
             }
             IPCMessageReq::RequestMinerStatus => {
-                let chuagaetheosgod = nakamoto_node.get_miner_status();
-                println!("{}", serde_json::to_string(&IPCMessageResp::MinerStatus(chuagaetheosgod)).unwrap());
+                let status = nakamoto_node.get_miner_status();
+                println!("{}", serde_json::to_string(&IPCMessageResp::MinerStatus(status)).unwrap());
             }
             IPCMessageReq::RequestNetStatus => {
-                let bencosplayaspekoraasajoke = nakamoto_node.get_network_status();
-                println!("{}", serde_json::to_string(&IPCMessageResp::MinerStatus(bencosplayaspekoraasajoke)).unwrap());
+                let status = nakamoto_node.get_network_status();
+                println!("{}", serde_json::to_string(&IPCMessageResp::NetStatus(status)).unwrap());
             }
             IPCMessageReq::RequestTxPoolStatus => {
-                let prateekfanclub = nakamoto_node.get_txpool_status();
-                println!("{}", serde_json::to_string(&IPCMessageResp::MinerStatus(prateekfanclub)).unwrap());
+                let status = nakamoto_node.get_txpool_status();
+                println!("{}", serde_json::to_string(&IPCMessageResp::TxPoolStatus(status)).unwrap());
             }
             IPCMessageReq::GetAddressBalance(user_id) => {
-                let user_balance = nakamoto_node.get_balance(user_id);
-                println!("{}", serde_json::to_string(&IPCMessageResp::AddressBalance(user_id, user_balance)).unwrap());
+                let user_balance = nakamoto_node.chain_p.lock().unwrap().get_balance(user_id.to_string());
+                println!("{}", serde_json::to_string(&IPCMessageResp::AddressBalance(user_id.to_string(), user_balance)).unwrap());
             }
-            IPCMessageReq::PublishTx(data, info) => {
-                let transaction : Transaction = serde_json::from_str(info.as_str()).unwrap();
-                nakamoto_node.publish_tx(transaction);
-                println!("{}", serde_json::to_string(&IPCMessageResp::PublishTxDone).unwrap());
+            IPCMessageReq::PublishTx(data, sig) => {
+                let tx_info: Vec<String> = serde_json::from_str(&data).unwrap();
+                let tx_sig: String = serde_json::from_str(&sig).unwrap();
+
+                let transaction = Transaction {
+                    sender: tx_info[0].to_string(),
+                    receiver: tx_info[1].to_string(),
+                    message: tx_info[2].to_string(),
+                    sig: tx_sig,
+                };
+
+                let is_verified = transaction.verify_sig();
+                if is_verified {
+                    nakamoto_node.publish_tx(transaction);
+                    println!("{}", serde_json::to_string(&IPCMessageResp::PublishTxDone).unwrap());
+                }
             }
             IPCMessageReq::RequestBlock(block_id) => {
-                let acertainblock = nakamoto_node.get_block(block_id);
-                println!("{}", serde_json::to_string(&IPCMessageResp::BlockData(acertainblock)).unwrap());
+                let block_node = nakamoto_node.chain_p.lock().unwrap().get_block(block_id).unwrap(); //need handle error
+                println!("{}", serde_json::to_string(&IPCMessageResp::BlockData(serde_json::to_string(&block_node).unwrap())).unwrap());
             }
             IPCMessageReq::RequestStateSerialization => {
                 let chain_info = nakamoto_node.get_serialized_chain();
@@ -175,11 +185,11 @@ fn main() {
                 println!("{}", serde_json::to_string(&IPCMessageResp::StateSerialization(chain_info, txpool_info)).unwrap());
             }
             IPCMessageReq::Quit => {
-                looptheinput = false;
+                has_exit = false;
                 println!("{}", serde_json::to_string(&IPCMessageResp::Quitting).unwrap());
             }
             _ => {
-                println!("{}", serde_json::to_string(&IPCMessageResp::Notify(raw_data)).unwrap()); //?????
+                println!("{}", serde_json::to_string(&IPCMessageResp::Notify(raw_data)).unwrap());
             }
         }    
     }

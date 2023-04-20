@@ -150,28 +150,29 @@ impl Nakamoto {
         // Start necessary thread(s) to control the miner.
         // Return the Nakamoto instance that holds pointers to the chain, the miner, the network and the tx pool.
 
-        let user_config : Config = serde_json::from_str(&config_str.as_str()).unwrap(); 
-        let user_chain : BlockTree = serde_json::from_str(&chain_str.as_str()).unwrap();
-        let user_txPool : TxPool = serde_json::from_str(&tx_pool_str.as_str()).unwrap();
-        let user_miner : Miner = Miner { 
-            thread_count: user_config.miner_thread_count,
-            leading_zero_len: user_config.difficulty_leading_zero_len,
-            is_running: false 
-        };
+        let user_config: Config = serde_json::from_str(&config_str.as_str()).unwrap(); 
+        let user_chain: BlockTree = serde_json::from_str(&chain_str.as_str()).unwrap();
+        let user_txPool: TxPool = serde_json::from_str(&tx_pool_str.as_str()).unwrap();
+        let user_miner: Miner = Miner::new_with_params(user_config.miner_thread_count, user_config.difficulty_leading_zero_len);
+ 
         let cancellation_token = Arc::new(RwLock::new(false));
+        
         let (network_p, block_rx, trans_rx, block_tx, trans_tx, blockid_tx)
              = P2PNetwork::create(user_config.addr, user_config.neighbors);
 
         let chain_p = Arc::new(Mutex::new(user_chain));
         let miner_p = Arc::new(Mutex::new(user_miner)); 
         let tx_pool_p  = Arc::new(Mutex::new(user_txPool));
-
+        
         let nakamoto = Nakamoto { chain_p, miner_p, network_p, tx_pool_p, trans_tx };
 
         let chain_p_block = Arc::clone(&nakamoto.chain_p);
         let tx_pool_p_block = Arc::clone(&nakamoto.tx_pool_p);
         let block_tx_block = block_tx.clone();
+        let chain_p = nakamoto.chain_p.clone();
+
         // when receiving a block
+        let cancellation_token_clone = cancellation_token.clone();
         thread::spawn(move || {
             loop {
                 // recv_timeout will get an error every 10 seconds when nothing is received
@@ -191,15 +192,13 @@ impl Nakamoto {
                         
                         // add block to the blocktree, broadcasts block
                         let mut bt = chain_p.lock().unwrap();
-                        let initial_working_block = bt.working_block_id;
+                        let initial_working_block = bt.working_block_id.clone();
                         bt.add_block(block.clone(), user_config.difficulty_leading_zero_len);
-                        let cur_working_block = bt.working_block_id;
-                        if(initial_working_block != cur_working_block) {
-                            let cancellation_token_clone = cancellation_token.clone();
+                        let cur_working_block = bt.working_block_id.clone();
+                        if initial_working_block != cur_working_block {
                             *cancellation_token_clone.write().unwrap() = true;
                         }
-
-                        block_tx_block.send(block.clone());
+                        block_tx_block.send(block.clone()).unwrap(); //possible err?
                         
                         // Do I need to remove transactions (belonging to finalised block) on tx_pool? yes
                         let newly_finalized_blocks = chain_p_block.lock().unwrap().get_finalized_blocks_since(last_finalized_block_id.to_string());
@@ -225,6 +224,7 @@ impl Nakamoto {
                         }
 
                         nakamoto_clone.publish_tx(tx);
+                        
                     }
                     Err(_) => { continue; }
                 }
@@ -237,6 +237,7 @@ impl Nakamoto {
         let block_tx_puzzle = block_tx.clone();
 
         // create a miner to solve puzzle
+
         let _miner_thread = thread::spawn(move || {
             loop {
                 // constantly creates a puzzle from tx pool
@@ -295,7 +296,7 @@ impl Nakamoto {
         // Add the transaction to the transaction pool and send it to the broadcast channel
         let is_added = self.tx_pool_p.lock().unwrap().add_tx(transaction.clone());
         if is_added {
-            self.trans_tx.send(transaction);
+            self.trans_tx.send(transaction).unwrap(); //possible err?
         }
     }
 
