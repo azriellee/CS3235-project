@@ -58,7 +58,22 @@ mod tests {
     #[test]
     fn test_tx_pool_additional () {
         // Please fill in the blank
-        
+        let mut tx_pool = TxPool::new();
+        let tx = Transaction {
+            sender: "MDgCMQCqrJ1yIJ7cDQIdTuS+4CkKn/tQPN7bZFbbGCBhvjQxs71f6Vu+sD9eh8JGpfiZSckCAwEAAQ==".to_string(),
+            receiver: "MDgCMQDZDExOs97sRTnQLYtgFjDKpDzmO7Uo5HPP62u6MDimXBpZtGxtwa8dhJe5NBIsJjUCAwEAAQ==".to_string(),
+            message: "SEND $100   // By Alice   // 1678173982754".to_string(),
+            sig: "dITCGcFiHcVvkThT7+dDd+SZ1ARjpA2eWS+9g9GahiADSPzPJ2se6hzn0PTLOEZW".to_string(),
+        };
+        let tx_invalid_sig = Transaction {
+            sender: "MDgCMQCqrJ1yIJ7cDQIdTuS+4CkKn/tQPN7bZFbbGCBhvjQxs71f6Vu+sD9eh8JGpfiZSckCAwEAAQ==".to_string(),
+            receiver: "MDgCMQDZDExOs97sRTnQLYtgFjDKpDzmO7Uo5HPP62u6MDimXBpZtGxtwa8dhJe5NBIsJjUCAwEAAQ==".to_string(),
+            message: "SEND $100   // By Alice   // 1678173982754".to_string(),
+            sig: "abcde".to_string(),
+        };
+        if !tx_pool.add_tx(tx_invalid_sig.clone()) {
+            println!("expected behaviour as tx has invalid signature");
+        }
     }
 }
 
