@@ -180,10 +180,10 @@ impl Nakamoto {
                 match block_result {
                     Ok(block) => { 
                         // if the block already exists in our block tree, do not broadcast?
-                        let has_block_result = chain_p_block.lock().unwrap().get_block(block.header.block_id.to_string());
-                        match has_block_result {
-                            Some(_) => {},
-                            None => { continue; },
+                        let has_existing_block_result = chain_p_block.lock().unwrap().get_block(block.header.block_id.to_string());
+                        match has_existing_block_result {
+                            Some(_) => { continue; },
+                            None => { },
                         }
 
                         // get the last finalized block for removing finalized transactions
@@ -211,6 +211,11 @@ impl Nakamoto {
                 match tx_result {
                     Ok(tx) => {
                         // if the transaction already exists in our tx_pool, do not broadcast?
+                        let has_existing_tx = nakamoto_clone.tx_pool_p.lock().unwrap().pool_tx_ids.contains(&tx.sig);
+                        if has_existing_tx {
+                            continue;
+                        }
+
                         nakamoto_clone.publish_tx(tx);
                     }
                     Err(_) => { continue; }
