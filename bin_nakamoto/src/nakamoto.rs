@@ -150,14 +150,11 @@ impl Nakamoto {
         // Start necessary thread(s) to control the miner.
         // Return the Nakamoto instance that holds pointers to the chain, the miner, the network and the tx pool.
 
-        let user_config : Config = serde_json::from_str(&config_str.as_str()).unwrap(); 
-        let user_chain : BlockTree = serde_json::from_str(&chain_str.as_str()).unwrap();
-        let user_txPool : TxPool = serde_json::from_str(&tx_pool_str.as_str()).unwrap();
-        let user_miner : Miner = Miner { 
-            thread_count: user_config.miner_thread_count,
-            leading_zero_len: user_config.difficulty_leading_zero_len,
-            is_running: false 
-        };
+        let user_config: Config = serde_json::from_str(&config_str.as_str()).unwrap(); 
+        let user_chain: BlockTree = serde_json::from_str(&chain_str.as_str()).unwrap();
+        let user_txPool: TxPool = serde_json::from_str(&tx_pool_str.as_str()).unwrap();
+        let user_miner: Miner = Miner::new_with_params(user_config.miner_thread_count, user_config.difficulty_leading_zero_len);
+ 
         let cancellation_token = Arc::new(RwLock::new(false));
         let (network_p, block_rx, trans_rx, block_tx, trans_tx, blockid_tx)
              = P2PNetwork::create(user_config.addr, user_config.neighbors);
@@ -191,7 +188,7 @@ impl Nakamoto {
                         
                         // add block to the blocktree, broadcasts block
                         chain_p_block.lock().unwrap().add_block(block.clone(), user_config.difficulty_leading_zero_len);
-                        block_tx_block.send(block.clone());
+                        block_tx_block.send(block.clone()).unwrap(); //possible err?
                         
                         // Do I need to remove transactions (belonging to finalised block) on tx_pool? yes
                         let newly_finalized_blocks = chain_p_block.lock().unwrap().get_finalized_blocks_since(last_finalized_block_id.to_string());
@@ -288,7 +285,7 @@ impl Nakamoto {
         // Add the transaction to the transaction pool and send it to the broadcast channel
         let is_added = self.tx_pool_p.lock().unwrap().add_tx(transaction.clone());
         if is_added {
-            self.trans_tx.send(transaction);
+            self.trans_tx.send(transaction).unwrap(); //possible err?
         }
     }
 

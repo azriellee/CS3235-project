@@ -50,6 +50,14 @@ impl Miner {
             is_running: false
         }
     }
+
+    pub fn new_with_params (thread_count: u16, leading_zero_len: u16) -> Miner {
+        Miner {
+            thread_count,
+            leading_zero_len,
+            is_running: false
+        }
+    }
     
     pub fn generate_hash(p: String, nonce_len: &u16, thread_seed: u64) -> (String, String) {
         let mut rng = Pcg32::seed_from_u64(thread_seed);
