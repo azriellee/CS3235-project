@@ -166,9 +166,12 @@ impl Transaction {
         let verifying_key = VerifyingKey::<Sha256>::new(public_key);
 
         // Retrieve signature into RSA
-        let signature = Base64::decode_vec(&self.sig).unwrap();
+        let signature = Base64::decode_vec(&self.sig);
+        let signature = match signature {
+            Ok(sig) => sig,
+            Err(e) => return false,
+        };
         let verify_signature = rsa::signature::Signature::from_bytes(&signature).unwrap();
-
         // Verify result
         let verify_result = verifying_key.verify(msg_json.as_bytes(), &verify_signature);
 
