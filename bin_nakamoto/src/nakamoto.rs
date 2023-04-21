@@ -190,7 +190,7 @@ impl Nakamoto {
                         
                         // add block to the blocktree, broadcasts block
                         let initial_working_block = chain_p.lock().unwrap().working_block_id.clone();
-                        chain_p.lock().unwrap().add_block(block.clone(), user_config.difficulty_leading_zero_len);
+                        chain_p.lock().unwrap().add_block(block.clone(), user_config.difficulty_leading_zero_len_acc);
                         block_tx_block.send(block.clone()).unwrap(); //possible err?
 
                         // if the working block is updated while miner is solving (a new block), restart the miner
@@ -252,13 +252,11 @@ impl Nakamoto {
                     cancellation_token.clone()
                 );
                 match solution {
-                    Some(PuzzleSolution { puzzle, nonce, hash }) => {
+                    Some(PuzzleSolution {puzzle, nonce, hash }) => {
                         //solution found, update the block and broadcast
-                        println!("Solution Found! HASH: {}\nNONCE: {}\nPUZZLE: {}", hash, nonce, puzzle);
-
                         block.header.block_id = hash;
                         block.header.nonce = nonce;
-                        block_tx_puzzle.send(block).unwrap();
+                        block_tx_puzzle.send(block.clone()).unwrap();
                     },
                     None => {println!("Solution found by another miner");}
                 };
