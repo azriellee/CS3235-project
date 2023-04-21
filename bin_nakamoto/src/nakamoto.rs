@@ -59,11 +59,11 @@ fn create_puzzle(chain_p: Arc<Mutex<BlockTree>>, tx_pool_p: Arc<Mutex<TxPool>>, 
     // Loop for every 0.5secs to see if there is any new transaction
     loop {
         let mut excluding_tx: Vec<Transaction> = Vec::new();
-        
-        // Get blocks that are already finalised 
-        for tx_id in chain_p.lock().unwrap().finalized_tx_ids.iter() {
-            let tx = tx_pool_p.lock().unwrap().pool_tx_map[tx_id].clone();
-            excluding_tx.push(tx);
+
+        // Get transactions that are part of blocks 
+        for block_node in chain_p.lock().unwrap().all_blocks.values() {
+            let block_transactions = block_node.transactions_block.transactions.clone();
+            excluding_tx.extend(block_transactions);
         }
 
         // Get blocks that are already removed from the pool
@@ -76,8 +76,6 @@ fn create_puzzle(chain_p: Arc<Mutex<BlockTree>>, tx_pool_p: Arc<Mutex<TxPool>>, 
 
         if unfinalised_tx.len() > 0 {
             break;
-        } else {
-           // thread::sleep(time::Duration::from_millis(500));
         }
     }
 
