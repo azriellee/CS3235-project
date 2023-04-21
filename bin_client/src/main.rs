@@ -154,11 +154,11 @@ fn main() {
     // - Create buffer readers if necessary
     let mut nakamoto_process_stdin = nakamoto_process.stdin.take().expect("Failed to get nakamoto_child stdin");
     let nakamoto_process_stdout = nakamoto_process.stdout.take().expect("Failed to get nakamoto_child stdout");
-    // let nakamoto_process_stderr = nakamoto_process.stderr.take().expect("Failed to get nakamoto_child stderr");
+    let nakamoto_process_stderr = nakamoto_process.stderr.take().expect("Failed to get nakamoto_child stderr");
 
     let mut bin_wallet_process_stdin = bin_wallet_process.stdin.take().expect("Failed to get wallet_child stdin");
     let bin_wallet_process_stdout = bin_wallet_process.stdout.take().expect("Failed to get wallet_child stdout");
-    // let bin_wallet_process_stderr = bin_wallet_process.stderr.take().expect("Failed to get wallet_child stderr");
+    let bin_wallet_process_stderr = bin_wallet_process.stderr.take().expect("Failed to get wallet_child stderr");
     
     let mut bin_wallet_reader = BufReader::new(bin_wallet_process_stdout);
 
@@ -266,7 +266,7 @@ fn main() {
             }
         });
     }
-    
+
     // Please fill in the blank
     // - Spawn threads to read/write from/to bin_nakamoto/bin_wallet. (Through their piped stdin and stdout)
     // - You should request for status update from bin_nakamoto periodically (every 500ms at least) to update the App (UI struct) accordingly.
@@ -428,6 +428,7 @@ fn main() {
     // Please fill in the blank
     // Wait for the IPC threads to finish
     nakamoto_thread.join().unwrap();
+    err_thread.join().unwrap();
 
     let ecode1 = nakamoto_process.wait().expect("failed to wait on child nakamoto");
     eprintln!("--- nakamoto ecode: {}", ecode1);
