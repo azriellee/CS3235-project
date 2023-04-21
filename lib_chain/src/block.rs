@@ -59,6 +59,13 @@ impl MerkleTree {
 
         hashes.push(init_hashes);
 
+        //If only 1 transaction, just directly output and avoid the loop
+        if txs.len() == 1 {
+            let merkle_tree = MerkleTree{hashes};
+            let root = merkle_tree.hashes[0][0].clone();
+            return (root, merkle_tree)
+        }
+
         // Subsequent levels, hash for every 2 hashes
         loop {
             let mut curr_level: Vec<String> = Vec::new();
@@ -81,7 +88,6 @@ impl MerkleTree {
                 break;
             }
         }
-
         // Finally, initalize merkle tree
         let merkle_tree = MerkleTree{hashes};
         let root = merkle_tree.hashes[merkle_tree.hashes.len() - 1][0].clone();
