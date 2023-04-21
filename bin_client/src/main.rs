@@ -155,7 +155,7 @@ fn main() {
     let mut nakamoto_process_stdin = nakamoto_process.stdin.take().expect("Failed to get nakamoto_child stdin");
     let nakamoto_process_stdout = nakamoto_process.stdout.take().expect("Failed to get nakamoto_child stdout");
     let nakamoto_process_stderr = nakamoto_process.stderr.take().expect("Failed to get nakamoto_child stderr");
-
+    
     let mut bin_wallet_process_stdin = bin_wallet_process.stdin.take().expect("Failed to get wallet_child stdin");
     let bin_wallet_process_stdout = bin_wallet_process.stdout.take().expect("Failed to get wallet_child stdout");
     let bin_wallet_process_stderr = bin_wallet_process.stderr.take().expect("Failed to get wallet_child stderr");
@@ -163,7 +163,6 @@ fn main() {
     let bin_wallet_reader =  Arc::new(Mutex::new(BufReader::new(bin_wallet_process_stdout)));
 
     // - Send initialization requests to bin_nakamoto and bin_wallet
-
     let nakamoto_config_configpath = format!("{}/Config.json", nakamoto_config_path);
     let nakamoto_config_blocktreepath = format!("{}/BlockTree.json", nakamoto_config_path);
     let nakamoto_config_txpoolpath = format!("{}/TxPool.json", nakamoto_config_path);
@@ -269,6 +268,7 @@ fn main() {
 
     let nakamoto_status_stdin_p_clone = Arc::clone(&nakamoto_status_stdin_p);
     let user_id_clone = user_id.clone();
+    let nakamote_write_app = app_arc.clone();
     let nakamoto_write_threads = thread::spawn(move || {
         let tick_rate = Duration::from_millis(500);
         loop {
@@ -287,6 +287,10 @@ fn main() {
 
             let status_update_msg = serde_json::to_string(&IPCMessageReqNakamoto::GetAddressBalance(user_id_clone.to_string())).unwrap();
             nakamoto_status_stdin_p_clone.lock().unwrap().write_all(format!("{}\n", status_update_msg).as_bytes()).unwrap();
+
+            if nakamote_write_app.lock().unwrap().should_quit {
+                break;
+            }
 
             thread::sleep(tick_rate);
         }
@@ -309,30 +313,76 @@ fn main() {
         }
     });
 
-    let nakamoto_app = app_arc.clone();
+    let nakamoto_read_app = app_arc.clone();
     let nakamoto_read_threads = thread::spawn(move || {
+        let tick_rate = Duration::from_millis(500);
         loop {
             let mut msg = String::new();
             nakamoto_status_reader.lock().unwrap().read_line(&mut msg).unwrap();
             let msg = serde_json::from_str(msg.as_str()).unwrap();
             match msg {
                 IPCMessageRespNakamoto::ChainStatus(status) => {
-                    nakamoto_app.lock().unwrap().blocktree_status = status;
-                }
+                    nakamoto_read_app.lock().unwrap().blocktree_status = status;
+                },
                 IPCMessageRespNakamoto::NetStatus(status) => {
-                    nakamoto_app.lock().unwrap().network_status = status;
-                }
+                    nakamoto_read_app.lock().unwrap().network_status = status;
+                },
                 IPCMessageRespNakamoto::TxPoolStatus(status) => {
-                    nakamoto_app.lock().unwrap().txpool_status = status;
-                }
+                    nakamoto_read_app.lock().unwrap().txpool_status = status;
+                },
                 IPCMessageRespNakamoto::MinerStatus(status) => {
-                    nakamoto_app.lock().unwrap().miner_status = status;
-                }
-                IPCMessageRespNakamoto::PublishTxDone => {
-                    println!("Transaction published to tx pool");
+                    nakamoto_read_app.lock().unwrap().miner_status = status;
+                },
+                IPCMessageRespNakamoto::AddressBalance(_, balance) => {
+                    nakamoto_read_app.lock().unwrap().user_balance = balance;
+                },
+                IPCMessageRespNakamoto::Notify(msg) => {
+                    nakamoto_read_app.lock().unwrap().notify_log.push(msg);
+                },
+                IPCMessageRespNakamoto::StateSerialization(chain_info, txpool_info) => {
+                    match fs::write(nakamoto_config_blocktreepath.to_string(), chain_info) {
+                        Ok(_) => { nakamoto_read_app.lock().unwrap().notify_log.push("[File] BlockTree.json saved".to_string()); },
+                        Err(_) => { nakamoto_read_app.lock().unwrap().notify_log.push("[File] Error saving BlockTree.json".to_string()); },
+                    };
+                    match fs::write(nakamoto_config_txpoolpath.to_string(), txpool_info) {
+                        Ok(_) => { nakamoto_read_app.lock().unwrap().notify_log.push("[File] TxPool.json saved".to_string()); },
+                        Err(_) => { nakamoto_read_app.lock().unwrap().notify_log.push("[File] Error saving TxPool.json".to_string()); }
+                    };
                 }
                 _=> {}
             }
+
+            if nakamoto_read_app.lock().unwrap().should_quit {
+                break;
+            }
+
+            thread::sleep(tick_rate);
+        }
+    });
+
+    let err_app = app_arc.clone();
+    let err_thread = thread::spawn(move || {
+        let mut nakamoto_err_reader = BufReader::new(nakamoto_process_stderr);
+        let mut wallet_err_reader = BufReader::new(bin_wallet_process_stderr);
+        loop {
+            let mut err_msg = String::new();
+            let mut err_msg2 = String::new();
+
+            match nakamoto_err_reader.read_line(&mut err_msg) {
+                Ok(_) => { err_app.lock().unwrap().stderr_log.push(err_msg); },
+                Err(_) => {},
+            }
+
+            match wallet_err_reader.read_line(&mut err_msg2) {
+                Ok(_) => { err_app.lock().unwrap().stderr_log.push(err_msg2); },
+                Err(_) => {},
+            }
+
+            if err_app.lock().unwrap().should_quit {
+                break;
+            }
+
+            thread::sleep(Duration::from_millis(1000));
         }
     });
 
@@ -433,7 +483,7 @@ fn main() {
     nakamoto_read_threads.join().unwrap();
     nakamoto_write_threads.join().unwrap();
     wallet_read_threads.join().unwrap();
-    //err_thread.join().unwrap();
+    err_thread.join().unwrap();
 
     let ecode1 = nakamoto_process.wait().expect("failed to wait on child nakamoto");
     eprintln!("--- nakamoto ecode: {}", ecode1);
