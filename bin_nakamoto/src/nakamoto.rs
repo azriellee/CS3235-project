@@ -71,23 +71,24 @@ fn create_puzzle(chain_p: Arc<Mutex<BlockTree>>, tx_pool_p: Arc<Mutex<TxPool>>, 
             let tx = tx_pool_p.lock().unwrap().pool_tx_map[tx_id].clone();
             excluding_tx.push(tx);
         }
-
         // Get the transactions that are not included in finalised blocks or are already removed in tx_pool
         unfinalised_tx = tx_pool_p.lock().unwrap().filter_tx(tx_count, &excluding_tx);
 
         if unfinalised_tx.len() > 0 {
             break;
         } else {
-            thread::sleep(time::Duration::from_millis(500));
+           // thread::sleep(time::Duration::from_millis(500));
         }
     }
 
     // Create the blocknode
     let (merkle_root, merkle_tree) = MerkleTree::create_merkle_tree(unfinalised_tx.clone());
+
     let new_transactions = Transactions {
         merkle_tree,
         transactions: unfinalised_tx.clone(),
     };
+
     let new_blocknode_header = BlockNodeHeader {
         parent: chain_p.lock().unwrap().working_block_id.to_string(),
         merkle_root: merkle_root.to_string(),
@@ -96,12 +97,12 @@ fn create_puzzle(chain_p: Arc<Mutex<BlockTree>>, tx_pool_p: Arc<Mutex<TxPool>>, 
         nonce: String::new(),
         reward_receiver: reward_receiver.to_string(),
     };
-  
+
     let new_blocknode = BlockNode {
         header: new_blocknode_header,
         transactions_block: new_transactions,
     };
-    
+
     // Create the puzzle
     let new_puzzle = Puzzle {
         parent: chain_p.lock().unwrap().working_block_id.to_string(),
@@ -109,7 +110,10 @@ fn create_puzzle(chain_p: Arc<Mutex<BlockTree>>, tx_pool_p: Arc<Mutex<TxPool>>, 
         reward_receiver: reward_receiver.to_string(),
     };
     let new_puzzle_json = serde_json::to_string(&new_puzzle).unwrap();
+
     (new_puzzle_json, new_blocknode)
+
+
 
 }
 
@@ -155,7 +159,12 @@ impl Nakamoto {
  
         let cancellation_token = Arc::new(RwLock::new(false));
         
-        let (network_p, block_rx, trans_rx, block_tx, trans_tx, blockid_tx)
+        let (network_p, 
+            block_rx, 
+            trans_rx, 
+            block_tx, 
+            trans_tx, 
+            blockid_tx)
              = P2PNetwork::create(user_config.addr, user_config.neighbors);
 
         let chain_p = Arc::new(Mutex::new(user_chain));
@@ -240,8 +249,15 @@ impl Nakamoto {
         let _miner_thread = thread::spawn(move || {
             loop {
                 // constantly creates a puzzle from tx pool
-                let (puzzle_json, mut block) = create_puzzle(chain_p_puzzle.clone(), tx_pool_p_puzzle.clone(), user_config.max_tx_in_one_block, user_config.mining_reward_receiver.to_string());
+                let (puzzle_json, mut block) = create_puzzle(
+                    chain_p_puzzle.clone(), 
+                    tx_pool_p_puzzle.clone(), 
+                    user_config.max_tx_in_one_block, 
+                    user_config.mining_reward_receiver.to_string()
+                );
+
                 let cancellation_token_clone = cancellation_token.clone();
+                
                 let solution = Miner::solve_puzzle(
                     miner_p_puzzle.clone(), 
                     puzzle_json.to_string(), 
@@ -254,11 +270,18 @@ impl Nakamoto {
                 match solution {
                     Some(PuzzleSolution {puzzle, nonce, hash }) => {
                         //solution found, update the block and broadcast
+                        //println!("Solution Found! HASH: {}\nNONCE: {}\nPUZZLE: {}", hash, nonce, puzzle);
+                        let test = "{\"Notify\":\"Hello from Nakamoto Miner; Solution Found!!!\"}";
+                        println!("{}", test);
+
                         block.header.block_id = hash;
                         block.header.nonce = nonce;
                         block_tx_puzzle.send(block.clone()).unwrap();
+                        chain_p_puzzle.lock().unwrap().add_block(block.clone(),user_config.difficulty_leading_zero_len);
                     },
-                    None => {println!("Solution found by another miner");}
+                    None => {
+                        //println!("Solution found by another miner");
+                }
                 };
                 *cancellation_token_clone.write().unwrap() = false; //set cancellation token back to false to solve next puzzle
             }
@@ -296,7 +319,6 @@ impl Nakamoto {
             self.trans_tx.send(transaction).unwrap(); //possible err?
         }
     }
-
     /// Get the serialized chain as a json string. 
     pub fn get_serialized_chain(&self) -> String {
         let chain = self.chain_p.lock().unwrap().clone();
@@ -309,4 +331,3 @@ impl Nakamoto {
         serde_json::to_string_pretty(&tx_pool).unwrap()
     }
 }
-
