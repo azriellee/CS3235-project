@@ -135,48 +135,34 @@ fn main() {
     let wallet_seccomp_path = std::env::args().nth(5).expect("Please specify wallet seccomp path");
 
     // - Create bin_nakamoto process:  Command::new("./target/debug/bin_nakamoto")...
-    let nakamoto_child = Command::new("./target/debug/bin_nakamoto").arg(nakamoto_seccomp_path)
-    .stdin(Stdio::piped())
-    .stdout(Stdio::piped())
-    .spawn()
-    .expect("Failed to execute bin_nakamoto as child process");
+    let mut nakamoto_process = Command::new("./target/debug/bin_nakamoto").arg(nakamoto_seccomp_path)
+        .stdin(Stdio::piped())
+        .stdout(Stdio::piped())
+        .stderr(Stdio::piped())
+        .spawn()
+        .expect("Failed to execute bin_nakamoto as child process");
 
     // - Create bin_wallet process:  Command::new("./target/debug/bin_wallet")...
-    let wallet_child = Command::new("./target/debug/bin_wallet").arg(wallet_seccomp_path)
-    .stdin(Stdio::piped())
-    .stdout(Stdio::piped())
-    .spawn()
-    .expect("Failed to execute bin_wallet as child process");
+    let mut bin_wallet_process = Command::new("./target/debug/bin_wallet").arg(wallet_seccomp_path)
+        .stdin(Stdio::piped())
+        .stdout(Stdio::piped())
+        .stderr(Stdio::piped())
+        .spawn()
+        .expect("Failed to execute bin_wallet as child process");
 
     // - Get stdin and stdout of those processes
-    let nakamoto_child_stdout = nakamoto_child.stdout.expect("Failed to get wallet_child stdout");
-    let nakamoto_child_stdin = nakamoto_child.stdin.expect("Failed to get wallet_child stdin");
-    let mut nakamoto_reader = BufReader::new(nakamoto_child_stdout);
-    let mut nakamoto_writer = BufWriter::new(nakamoto_child_stdin);
-
-    let wallet_child_stdout = wallet_child.stdout.expect("Failed to get wallet_child stdout");
-    let wallet_child_stdin = wallet_child.stdin.expect("Failed to get wallet_child stdin");
-    let mut wallet_reader = BufReader::new(wallet_child_stdout);
-    let mut wallet_writer = BufWriter::new(wallet_child_stdin);
-
-
     // - Create buffer readers if necessary
+    let mut nakamoto_process_stdin = nakamoto_process.stdin.take().expect("Failed to get nakamoto_child stdin");
+    let nakamoto_process_stdout = nakamoto_process.stdout.take().expect("Failed to get nakamoto_child stdout");
+    // let nakamoto_process_stderr = nakamoto_process.stderr.take().expect("Failed to get nakamoto_child stderr");
 
+    let mut bin_wallet_process_stdin = bin_wallet_process.stdin.take().expect("Failed to get wallet_child stdin");
+    let bin_wallet_process_stdout = bin_wallet_process.stdout.take().expect("Failed to get wallet_child stdout");
+    // let bin_wallet_process_stderr = bin_wallet_process.stderr.take().expect("Failed to get wallet_child stderr");
+    
+    let mut bin_wallet_reader = BufReader::new(bin_wallet_process_stdout);
 
     // - Send initialization requests to bin_nakamoto and bin_wallet
-
-    //No idea if this is the right place to get the input, or if this is even the input. 
-    //For now this implementation only sends the first line.
-    /* 
-    let wallet_input_file = File::open(wallet_config_path).unwrap();
-    let wallet_input_reader = BufReader::new(wallet_input_file);
-    if let Some(Ok(wallet_init_msg)) = wallet_input_reader.lines().next() {
-        wallet_writer.write(wallet_init_msg.as_bytes());
-    }
-    */
-    let wallet_init_msg = fs::read_to_string(wallet_config_path).expect("Failed to read wallet.json");
-    let wallet_init_msg_serialised = serde_json::to_string(&IPCMessageReqWallet::Initialize(wallet_init_msg)).unwrap();
-    wallet_writer.write_all(wallet_init_msg_serialised.as_bytes());
 
     let nakamoto_config_configpath = format!("{}/Config.json", nakamoto_config_path);
     let nakamoto_config_blocktreepath = format!("{}/BlockTree.json", nakamoto_config_path);
@@ -187,31 +173,37 @@ fn main() {
     let nakamoto_init_txpool_msg = fs::read_to_string(nakamoto_config_txpoolpath).expect("Failed to read txpool.json");
     let nakamoto_init_msg_serialised = serde_json::to_string(
         &IPCMessageReqNakamoto::Initialize(nakamoto_init_blocktree_msg, nakamoto_init_txpool_msg, nakamoto_init_config_msg)).unwrap();
-    nakamoto_writer.write_all(nakamoto_init_msg_serialised.as_bytes());
+    // nakamoto_writer.write_all(format!("{}\n", nakamoto_init_msg_serialised).as_bytes());
+    nakamoto_process_stdin.write_all(format!("{}\n", nakamoto_init_msg_serialised).as_bytes()).unwrap();
+
+    // bin_wallet initalisation
+    let wallet_init_msg = fs::read_to_string(wallet_config_path).expect("Failed to read wallet.json");
+    let wallet_init_msg_serialised = serde_json::to_string(&IPCMessageReqWallet::Initialize(wallet_init_msg)).unwrap();
+    // bin_wallet_writer.write_all(format!("{}\n", wallet_init_msg_serialised).as_bytes());
+    bin_wallet_process_stdin.write_all(format!("{}\n", wallet_init_msg_serialised).as_bytes()).unwrap();
 
     // Please fill in the blank
     // sandboxing the bin_client (For part B). Leave it blank for part A.
-    
+    // ###
 
     let user_name: String;
     let user_id: String;
     // Please fill in the blank
     // Read the user info from wallet
-    let mut wallet_reply = String::new();
-    wallet_reader.read_line(&mut wallet_reply).expect("Help how did getting wallet data fail");
-    assert!(wallet_reply == serde_json::to_string(&IPCMessageRespWallet::Initialized).unwrap(), "Help how did getting wallet data get the wrong thing");
-    wallet_reply = "".to_string();
-    let wallet_req = serde_json::to_string(&IPCMessageReqWallet::GetUserInfo).unwrap();
-    wallet_writer.write_all(wallet_req.as_bytes());
-    wallet_reader.read_line(&mut wallet_reply).expect("Help how did getting wallet data on the second take??");
-    let parsed_input : IPCMessageRespWallet = serde_json::from_str(wallet_reply.as_str()).unwrap(); 
-    match parsed_input {
-        IPCMessageRespWallet::UserInfo(x, y) => {
-            user_name = x;
-            user_id = y;
-        }
-        _ => return, //Terminate if its invalid
-    }
+    let mut wallet_info_output = String::new();
+    let wallet_get_user_info_msg_serialised = serde_json::to_string(&IPCMessageReqWallet::GetUserInfo).unwrap();
+    // bin_wallet_writer.write_all(format!("{}\n", wallet_get_user_info_msg_serialised).as_bytes());
+    bin_wallet_process_stdin.write_all(format!("{}\n", wallet_get_user_info_msg_serialised).as_bytes()).unwrap();
+
+    bin_wallet_reader.read_line(&mut wallet_info_output).expect("Failed to retrieve wallet user info");
+    let wallet_info = serde_json::from_str(&wallet_info_output).unwrap();
+    match wallet_info {
+        IPCMessageRespWallet::UserInfo(username, userid) => {
+            user_name = username;
+            user_id = userid;
+        },
+        _=> { panic!() }
+    };
 
     // Create the Terminal UI app
     let app_arc = Arc::new(Mutex::new(app::App::new(
@@ -230,25 +222,23 @@ fn main() {
         return sign_req_str;
     };
 
-
     if std::env::args().len() != 6 {
-        let bot_command_path = std::env::args().nth(6).expect("In what universe did you see this");
         // Then there must be 7 arguments provided. The last argument is the bot commands path
         // Please fill in the blank
         // Create a thread to read the bot commands from `bot_command_path`, execute those commands and update the UI
         // Notice that the `SleepMs(1000)` doesn't mean that the all threads in the whole process should sleep for 1000ms. It means that 
         // The next bot command that fakes the user interaction should be processed 1000ms later. 
         // It should not block the execution of any other threads or the main thread.
-
-        let bot_command_file = File::open(bot_command_path).expect("failed to open bot_cmd_file");
+        let bot_command_path = std::env::args().nth(6).expect("Failed to get bot_command_path");
+        let bot_command_file = File::open(bot_command_path).expect("Failed to open bot_cmd_file");
         let bot_command_reader = BufReader::new(bot_command_file);
         thread::spawn(move || {
             for bot_line in  bot_command_reader.lines() {
-                let bot_line = bot_line.expect("failed to read line");
+                let bot_line = bot_line.expect("Failed to read line");
                 let parsed_bot_cmd : BotCommand = serde_json::from_str(bot_line.as_str()).unwrap(); 
                 match parsed_bot_cmd {
                     BotCommand::Send(receiver_user_id, transaction_message) => {
-                        create_sign_req(user_id.clone(), receiver_user_id, transaction_message);
+                        let request = create_sign_req(user_id.to_string(), receiver_user_id, transaction_message);
                         //Add to Tx Pool
                     }
                     BotCommand::SleepMs(sleeptime) => {
@@ -262,55 +252,46 @@ fn main() {
             }
         });
     }
+    
     // Please fill in the blank
     // - Spawn threads to read/write from/to bin_nakamoto/bin_wallet. (Through their piped stdin and stdout)
     // - You should request for status update from bin_nakamoto periodically (every 500ms at least) to update the App (UI struct) accordingly.
     // - You can also create threads to read from stderr of bin_nakamoto/bin_wallet and add those lines to the UI (app.stderr_log) for easier debugging.
-    
-    //status update from bin_nakamoto
-    // wanted to spawn different threads for each update, however i was thinking that if i use the same stream, there might be a chance for data race? but i lazy create 4 diff streams for all lol
-    // e.g. my blocktree status accidentallyy updated with my network status? not sure if my understanding is right tho
-    let app_arc_clone = app_arc.clone();
-    let IPCthreads = thread::spawn(move || {
-        let tick_rate = Duration::from_millis(500);
+    let nakamoto_status_stdin_p = Arc::new(Mutex::new(nakamoto_process_stdin));
+    let nakamoto_status_reader = Arc::new(Mutex::new(BufReader::new(nakamoto_process_stdout)));
+
+    let nakamoto_stdin_p = Arc::clone(&nakamoto_status_stdin_p);
+    let bin_wallet_stdin_p = Arc::new(Mutex::new(bin_wallet_process_stdin));
+
+    let nakamoto_app = app_arc.clone();
+    let nakamoto_thread = thread::spawn(move || {
         loop {
-            //chain status update
-            let chain_status_req = serde_json::to_string(&IPCMessageReqNakamoto::RequestChainStatus).unwrap();
-            nakamoto_writer.write_all(chain_status_req.as_bytes());
-            let mut chain_status_reply = String::new();
-            nakamoto_reader.read_line(&mut chain_status_reply).expect("nakamoto data failed");
-            let parsed_reply = serde_json::from_str(chain_status_reply.as_str()).unwrap();
-            app_arc_clone.lock().unwrap().blocktree_status = parsed_reply;
+            let mut msg = String::new();
+            // Get status update
+            let status_update_msg = serde_json::to_string(&IPCMessageReqNakamoto::RequestChainStatus).unwrap();
+            nakamoto_status_stdin_p.lock().unwrap().write_all(format!("{}\n", status_update_msg).as_bytes()).unwrap();
+            nakamoto_status_reader.lock().unwrap().read_line(&mut msg).unwrap();
+            nakamoto_app.lock().unwrap().blocktree_status = serde_json::from_str(&msg).unwrap();
 
-            //network status update
-            let network_status_req = serde_json::to_string(&IPCMessageReqNakamoto::RequestNetStatus).unwrap();
-            nakamoto_writer.write_all(network_status_req.as_bytes());
-            let mut network_status_reply = String::new();
-            nakamoto_reader.read_line(&mut network_status_reply).expect("nakamoto data failed");
-            let parsed_reply = serde_json::from_str(network_status_reply.as_str()).unwrap();
-            app_arc_clone.lock().unwrap().network_status = parsed_reply;
+            let status_update_msg = serde_json::to_string(&IPCMessageReqNakamoto::RequestMinerStatus).unwrap();
+            nakamoto_status_stdin_p.lock().unwrap().write_all(format!("{}\n", status_update_msg).as_bytes()).unwrap();
+            nakamoto_status_reader.lock().unwrap().read_line(&mut msg).unwrap();
+            nakamoto_app.lock().unwrap().miner_status = serde_json::from_str(&msg).unwrap();
 
-            //miner status update
-            let miner_status_req = serde_json::to_string(&IPCMessageReqNakamoto::RequestMinerStatus).unwrap();
-            nakamoto_writer.write_all(miner_status_req.as_bytes());
-            let mut miner_status_reply = String::new();
-            nakamoto_reader.read_line(&mut miner_status_reply).expect("nakamoto data failed");
-            let parsed_reply = serde_json::from_str(miner_status_reply.as_str()).unwrap();
-            app_arc_clone.lock().unwrap().miner_status = parsed_reply;
+            let status_update_msg = serde_json::to_string(&IPCMessageReqNakamoto::RequestNetStatus).unwrap();
+            nakamoto_status_stdin_p.lock().unwrap().write_all(format!("{}\n", status_update_msg).as_bytes()).unwrap();
+            nakamoto_status_reader.lock().unwrap().read_line(&mut msg).unwrap();
+            nakamoto_app.lock().unwrap().network_status = serde_json::from_str(&msg).unwrap();
 
-            //tx pool status update
-            let txpool_status_req = serde_json::to_string(&IPCMessageReqNakamoto::RequestTxPoolStatus).unwrap();
-            nakamoto_writer.write_all(txpool_status_req.as_bytes());
-            let mut txpool_status_reply = String::new();
-            nakamoto_reader.read_line(&mut txpool_status_reply).expect("nakamoto data failed");
-            let parsed_reply = serde_json::from_str(txpool_status_reply.as_str()).unwrap();
-            app_arc_clone.lock().unwrap().txpool_status = parsed_reply;
+            let status_update_msg = serde_json::to_string(&IPCMessageReqNakamoto::RequestTxPoolStatus).unwrap();
+            nakamoto_status_stdin_p.lock().unwrap().write_all(format!("{}\n", status_update_msg).as_bytes()).unwrap();
+            nakamoto_status_reader.lock().unwrap().read_line(&mut msg).unwrap();
+            nakamoto_app.lock().unwrap().txpool_status = serde_json::from_str(&msg).unwrap();
+
+            thread::sleep(Duration::from_millis(500));
         }
     });
-    /*/
-    let bin_wallet_stdin_p = Arc::new(Mutex::new(wallet_child_stdin));
-    let nakamoto_stdin_p = Arc::new(Mutex::new(nakamoto_child_stdin));
-    */
+
     // UI thread. Modify it to suit your needs. 
     let app_ui_ref = app_arc.clone();
     let bin_wallet_stdin_p_cloned = bin_wallet_stdin_p.clone();
@@ -405,11 +386,12 @@ fn main() {
 
     // Please fill in the blank
     // Wait for the IPC threads to finish
-    /*
-    let ecode1 = nakamoto_child.wait().expect("failed to wait on child nakamoto");
+    nakamoto_thread.join().unwrap();
+
+    let ecode1 = nakamoto_process.wait().expect("failed to wait on child nakamoto");
     eprintln!("--- nakamoto ecode: {}", ecode1);
 
-    let ecode2 = wallet_child.wait().expect("failed to wait on child bin_wallet");
+    let ecode2 = bin_wallet_process.wait().expect("failed to wait on child bin_wallet");
     eprintln!("--- bin_wallet ecode: {}", ecode2);
     */
 }

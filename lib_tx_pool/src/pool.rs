@@ -125,10 +125,13 @@ impl TxPool {
         // Please fill in the blank
         // For debugging purpose, you can return any dictionary of strings as the status of the tx_pool. 
         // It should be displayed in the Client UI eventually.
+        
         let mut status = BTreeMap::new();
         let mut tx_ids = String::new();
         let mut removed_ids = String::new();
 
+        status.insert("#pool_tx_map".to_string(), self.pool_tx_ids.len().to_string());
+        /* 
         status.insert("last finalized block id".to_string(), self.last_finalized_block_id.clone());
 
         for id in self.pool_tx_ids.iter() {
@@ -142,9 +145,9 @@ impl TxPool {
             removed_ids += " ";
         }
         status.insert("removed ids".to_string(), removed_ids);
+        */
 
         status
     }
 }
-
 

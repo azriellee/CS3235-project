@@ -448,12 +448,12 @@ impl BlockTree {
         // It should be displayed in the Client UI eventually.
         let mut statuses: BTreeMap<String, String> = BTreeMap::new();
         statuses.insert("root_id".to_string(), self.root_id.to_string());
-        statuses.insert("finalized_block_id".to_string(), self.finalized_block_id.to_string());
-        statuses.insert("finalized_block_id_depth".to_string(), self.block_depth.get(&self.finalized_block_id).unwrap().to_string());
-        statuses.insert("working_block_id".to_string(), self.working_block_id.to_string());
-        statuses.insert("working_block_id_depth".to_string(), self.block_depth.get(&self.working_block_id).unwrap().to_string());
-        statuses.insert("no_of_orphans".to_string(), self.orphans.len().to_string());
-
+        statuses.insert("finalized_id".to_string(), self.finalized_block_id.to_string());
+        //statuses.insert("finalized_block_id_depth".to_string(), self.block_depth.get(&self.finalized_block_id).unwrap().to_string());
+        statuses.insert("working_id".to_string(), self.working_block_id.to_string());
+        statuses.insert("working_depth".to_string(), self.block_depth.get(&self.working_block_id).unwrap().to_string());
+        statuses.insert("#orphans".to_string(), self.orphans.len().to_string());
+        statuses.insert("#blocks".to_string(), self.all_blocks.len().to_string()); //I think
         statuses
     }
     

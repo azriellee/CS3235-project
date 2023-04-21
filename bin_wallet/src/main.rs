@@ -97,7 +97,6 @@ fn main() {
     //println!("StartCheck");
     let mut raw_data = String::new();
     //let mut parsedInput : IPCMessageReq = serde_json::from_str(rawData)?; 
-    let mut looptheinput : bool = true;
     let user_wallet : Wallet;
 
     //Initialise
@@ -111,11 +110,12 @@ fn main() {
         _ => return, //Terminate if first thing is not an IPCMessageReq::Initialize();
     }
     
-    while looptheinput {
+    let mut is_running: bool = true;
+    while is_running {
         //Read the damn input. Expected to fit IPCMessageReq.
         //println!("Reading In Progress...\n");
         raw_data = "".to_string();
-        io::stdin().read_line(&mut raw_data).expect("wtf");
+        io::stdin().read_line(&mut raw_data).expect("Failed to read input.");
         //println!("What is read: \n{}\n", raw_data);
         let parsed_input : IPCMessageReq = serde_json::from_str(raw_data.as_str()).unwrap(); 
         //println!("Matching In Progress...\n");
@@ -136,10 +136,10 @@ fn main() {
                 println!("{}", serde_json::to_string(&IPCMessageResp::VerifyResponse(is_correct, data_string)).unwrap());
             }
             IPCMessageReq::Quit => {
-                looptheinput = false;
+                is_running = false;
                 println!("{}\n", serde_json::to_string(&IPCMessageResp::Quitting).unwrap());
             }
-            _ => println!("Ayyo shen me the faq?\n"),
+            _ => panic!(),
         }
 
     }

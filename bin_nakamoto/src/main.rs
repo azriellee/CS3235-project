@@ -112,13 +112,15 @@ fn main() {
     // Please fill in the blank
     // Loop over stdin and handle IPC messages
     
-    println!("StartCheck!!");
+    //println!("StartCheck!!");
+    println!("{}", serde_json::to_string(&IPCMessageResp::Notify("# Waiting for IPC Requests ...".to_string())).unwrap());
     let mut raw_data = String::new();
     let mut nakamoto_node : Nakamoto;
 
     //Initialise
     io::stdin().read_line(&mut raw_data).expect("wtf"); //need handle err here
     let parsed_input : IPCMessageReq = serde_json::from_str(raw_data.as_str()).unwrap(); 
+    println!("{}", serde_json::to_string(&IPCMessageResp::Notify("[Main] Start receiving trans thread".to_string())).unwrap());
     match parsed_input {
         IPCMessageReq::Initialize(chain_info, tx_info, config_info) => {
             nakamoto_node = Nakamoto::create_nakamoto(chain_info, tx_info, config_info);
@@ -194,5 +196,4 @@ fn main() {
         }    
     }
 }
-
 

@@ -205,18 +205,18 @@ impl P2PNetwork {
         // For debugging purpose, you can return any dictionary of strings as the status of the network. 
         // It should be displayed in the Client UI eventually.
         let mut statuses: BTreeMap<String, String> = BTreeMap::new();
-        statuses.insert("address".to_string(), format!("{}:{}", self.address.ip, self.address.port));
-        statuses.insert("send_msg_count".to_string(), self.send_msg_count.to_string());
-        statuses.insert("recv_msg_count".to_string(), self.recv_msg_count.to_string());
+        statuses.insert("#address".to_string(), format!("ip: {} port: {}", self.address.ip, self.address.port));
+        statuses.insert("#send_msg".to_string(), self.send_msg_count.to_string());
+        statuses.insert("#recv_msg".to_string(), self.recv_msg_count.to_string());
+        /*
         statuses.insert("neighbours".to_string(), self.neighbors
             .iter()
             .map(|n| format!("{}:{}", n.ip, n.port))
             .collect::<Vec<String>>()
             .join(", "));
-
+        */
         statuses
     }
 
 }
-
 
