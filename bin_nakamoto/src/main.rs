@@ -188,7 +188,7 @@ fn main() {
             }
             IPCMessageReq::Quit => {
                 is_running = false;
-                println!("{}", serde_json::to_string(&IPCMessageResp::Quitting).unwrap());
+                println!("{}\n", serde_json::to_string(&IPCMessageResp::Quitting).unwrap());
             }
             _ => {
                 println!("{}", serde_json::to_string(&IPCMessageResp::Notify(raw_data)).unwrap());
