@@ -212,8 +212,6 @@ fn main() {
         "".to_string(), 
         format!("SEND $100   // By {}", user_name)))
     );
-    let ui = app_arc.clone()
-    let input = ui.lock().unwrap().textareas;
 
     // An enclosure func to generate signing requests when creating new transactions. 
     let create_sign_req = |sender: String, receiver: String, message: String| {
@@ -427,8 +425,10 @@ fn main() {
 
     // Please fill in the blank
     // Wait for the IPC threads to finish
-    nakamoto_thread.join().unwrap();
-    err_thread.join().unwrap();
+    nakamoto_read_threads.join().unwrap();
+    status_threads.join().unwrap();
+    wallet_read_threads.join().unwrap();
+    //err_thread.join().unwrap();
 
     let ecode1 = nakamoto_process.wait().expect("failed to wait on child nakamoto");
     eprintln!("--- nakamoto ecode: {}", ecode1);
