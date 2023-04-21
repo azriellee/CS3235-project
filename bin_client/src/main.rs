@@ -21,7 +21,7 @@ use crossterm::{
 };
 
 use std::fs::File;
-use std::io::{self, Read, Write, BufReader, BufRead, BufWriter};
+use std::io::{self, Write, BufReader, BufRead};
 use std::process::{Command, Stdio};
 use std::collections::BTreeMap;
 use std::time::SystemTime;
@@ -160,7 +160,7 @@ fn main() {
     let bin_wallet_process_stdout = bin_wallet_process.stdout.take().expect("Failed to get wallet_child stdout");
     let bin_wallet_process_stderr = bin_wallet_process.stderr.take().expect("Failed to get wallet_child stderr");
     
-    let mut bin_wallet_reader = BufReader::new(bin_wallet_process_stdout);
+    let bin_wallet_reader =  Arc::new(Mutex::new(BufReader::new(bin_wallet_process_stdout)));
 
     // - Send initialization requests to bin_nakamoto and bin_wallet
 
@@ -168,18 +168,16 @@ fn main() {
     let nakamoto_config_blocktreepath = format!("{}/BlockTree.json", nakamoto_config_path);
     let nakamoto_config_txpoolpath = format!("{}/TxPool.json", nakamoto_config_path);
 
-    let nakamoto_init_config_msg = fs::read_to_string(nakamoto_config_configpath).expect("Failed to read config.json");
-    let nakamoto_init_blocktree_msg = fs::read_to_string(nakamoto_config_blocktreepath).expect("Failed to read blocktree.json");
-    let nakamoto_init_txpool_msg = fs::read_to_string(nakamoto_config_txpoolpath).expect("Failed to read txpool.json");
+    let nakamoto_init_config_msg = read_string_from_file(nakamoto_config_configpath.as_str());
+    let nakamoto_init_blocktree_msg = read_string_from_file(nakamoto_config_blocktreepath.as_str());
+    let nakamoto_init_txpool_msg = read_string_from_file(nakamoto_config_txpoolpath.as_str());
     let nakamoto_init_msg_serialised = serde_json::to_string(
         &IPCMessageReqNakamoto::Initialize(nakamoto_init_blocktree_msg, nakamoto_init_txpool_msg, nakamoto_init_config_msg)).unwrap();
-    // nakamoto_writer.write_all(format!("{}\n", nakamoto_init_msg_serialised).as_bytes());
     nakamoto_process_stdin.write_all(format!("{}\n", nakamoto_init_msg_serialised).as_bytes()).unwrap();
 
     // bin_wallet initalisation
-    let wallet_init_msg = fs::read_to_string(wallet_config_path).expect("Failed to read wallet.json");
+    let wallet_init_msg = read_string_from_file(wallet_config_path.as_str());
     let wallet_init_msg_serialised = serde_json::to_string(&IPCMessageReqWallet::Initialize(wallet_init_msg)).unwrap();
-    // bin_wallet_writer.write_all(format!("{}\n", wallet_init_msg_serialised).as_bytes());
     bin_wallet_process_stdin.write_all(format!("{}\n", wallet_init_msg_serialised).as_bytes()).unwrap();
 
     // Please fill in the blank
@@ -192,15 +190,14 @@ fn main() {
     // Read the user info from wallet
     let mut wallet_info_output = String::new();
     let wallet_get_user_info_msg_serialised = serde_json::to_string(&IPCMessageReqWallet::GetUserInfo).unwrap();
-    // bin_wallet_writer.write_all(format!("{}\n", wallet_get_user_info_msg_serialised).as_bytes());
     bin_wallet_process_stdin.write_all(format!("{}\n", wallet_get_user_info_msg_serialised).as_bytes()).unwrap();
 
-    bin_wallet_reader.read_line(&mut wallet_info_output).expect("Failed to retrieve wallet user info");
+    bin_wallet_reader.lock().unwrap().read_line(&mut wallet_info_output).expect("Failed to retrieve wallet user info");
     let wallet_info = serde_json::from_str(&wallet_info_output).unwrap();
     match wallet_info {
         IPCMessageRespWallet::UserInfo(username, userid) => {
-            user_name = username;
-            user_id = userid;
+            user_name = username.clone();
+            user_id = userid.clone();
         },
         _=> { panic!() }
     };
@@ -222,14 +219,13 @@ fn main() {
         return sign_req_str;
     };
 
-    let nakamoto_status_stdin_p = Arc::new(Mutex::new(nakamoto_process_stdin));
-    let nakamoto_status_reader = Arc::new(Mutex::new(BufReader::new(nakamoto_process_stdout)));
-    let nakamoto_stdin_p = Arc::clone(&nakamoto_status_stdin_p);
+    // Arc mutex starts here
+    let nakamoto_status_stdin_p = Arc::new(Mutex::new(nakamoto_process_stdin)); // nakamoto std in
+    let nakamoto_stdin_p = Arc::clone(&nakamoto_status_stdin_p); // nakamoto std in for ui
+    let nakamoto_status_reader = Arc::new(Mutex::new(BufReader::new(nakamoto_process_stdout))); // nakamoto std out
 
-    let wallet_reader = Arc::new(Mutex::new(BufReader::new(bin_wallet_process_stdout)));
     let bin_wallet_stdin_p = Arc::new(Mutex::new(bin_wallet_process_stdin));
-
-    let nakamoto_app = app_arc.clone();
+    // bin_wallet std out, bin_wallet_reader on top
 
     if std::env::args().len() != 6 {
         // Then there must be 7 arguments provided. The last argument is the bot commands path
@@ -242,13 +238,14 @@ fn main() {
         let bot_command_file = File::open(bot_command_path).expect("Failed to open bot_cmd_file");
         let bot_command_reader = BufReader::new(bot_command_file);
         let bin_wallet_stdin_p_clone = bin_wallet_stdin_p.clone();
+        let user_id_clone = user_id.to_string();
         thread::spawn(move || {
             for bot_line in  bot_command_reader.lines() {
                 let bot_line = bot_line.expect("Failed to read line");
                 let parsed_bot_cmd : BotCommand = serde_json::from_str(bot_line.as_str()).unwrap(); 
                 match parsed_bot_cmd {
                     BotCommand::Send(receiver_user_id, transaction_message) => {
-                        let sign_request = create_sign_req(user_id.to_string(), receiver_user_id, transaction_message);
+                        let sign_request = create_sign_req(user_id_clone.to_string(), receiver_user_id, transaction_message);
                         //Add to Tx Pool
                         // publish sign request to stdin to wallet
                         bin_wallet_stdin_p_clone.lock().unwrap().write_all(sign_request.as_bytes()).unwrap();
@@ -270,41 +267,49 @@ fn main() {
     // - You should request for status update from bin_nakamoto periodically (every 500ms at least) to update the App (UI struct) accordingly.
     // - You can also create threads to read from stderr of bin_nakamoto/bin_wallet and add those lines to the UI (app.stderr_log) for easier debugging.
 
-
-    let status_threads = thread::spawn(move || {
+    let nakamoto_status_stdin_p_clone = Arc::clone(&nakamoto_status_stdin_p);
+    let user_id_clone = user_id.clone();
+    let nakamoto_write_threads = thread::spawn(move || {
         let tick_rate = Duration::from_millis(500);
         loop {
-            let mut msg = String::new();
             // Get status update
             let status_update_msg = serde_json::to_string(&IPCMessageReqNakamoto::RequestChainStatus).unwrap();
-            nakamoto_status_stdin_p.lock().unwrap().write_all(format!("{}\n", status_update_msg).as_bytes()).unwrap();
+            nakamoto_status_stdin_p_clone.lock().unwrap().write_all(format!("{}\n", status_update_msg).as_bytes()).unwrap();
 
             let status_update_msg = serde_json::to_string(&IPCMessageReqNakamoto::RequestMinerStatus).unwrap();
-            nakamoto_status_stdin_p.lock().unwrap().write_all(format!("{}\n", status_update_msg).as_bytes()).unwrap();
+            nakamoto_status_stdin_p_clone.lock().unwrap().write_all(format!("{}\n", status_update_msg).as_bytes()).unwrap();
 
             let status_update_msg = serde_json::to_string(&IPCMessageReqNakamoto::RequestNetStatus).unwrap();
-            nakamoto_status_stdin_p.lock().unwrap().write_all(format!("{}\n", status_update_msg).as_bytes()).unwrap();
+            nakamoto_status_stdin_p_clone.lock().unwrap().write_all(format!("{}\n", status_update_msg).as_bytes()).unwrap();
 
             let status_update_msg = serde_json::to_string(&IPCMessageReqNakamoto::RequestTxPoolStatus).unwrap();
-            nakamoto_status_stdin_p.lock().unwrap().write_all(format!("{}\n", status_update_msg).as_bytes()).unwrap();
+            nakamoto_status_stdin_p_clone.lock().unwrap().write_all(format!("{}\n", status_update_msg).as_bytes()).unwrap();
+
+            let status_update_msg = serde_json::to_string(&IPCMessageReqNakamoto::GetAddressBalance(user_id_clone.to_string())).unwrap();
+            nakamoto_status_stdin_p_clone.lock().unwrap().write_all(format!("{}\n", status_update_msg).as_bytes()).unwrap();
+
+            thread::sleep(tick_rate);
         }
     });
 
+    let bin_wallet_reader_clone = Arc::clone(&bin_wallet_reader);
+    let nakamoto_status_stdin_p_clone_clone = Arc::clone(&nakamoto_status_stdin_p);
     let wallet_read_threads = thread::spawn(move || {
         loop {
             let mut wallet_sign_response = String::new();
-            wallet_reader.lock().unwrap().read_line(&mut wallet_sign_response).expect("Failed to retrieve wallet user info");
+            bin_wallet_reader_clone.lock().unwrap().read_line(&mut wallet_sign_response).expect("Failed to retrieve wallet user info");
             let sign_response = serde_json::from_str(&wallet_sign_response).unwrap();
             match sign_response {
                 IPCMessageRespWallet::SignResponse(data_string, signature) => {
                     let publish_tx_req = serde_json::to_string(&IPCMessageReqNakamoto::PublishTx(data_string, signature)).unwrap();
-                    nakamoto_status_stdin_p.lock().unwrap().write_all(format!("{}\n", publish_tx_req).as_bytes()).unwrap();
+                    nakamoto_status_stdin_p_clone_clone.lock().unwrap().write_all(format!("{}\n", publish_tx_req).as_bytes()).unwrap();
                 },
                 _=> {}
             };
         }
     });
 
+    let nakamoto_app = app_arc.clone();
     let nakamoto_read_threads = thread::spawn(move || {
         loop {
             let mut msg = String::new();
@@ -426,7 +431,7 @@ fn main() {
     // Please fill in the blank
     // Wait for the IPC threads to finish
     nakamoto_read_threads.join().unwrap();
-    status_threads.join().unwrap();
+    nakamoto_write_threads.join().unwrap();
     wallet_read_threads.join().unwrap();
     //err_thread.join().unwrap();
 

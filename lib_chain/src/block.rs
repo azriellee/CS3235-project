@@ -453,7 +453,7 @@ impl BlockTree {
         statuses.insert("working_id".to_string(), self.working_block_id.to_string());
         statuses.insert("working_depth".to_string(), self.block_depth.get(&self.working_block_id).unwrap().to_string());
         statuses.insert("#orphans".to_string(), self.orphans.len().to_string());
-        statuses.insert("#blocks".to_string(), self.all_blocks.len().to_string()); //I think
+        statuses.insert("#blocks".to_string(), self.all_blocks.len().to_string());
         statuses
     }
     
