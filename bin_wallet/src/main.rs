@@ -84,7 +84,7 @@ fn main() {
     if let Some(policy_path) = maybe_policy_path {
         // Please fill in the blank
         // If the first param is provided, read the seccomp config and apply it
-
+/*
         let json_input = read_string_from_file(&policy_path);
         let filter_map: BpfMap = seccompiler::compile_from_json(
             json_input.as_bytes(),
@@ -104,6 +104,7 @@ fn main() {
             Ok(()) => println!("very nice"),
             Err(e) => eprintln!("tohtohtoh {}", e),
         };
+        */
     }
 
     // The main logic of the bin_wallet starts here

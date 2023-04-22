@@ -189,16 +189,14 @@ impl Nakamoto {
                 // recv_timeout will get an error every 10 seconds when nothing is received REMOVED
                 let block_result = block_rx.recv();
                 eprintln!("recived a block");
-                
                 match block_result {
                     Ok(block) => { 
                         // if the block already exists in our block tree, do not broadcast?
-                        let has_existing_block_result = chain_p_block.lock().unwrap().get_block(block.header.block_id.to_string());
-                        match has_existing_block_result {
-                            Some(_) => {  continue; },
-                            None => { },
+                        let incoming_block_id = block.header.block_id.to_string();
+                        let has_existing_block_result = chain_p_block.lock().unwrap().all_blocks.contains_key(&incoming_block_id);
+                        if has_existing_block_result {
+                            continue;
                         }
-
                         // add block to the blocktree, broadcasts block
                         let initial_working_block = chain_p.lock().unwrap().working_block_id.clone();
                         chain_p.lock().unwrap().add_block(block.clone(), user_config.difficulty_leading_zero_len_acc);
