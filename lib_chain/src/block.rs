@@ -414,12 +414,10 @@ impl BlockTree {
 
         let mut block_iterator: &BlockNode = self.all_blocks.get(&self.finalized_block_id.to_string()).unwrap();
         loop {
-            if since_block_id != block_iterator.header.block_id.to_string() {
+            if since_block_id == block_iterator.header.block_id.to_string() {
                 break;
             }
-
             finalized_blocks.push(block_iterator.clone());
-
             block_iterator = &self.all_blocks.get(&block_iterator.header.parent.to_string()).unwrap();
         }
         finalized_blocks.reverse();

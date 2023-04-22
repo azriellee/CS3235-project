@@ -53,30 +53,36 @@ fn create_puzzle(chain_p: Arc<Mutex<BlockTree>>, tx_pool_p: Arc<Mutex<TxPool>>, 
     // Please fill in the blank
     // Filter transactions from tx_pool and get the last node of the longest chain.
     // tx_count corresponds to max_count of filter_txs in TxPool
-
+    if chain_p.lock().unwrap().finalized_tx_ids.len() > 0 {
+        // get the last finalized block for removing finalized transactions
+        // technically i can just call the function on each new finalized block?
+        let genesis_id = chain_p.lock().unwrap().root_id.clone();
+        let finalized_blocks = chain_p.lock().unwrap().get_finalized_blocks_since(genesis_id);
+        tx_pool_p.lock().unwrap().remove_txs_from_finalized_blocks(&finalized_blocks);
+    }
     let mut unfinalised_tx: Vec<Transaction>;
 
     // Loop for every 0.5secs to see if there is any new transaction
     loop {
         let mut excluding_tx: Vec<Transaction> = Vec::new();
-
         // Get transactions that are part of blocks 
         for block_node in chain_p.lock().unwrap().all_blocks.values() {
             let block_transactions = block_node.transactions_block.transactions.clone();
             excluding_tx.extend(block_transactions);
         }
-
+        /*
         // Get blocks that are already removed from the pool
         for tx_id in tx_pool_p.lock().unwrap().removed_tx_ids.iter() {
             let tx = tx_pool_p.lock().unwrap().pool_tx_map[tx_id].clone();
             excluding_tx.push(tx);
-        }
+        } */
         // Get the transactions that are not included in finalised blocks or are already removed in tx_pool
         unfinalised_tx = tx_pool_p.lock().unwrap().filter_tx(tx_count, &excluding_tx);
 
         if unfinalised_tx.len() > 0 {
             break;
         }
+        thread::sleep(Duration::from_millis(500)); //wait 0.5s if no new transactions
     }
 
     // Create the blocknode
@@ -191,9 +197,6 @@ impl Nakamoto {
                             Some(_) => { continue; },
                             None => { },
                         }
-
-                        // get the last finalized block for removing finalized transactions
-                        let last_finalized_block_id = &chain_p_block.lock().unwrap().finalized_block_id;
                         
                         // add block to the blocktree, broadcasts block
                         let initial_working_block = chain_p.lock().unwrap().working_block_id.clone();
@@ -206,9 +209,6 @@ impl Nakamoto {
                             *cancellation_token_clone.write().unwrap() = true;
                         }
                         
-                        // Do I need to remove transactions (belonging to finalised block) on tx_pool? yes
-                        let newly_finalized_blocks = chain_p_block.lock().unwrap().get_finalized_blocks_since(last_finalized_block_id.to_string());
-                        tx_pool_p_block.lock().unwrap().remove_txs_from_finalized_blocks(&newly_finalized_blocks);
                     },
                     Err(_) => { continue; },
                 }
