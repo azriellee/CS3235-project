@@ -80,38 +80,18 @@ fn main() {
     // If the argument is provided, bin_wallet will read and apply the seccomp policy at the beginning of the program
     // Otherwise, it will proceed to the normal execution
     
-       let maybe_policy_path = std::env::args().nth(1);
+    let maybe_policy_path = std::env::args().nth(1);
     if let Some(policy_path) = maybe_policy_path {
         // Please fill in the blank
         // If the first param is provided, read the seccomp config and apply it
-         let json_input = read_string_from_file(&policy_path);
-         let filter_map: BpfMap = seccompiler::compile_from_json(
-             json_input.as_bytes(),
-             std::env::consts::ARCH.try_into().unwrap(),
-         )
-         .unwrap();
-
-        /*
-        //Uncomment this to check if ilters applied properly. If you get os error 22 with prctl, good luck.
-        println!("pekopekopekopekopeko");
-
-        let maybefilter = filter_map.get("main_thread");
-
-        match maybefilter {
-            Some(_) => { println!("nice"); },
-            _ => { println!("toh"); }
-        };
-        let filter = maybefilter.unwrap();
-
-        match seccompiler::apply_filter(filter) {
-            Ok(()) => println!("very nice"),
-            Err(e) => eprintln!("tohtohtoh {}", e),
-        };
-        */
-        ///*
-         let filter = filter_map.get("main_thread").unwrap() ;
-         seccompiler::apply_filter(filter).unwrap();
-        //*/
+        let json_input = read_string_from_file(&policy_path);
+        let filter_map: BpfMap = seccompiler::compile_from_json(
+            json_input.as_bytes(),
+            std::env::consts::ARCH.try_into().unwrap(),
+        )
+        .unwrap();
+        let filter = filter_map.get("main_thread").unwrap() ;
+        seccompiler::apply_filter(filter).unwrap();
     }
 
     // The main logic of the bin_wallet starts here
