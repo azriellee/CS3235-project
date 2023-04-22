@@ -84,12 +84,12 @@ fn main() {
     if let Some(policy_path) = maybe_policy_path {
         // Please fill in the blank
         // If the first param is provided, read the seccomp config and apply it
-        // let json_input = read_string_from_file(&policy_path);
-        // let filter_map: BpfMap = seccompiler::compile_from_json(
-        //     json_input.as_bytes(),
-        //     std::env::consts::ARCH.try_into().unwrap(),
-        // )
-        // .unwrap();
+         let json_input = read_string_from_file(&policy_path);
+         let filter_map: BpfMap = seccompiler::compile_from_json(
+             json_input.as_bytes(),
+             std::env::consts::ARCH.try_into().unwrap(),
+         )
+         .unwrap();
 
         /*
         //Uncomment this to check if ilters applied properly. If you get os error 22 with prctl, good luck.
@@ -108,9 +108,9 @@ fn main() {
             Err(e) => eprintln!("tohtohtoh {}", e),
         };
         */
-        //
-        // let filter = filter_map.get("main_thread").unwrap() ;
-        // seccompiler::apply_filter(filter).unwrap();
+        ///*
+         let filter = filter_map.get("main_thread").unwrap() ;
+         seccompiler::apply_filter(filter).unwrap();
         //*/
     }
 
