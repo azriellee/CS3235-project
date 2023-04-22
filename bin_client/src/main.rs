@@ -353,11 +353,15 @@ fn main() {
                     nakamoto_read_app.lock().unwrap().notify_log.push(msg);
                 },
                 IPCMessageRespNakamoto::StateSerialization(chain_info, txpool_info) => {
-                    match fs::write(nakamoto_config_blocktreepath.to_string(), chain_info) {
+                    let timestamp = SystemTime::now().duration_since(SystemTime::UNIX_EPOCH).unwrap().as_millis();
+                    let block_tree_path = format!("{}/{}-BlockTree.json", nakamoto_config_path, timestamp);
+                    let tx_pool_path = format!("{}/{}-TxPool.json", nakamoto_config_path, timestamp);
+                    nakamoto_read_app.lock().unwrap().notify_log.push(block_tree_path.clone());
+                    match fs::write(block_tree_path, chain_info) {
                         Ok(_) => { nakamoto_read_app.lock().unwrap().notify_log.push("[File] BlockTree.json saved".to_string()); },
                         Err(_) => { nakamoto_read_app.lock().unwrap().notify_log.push("[File] Error saving BlockTree.json".to_string()); },
                     };
-                    match fs::write(nakamoto_config_txpoolpath.to_string(), txpool_info) {
+                    match fs::write(tx_pool_path, txpool_info) {
                         Ok(_) => { nakamoto_read_app.lock().unwrap().notify_log.push("[File] TxPool.json saved".to_string()); },
                         Err(_) => { nakamoto_read_app.lock().unwrap().notify_log.push("[File] Error saving TxPool.json".to_string()); }
                     };
