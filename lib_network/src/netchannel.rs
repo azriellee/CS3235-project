@@ -101,7 +101,7 @@ impl NetChannelTCP {
         };
 
         match serde_json::from_str(&msg) {
-            Ok(m) => {return m;},
+            Ok(m) => return m,
             Err(_) => return None,
         }
     }

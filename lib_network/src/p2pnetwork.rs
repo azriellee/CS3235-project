@@ -115,8 +115,10 @@ impl P2PNetwork {
                                     BroadcastBlock(node) => { block_sender.send(node).unwrap(); },
                                     BroadcastTx(tx) => { tx_sender.send(tx).unwrap(); },
                                     RequestBlock(id) => { },
-                                    Unknown(debug_msg) => { } //println!("{}", debug_msg);
+                                    Unknown(debug_msg) => { }, //println!("{}", debug_msg);
                                 }
+
+                                lock_recv.lock().unwrap().recv_msg_count += 1;
                             }
                         });
                     },
@@ -143,8 +145,8 @@ impl P2PNetwork {
                             break;
                         },
                         Err(_) => {
-                            eprintln!("Retrying connection to {}:{}, retrying in 45 seconds", neighbor.ip, neighbor.port);
-                            thread::sleep(Duration::from_secs(45));
+                            eprintln!("Retrying connection to {}:{}, retrying in 30 seconds", neighbor.ip, neighbor.port);
+                            thread::sleep(Duration::from_secs(30));
                             continue;
                         },
                     }
@@ -156,8 +158,8 @@ impl P2PNetwork {
         let lock = Arc::clone(&p2p_network_mutex);
         thread::spawn(move || {
             loop {
-                // recv_timeout will get an error every 10 seconds when nothing is received
-                let msg_result = relay_block_recv.recv_timeout(Duration::from_secs(10));
+                // recv_timeout will get an error every 10 seconds when nothing is received REMOVED
+                let msg_result = relay_block_recv.recv();
                 let msg: BlockNode;
                 match msg_result {
                     Ok(node) => { msg = node; },
@@ -180,8 +182,8 @@ impl P2PNetwork {
         let lock2 = Arc::clone(&p2p_network_mutex);
         thread::spawn(move || {
             loop {
-                // recv_timeout will get an error every 10 seconds when nothing is received
-                let msg_result = relay_tx_recv.recv_timeout(Duration::from_secs(10));
+                // recv_timeout will get an error every 10 seconds when nothing is received REMOVED
+                let msg_result = relay_tx_recv.recv();
                 let msg: Transaction;
                 match msg_result {
                     Ok(tx) => { msg = tx; },

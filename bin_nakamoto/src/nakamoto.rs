@@ -182,22 +182,23 @@ impl Nakamoto {
         let block_tx_block = block_tx.clone();
         let chain_p = nakamoto.chain_p.clone();
 
-        // when receiving a block
+        // when receiving a block from neighbor
         let cancellation_token_clone = cancellation_token.clone();
         thread::spawn(move || {
             loop {
-                // recv_timeout will get an error every 10 seconds when nothing is received
-                let block_result = block_rx.recv_timeout(Duration::from_secs(10));
+                // recv_timeout will get an error every 10 seconds when nothing is received REMOVED
+                let block_result = block_rx.recv();
+                eprintln!("recived a block");
                 
                 match block_result {
                     Ok(block) => { 
                         // if the block already exists in our block tree, do not broadcast?
                         let has_existing_block_result = chain_p_block.lock().unwrap().get_block(block.header.block_id.to_string());
                         match has_existing_block_result {
-                            Some(_) => { continue; },
+                            Some(_) => {  continue; },
                             None => { },
                         }
-                        
+
                         // add block to the blocktree, broadcasts block
                         let initial_working_block = chain_p.lock().unwrap().working_block_id.clone();
                         chain_p.lock().unwrap().add_block(block.clone(), user_config.difficulty_leading_zero_len_acc);
@@ -216,17 +217,18 @@ impl Nakamoto {
         });
 
         let mut nakamoto_clone = nakamoto.clone();
-        // when receiving a transaction
+        // when receiving a transaction from neighbor
         thread::spawn(move || {
             loop {
-                // recv_timeout will get an error every 10 seconds when nothing is received
-                let tx_result = trans_rx.recv_timeout(Duration::from_secs(10));
+                // recv_timeout will get an error every 10 seconds when nothing is received REMOVED
+                let tx_result = trans_rx.recv();
                 match tx_result {
                     Ok(tx) => {
                         //Self::stdout_notify("transaction is publishing...".to_string());
 
                         // if the transaction already exists in our tx_pool, do not broadcast?
-                        let has_existing_tx = nakamoto_clone.tx_pool_p.lock().unwrap().pool_tx_ids.contains(&tx.sig);
+                        let has_existing_tx = nakamoto_clone.tx_pool_p.lock().unwrap().pool_tx_ids.contains(&tx.gen_hash());
+                        Nakamoto::stdout_notify(format!("The existing transaction received isaaa {}", has_existing_tx));
                         if has_existing_tx {
                             continue;
                         }
