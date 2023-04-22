@@ -305,7 +305,6 @@ fn main() {
             if nakamote_write_app.lock().unwrap().should_quit {
                 break;
             }
-
             thread::sleep(tick_rate);
         }
     });
