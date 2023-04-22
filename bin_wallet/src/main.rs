@@ -105,7 +105,6 @@ fn main() {
             Err(e) => eprintln!("tohtohtoh {}", e),
         };
     }
-    
 
     // The main logic of the bin_wallet starts here
     // It reads IPC calls from stdin and write IPC responses to stdout in a loop.

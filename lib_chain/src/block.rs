@@ -392,7 +392,6 @@ impl BlockTree {
         
     }
 
-
     /// Get the block node by the block id if exists. Otherwise, return None.
     pub fn get_block(&self, block_id: BlockId) -> Option<BlockNode> {
         self.all_blocks.get(&block_id).and_then(|block| return Some(block.clone()));

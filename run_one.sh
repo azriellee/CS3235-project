@@ -4,4 +4,4 @@
    ./tests/nakamoto_config1_alone \
    ./bin_client/policies/seccomp_nakamoto.json \
    ./tests/_secrets/Wallet.A.json \
-   ./bin_client/policies/seccomp_client.json \
+   ./bin_client/policies/seccomp_wallet.json \
