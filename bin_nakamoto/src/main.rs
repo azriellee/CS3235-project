@@ -9,9 +9,7 @@
 /// You can see detailed instructions in the comments below.
 
 mod nakamoto;
-use lib_chain::block::{Transaction, Signature, BlockTree}; 
-use lib_tx_pool::pool::{TxPool}; 
-use lib_network::netchannel::{NetAddress};
+use lib_chain::block::{Transaction, Signature}; 
 use nakamoto::Nakamoto;
 
 use std::collections::BTreeMap;
@@ -20,14 +18,14 @@ use std::fs;
 use serde::{Serialize, Deserialize};
 
 // Read a string from a file (to help you debug)
-fn read_string_from_file(filepath: &str) -> String {
+fn _read_string_from_file(filepath: &str) -> String {
     let contents = fs::read_to_string(filepath)
         .expect(&("Cannot read ".to_owned() + filepath));
     contents
 }
 
 // Append a string to a file (to help you debug)
-fn append_string_to_file(filepath: &str, content: String) {
+fn _append_string_to_file(filepath: &str, content: String) {
     // if not exists, create file
     if !std::path::Path::new(filepath).exists() {
         fs::File::create(filepath).unwrap();

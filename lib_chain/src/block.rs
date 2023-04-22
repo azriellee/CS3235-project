@@ -7,12 +7,12 @@
 /// The longest path in the BlockTree is the main chain. It is the chain from the root to the working_block_id.
 
 use core::panic;
-use std::{collections::{BTreeMap, HashMap, HashSet}, convert, str::FromStr};
+use std::collections::{BTreeMap, HashMap, HashSet};
 use base64ct::{Base64, Encoding};
 use rsa::{pkcs1::DecodeRsaPublicKey, pkcs1v15::VerifyingKey};
 use serde::{Serialize, Deserialize};
 use serde_json::json;
-use sha2::{Sha256, Digest, digest::block_buffer::Block};
+use sha2::{Sha256, Digest};
 use rsa::signature::{Verifier};
 
 const PUBLIC_KEY_BEGIN: &str = "-----BEGIN RSA PUBLIC KEY-----\n";
@@ -175,7 +175,7 @@ impl Transaction {
         let signature = Base64::decode_vec(&self.sig);
         let signature = match signature {
             Ok(sig) => sig,
-            Err(e) => return false,
+            Err(_) => return false,
         };
         let verify_signature = rsa::signature::Signature::from_bytes(&signature).unwrap();
         // Verify result
@@ -394,8 +394,8 @@ impl BlockTree {
 
     /// Get the block node by the block id if exists. Otherwise, return None.
     pub fn get_block(&self, block_id: BlockId) -> Option<BlockNode> {
-        self.all_blocks.get(&block_id).and_then(|block| {eprintln!("found");return Some(block.clone())});
-        self.orphans.get(&block_id).and_then(|block| {eprintln!("foundorpan");return Some(block.clone())});
+        self.all_blocks.get(&block_id).and_then(|block| { return Some(block.clone()) });
+        self.orphans.get(&block_id).and_then(|block| { return Some(block.clone()) });
         None
     }
 
@@ -455,8 +455,7 @@ impl BlockTree {
         statuses.insert("working_depth".to_string(), self.block_depth.get(&self.working_block_id).unwrap().to_string());
         statuses.insert("#orphans".to_string(), self.orphans.len().to_string());
         statuses.insert("#blocks".to_string(), self.all_blocks.len().to_string());
-        let vec: Vec<String> = self.all_blocks.iter().map(|b| format!("{}+{}", b.0, b.1.header.block_id)).collect();
-        statuses.insert("block".to_string(), vec.join(","));
+
         statuses
     }
     

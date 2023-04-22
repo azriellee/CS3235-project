@@ -9,13 +9,12 @@
 // You can also look at the unit tests in ./lib.rs to understand the expected behavior of the P2PNetwork.
 
 
-use lib_chain::block::{BlockNode, Transaction, BlockId, TxId};
+use lib_chain::block::{BlockNode, Transaction, BlockId};
 use crate::netchannel::*;
-use std::borrow::Borrow;
-use std::collections::{HashMap, BTreeMap, HashSet};
+use std::collections::BTreeMap;
 use std::time::Duration;
-use std::{convert, sync};
-use std::net::{TcpListener, TcpStream};
+use std::sync;
+use std::net::TcpListener;
 use std::sync::mpsc::{Receiver, Sender};
 use std::thread;
 use std::sync::{Arc, Mutex};
@@ -83,7 +82,7 @@ impl P2PNetwork {
         let (process_tx_sender, process_tx_recv) = sync::mpsc::channel::<Transaction>();
         let (relay_block_sender, relay_block_recv) = sync::mpsc::channel::<BlockNode>();
         let (relay_tx_sender, relay_tx_recv) = sync::mpsc::channel::<Transaction>();
-        let (req_id_sender, req_id_recv) = sync::mpsc::channel::<BlockId>();
+        let (req_id_sender, _) = sync::mpsc::channel::<BlockId>();
 
         // 3 incoming TCP connection
         let local_addr = format!("{}:{}", network_address.ip, network_address.port);
@@ -114,8 +113,8 @@ impl P2PNetwork {
                                 match msg {
                                     BroadcastBlock(node) => { block_sender.send(node).unwrap(); },
                                     BroadcastTx(tx) => { tx_sender.send(tx).unwrap(); },
-                                    RequestBlock(id) => { },
-                                    Unknown(debug_msg) => { }, //println!("{}", debug_msg);
+                                    RequestBlock(_) => { },
+                                    Unknown(_) => { }, //println!("{}", debug_msg);
                                 }
 
                                 lock_recv.lock().unwrap().recv_msg_count += 1;
@@ -139,14 +138,14 @@ impl P2PNetwork {
                     let neighbor_tcp_result = NetChannelTCP::from_addr(&neighbor);
                     match neighbor_tcp_result {
                         Ok(mut neighbor_tcp) => {
-                            eprintln!("i found a channel i can connect to");
+                            println!("{{\"Notify\":\"Connected to {}:{}\"}}", neighbor.ip, neighbor.port);
                             outgoing_neighbors_clone.lock().unwrap().push(neighbor_tcp.clone_channel());
                             outgoing_neighbors2_clone.lock().unwrap().push(neighbor_tcp.clone_channel());
                             break;
                         },
                         Err(_) => {
-                            eprintln!("Retrying connection to {}:{}, retrying in 30 seconds", neighbor.ip, neighbor.port);
-                            thread::sleep(Duration::from_secs(30));
+                            eprintln!("Retrying connection to {}:{} in 1 second", neighbor.ip, neighbor.port);
+                            thread::sleep(Duration::from_secs(1));
                             continue;
                         },
                     }
