@@ -395,9 +395,8 @@ impl BlockTree {
 
     /// Get the block node by the block id if exists. Otherwise, return None.
     pub fn get_block(&self, block_id: BlockId) -> Option<BlockNode> {
-        self.all_blocks.get(&block_id).and_then(|block| return Some(block.clone()));
-        self.orphans.get(&block_id).and_then(|block| return Some(block.clone()));
-        
+        self.all_blocks.get(&block_id).and_then(|block| {eprintln!("found");return Some(block.clone())});
+        self.orphans.get(&block_id).and_then(|block| {eprintln!("foundorpan");return Some(block.clone())});
         None
     }
 
@@ -457,6 +456,8 @@ impl BlockTree {
         statuses.insert("working_depth".to_string(), self.block_depth.get(&self.working_block_id).unwrap().to_string());
         statuses.insert("#orphans".to_string(), self.orphans.len().to_string());
         statuses.insert("#blocks".to_string(), self.all_blocks.len().to_string());
+        let vec: Vec<String> = self.all_blocks.iter().map(|b| format!("{}+{}", b.0, b.1.header.block_id)).collect();
+        statuses.insert("block".to_string(), vec.join(","));
         statuses
     }
     
