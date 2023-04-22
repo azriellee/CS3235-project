@@ -1,32 +1,28 @@
 {
     "main_thread": {
-        "mismatch_action": "kill_process",
+        "mismatch_action": "Log",
         "match_action": "allow",
         "filter": [
-            {
-                "syscall": "read"
-            },
-            {
-                "syscall": "write"
-            },
-            {
-                "syscall": "close"
-            },
-            {
-                "syscall": "openat"
-            },
-            {
-                "syscall": "fstat"
-            },
-            {
-                "syscall": "pread64"
-            },
-            {
-                "syscall": "mmap"
-            },
-            {
-                "syscall": "mprotect"
-            }
+            { "syscall": "arch_prctl"},
+            { "syscall": "access"},
+            { "syscall": "brk"},
+            { "syscall": "close"},
+            { "syscall": "fstat"},
+            { "syscall": "mmap"},
+            { "syscall": "mprotect"},
+            { "syscall": "openat"},
+            { "syscall": "poll"},
+            { "syscall": "prlimit64"},
+            { "syscall": "prctl"},
+            { "syscall": "pread64"},
+            { "syscall": "read"},
+            { "syscall": "rt_sigaction"},
+            { "syscall": "sched_getaffinity"},
+            { "syscall": "set_tid_address"},
+            { "syscall": "set_robust_list"},
+            { "syscall": "sigaltstack"},
+            { "syscall": "statx"},
+            { "syscall": "write"}
         ]
     }
 }

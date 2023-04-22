@@ -6,12 +6,11 @@
 // The Nakamoto leverages lib_chain, lib_miner, lib_tx_pool and lib_network to implement the Nakamoto consensus algorithm.
 // You can see detailed instructions in the comments below.
 
-use core::time;
 use std::sync::mpsc::Sender;
 use std::{thread, time::Duration};
 use std::sync::{Arc, Mutex, RwLock};
 use serde::{Deserialize, Serialize};
-use lib_chain::block::{BlockTree, Puzzle, Transactions, MerkleTree, BlockNode, BlockNodeHeader, Transaction, BlockId, TxId};
+use lib_chain::block::{BlockTree, Puzzle, Transactions, MerkleTree, BlockNode, BlockNodeHeader, Transaction};
 use lib_miner::miner::{Miner, PuzzleSolution};
 use lib_tx_pool::pool::TxPool;
 use lib_network::p2pnetwork::{P2PNetwork};
@@ -158,7 +157,7 @@ impl Nakamoto {
 
         let user_config: Config = serde_json::from_str(&config_str.as_str()).unwrap(); 
         let user_chain: BlockTree = serde_json::from_str(&chain_str.as_str()).unwrap();
-        let user_txPool: TxPool = serde_json::from_str(&tx_pool_str.as_str()).unwrap();
+        let user_txpool: TxPool = serde_json::from_str(&tx_pool_str.as_str()).unwrap();
         let user_miner: Miner = Miner::new();
  
         let cancellation_token = Arc::new(RwLock::new(false));
@@ -168,17 +167,17 @@ impl Nakamoto {
             trans_rx, 
             block_tx, 
             trans_tx, 
-            blockid_tx)
+            _)
              = P2PNetwork::create(user_config.addr, user_config.neighbors);
 
         let chain_p = Arc::new(Mutex::new(user_chain));
         let miner_p = Arc::new(Mutex::new(user_miner)); 
-        let tx_pool_p  = Arc::new(Mutex::new(user_txPool));
+        let tx_pool_p  = Arc::new(Mutex::new(user_txpool));
         
         let nakamoto = Nakamoto { chain_p, miner_p, network_p, tx_pool_p, trans_tx };
 
         let chain_p_block = Arc::clone(&nakamoto.chain_p);
-        let tx_pool_p_block = Arc::clone(&nakamoto.tx_pool_p);
+        // let tx_pool_p_block = Arc::clone(&nakamoto.tx_pool_p);
         let block_tx_block = block_tx.clone();
         let chain_p = nakamoto.chain_p.clone();
 
@@ -188,7 +187,7 @@ impl Nakamoto {
             loop {
                 // recv_timeout will get an error every 10 seconds when nothing is received REMOVED
                 let block_result = block_rx.recv();
-                eprintln!("recived a block");
+
                 match block_result {
                     Ok(block) => { 
                         // if the block already exists in our block tree, do not broadcast?
@@ -222,15 +221,13 @@ impl Nakamoto {
                 let tx_result = trans_rx.recv();
                 match tx_result {
                     Ok(tx) => {
-                        //Self::stdout_notify("transaction is publishing...".to_string());
-
                         // if the transaction already exists in our tx_pool, do not broadcast?
                         let has_existing_tx = nakamoto_clone.tx_pool_p.lock().unwrap().pool_tx_ids.contains(&tx.gen_hash());
-                        Nakamoto::stdout_notify(format!("The existing transaction received isaaa {}", has_existing_tx));
                         if has_existing_tx {
                             continue;
                         }
 
+                        // Nakamoto::stdout_notify(format!("Received a new transaction: {}", tx.gen_hash()));
                         nakamoto_clone.publish_tx(tx);
                         
                     }
@@ -258,6 +255,7 @@ impl Nakamoto {
 
                 let cancellation_token_clone = cancellation_token.clone();
                 
+                // Nakamoto::stdout_notify(format!("Mining on a block: {}", block.header.block_id.to_string()));
                 let solution = Miner::solve_puzzle(
                     miner_p_puzzle.clone(), 
                     puzzle_json.to_string(), 
@@ -268,11 +266,9 @@ impl Nakamoto {
                     cancellation_token.clone()
                 );
                 match solution {
-                    Some(PuzzleSolution {puzzle, nonce, hash }) => {
+                    Some(PuzzleSolution {puzzle: _, nonce, hash }) => {
                         //solution found, update the block and broadcast
-                        //println!("Solution Found! HASH: {}\nNONCE: {}\nPUZZLE: {}", hash, nonce, puzzle);
-                        let test = "{\"Notify\":\"Hello from Nakamoto Miner; Solution Found!!!\"}";
-                        println!("{}", test);
+                        Nakamoto::stdout_notify(format!("Solution found for block: {}", hash.to_string()));
 
                         block.header.block_id = hash;
                         block.header.nonce = nonce;
@@ -280,7 +276,7 @@ impl Nakamoto {
                         chain_p_puzzle.lock().unwrap().add_block(block.clone(),user_config.difficulty_leading_zero_len);
                     },
                     None => {
-                        //println!("Solution found by another miner");
+                        Nakamoto::stdout_notify(format!("Block found by another miner."));
                 }
                 };
                 *cancellation_token_clone.write().unwrap() = false; //set cancellation token back to false to solve next puzzle
