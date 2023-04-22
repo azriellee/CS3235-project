@@ -284,7 +284,7 @@ fn main() {
     let user_id_clone = user_id.clone();
     let nakamote_write_app = app_arc.clone();
     let nakamoto_write_threads = thread::spawn(move || {
-        let tick_rate = Duration::from_millis(500);
+        let tick_rate = Duration::from_millis(3000);
         loop {
             // Get status update
             let status_update_msg = serde_json::to_string(&IPCMessageReqNakamoto::RequestChainStatus).unwrap();
@@ -319,6 +319,7 @@ fn main() {
             let sign_response = serde_json::from_str(&wallet_sign_response).unwrap();
             match sign_response {
                 IPCMessageRespWallet::SignResponse(data_string, signature) => {
+                    // eprintln!("found a sign response! publishing to tx...");
                     let publish_tx_req = serde_json::to_string(&IPCMessageReqNakamoto::PublishTx(data_string, signature)).unwrap();
                     nakamoto_status_stdin_p_clone_clone.lock().unwrap().write_all(format!("{}\n", publish_tx_req).as_bytes()).unwrap();
                 },
@@ -329,7 +330,6 @@ fn main() {
 
     let nakamoto_read_app = app_arc.clone();
     let nakamoto_read_threads = thread::spawn(move || {
-        let tick_rate = Duration::from_millis(500);
         loop {
             let mut msg = String::new();
             nakamoto_status_reader.lock().unwrap().read_line(&mut msg).unwrap();
@@ -369,30 +369,40 @@ fn main() {
             if nakamoto_read_app.lock().unwrap().should_quit {
                 break;
             }
-
-            thread::sleep(tick_rate);
         }
     });
 
     let err_app = app_arc.clone();
     let err_thread = thread::spawn(move || {
         let mut nakamoto_err_reader = BufReader::new(nakamoto_process_stderr);
-        let mut wallet_err_reader = BufReader::new(bin_wallet_process_stderr);
         loop {
             let mut err_msg = String::new();
-            let mut err_msg2 = String::new();
 
             match nakamoto_err_reader.read_line(&mut err_msg) {
                 Ok(_) => { err_app.lock().unwrap().stderr_log.push(err_msg); },
                 Err(_) => {},
             }
 
+            if err_app.lock().unwrap().should_quit {
+                break;
+            }
+
+            thread::sleep(Duration::from_millis(1000));
+        }
+    });
+
+    let err_app2 = app_arc.clone();
+    let err_thread2 = thread::spawn(move || {
+        let mut wallet_err_reader = BufReader::new(bin_wallet_process_stderr);
+        loop {
+            let mut err_msg2 = String::new();
+
             match wallet_err_reader.read_line(&mut err_msg2) {
-                Ok(_) => { err_app.lock().unwrap().stderr_log.push(err_msg2); },
+                Ok(_) => { err_app2.lock().unwrap().stderr_log.push(err_msg2); },
                 Err(_) => {},
             }
 
-            if err_app.lock().unwrap().should_quit {
+            if err_app2.lock().unwrap().should_quit {
                 break;
             }
 
@@ -498,6 +508,7 @@ fn main() {
     nakamoto_write_threads.join().unwrap();
     wallet_read_threads.join().unwrap();
     err_thread.join().unwrap();
+    err_thread2.join().unwrap();
 
     let ecode1 = nakamoto_process.wait().expect("failed to wait on child nakamoto");
     eprintln!("--- nakamoto ecode: {}", ecode1);

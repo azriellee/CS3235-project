@@ -141,26 +141,32 @@ fn main() {
         //Does the matching.
         match parsed_input {
             IPCMessageReq::RequestChainStatus => {
+                println!("{}", serde_json::to_string(&IPCMessageResp::Notify("printing chain status".to_string())).unwrap());
                 let status = nakamoto_node.get_chain_status();
                 println!("{}", serde_json::to_string(&IPCMessageResp::ChainStatus(status)).unwrap());
             }
             IPCMessageReq::RequestMinerStatus => {
+                println!("{}", serde_json::to_string(&IPCMessageResp::Notify("printing miner status".to_string())).unwrap());
                 let status = nakamoto_node.get_miner_status();
                 println!("{}", serde_json::to_string(&IPCMessageResp::MinerStatus(status)).unwrap());
             }
             IPCMessageReq::RequestNetStatus => {
+                println!("{}", serde_json::to_string(&IPCMessageResp::Notify("printing net status".to_string())).unwrap());
                 let status = nakamoto_node.get_network_status();
                 println!("{}", serde_json::to_string(&IPCMessageResp::NetStatus(status)).unwrap());
             }
             IPCMessageReq::RequestTxPoolStatus => {
+                println!("{}", serde_json::to_string(&IPCMessageResp::Notify("printing pool status".to_string())).unwrap());
                 let status = nakamoto_node.get_txpool_status();
                 println!("{}", serde_json::to_string(&IPCMessageResp::TxPoolStatus(status)).unwrap());
             }
             IPCMessageReq::GetAddressBalance(user_id) => {
+                println!("{}", serde_json::to_string(&IPCMessageResp::Notify("printing balance".to_string())).unwrap());
                 let user_balance = nakamoto_node.chain_p.lock().unwrap().get_balance(user_id.to_string());
                 println!("{}", serde_json::to_string(&IPCMessageResp::AddressBalance(user_id.to_string(), user_balance)).unwrap());
             }
             IPCMessageReq::PublishTx(data, sig) => {
+                println!("{}", serde_json::to_string(&IPCMessageResp::Notify("Published has arrived, doing now".to_string())).unwrap());
                 let tx_info: Vec<String> = serde_json::from_str(&data).unwrap();
                 let tx_sig: String = sig;
 

@@ -50,14 +50,6 @@ impl Miner {
             is_running: false
         }
     }
-
-    pub fn new_with_params (thread_count: u16, leading_zero_len: u16) -> Miner {
-        Miner {
-            thread_count,
-            leading_zero_len,
-            is_running: false
-        }
-    }
     
     pub fn generate_hash(p: String, nonce_len: &u16, thread_seed: u64) -> (String, String) {
         let mut rng = Pcg32::seed_from_u64(thread_seed);
@@ -133,15 +125,9 @@ impl Miner {
         // It should be displayed in the Client UI eventually.
         let mut status = BTreeMap::new();
         status.insert("is_running".to_string(), self.is_running.to_string());
-        if self.is_running {
-            status.insert("#thread".to_string(), self.thread_count.to_string());
-            //status.insert(String::from("leading_zero_len"), self.leading_zero_len.to_string());
-            status.insert("difficulty".to_string(), self.leading_zero_len.to_string());
-        } else {
-            status.insert("#thread".to_string(), "0".to_string());
-            //status.insert(String::from("leading_zero_len"), self.leading_zero_len.to_string());
-            status.insert("difficulty".to_string(), "0".to_string());
-        }
+        status.insert("#thread".to_string(), self.thread_count.to_string());
+        status.insert("difficulty".to_string(), self.leading_zero_len.to_string());
+
         status
     }
 }

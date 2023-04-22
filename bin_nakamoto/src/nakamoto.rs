@@ -153,7 +153,7 @@ impl Nakamoto {
         let user_config: Config = serde_json::from_str(&config_str.as_str()).unwrap(); 
         let user_chain: BlockTree = serde_json::from_str(&chain_str.as_str()).unwrap();
         let user_txPool: TxPool = serde_json::from_str(&tx_pool_str.as_str()).unwrap();
-        let user_miner: Miner = Miner::new_with_params(user_config.miner_thread_count, user_config.difficulty_leading_zero_len);
+        let user_miner: Miner = Miner::new();
  
         let cancellation_token = Arc::new(RwLock::new(false));
         
@@ -223,6 +223,8 @@ impl Nakamoto {
                 let tx_result = trans_rx.recv_timeout(Duration::from_secs(10));
                 match tx_result {
                     Ok(tx) => {
+                        //Self::stdout_notify("transaction is publishing...".to_string());
+
                         // if the transaction already exists in our tx_pool, do not broadcast?
                         let has_existing_tx = nakamoto_clone.tx_pool_p.lock().unwrap().pool_tx_ids.contains(&tx.sig);
                         if has_existing_tx {
