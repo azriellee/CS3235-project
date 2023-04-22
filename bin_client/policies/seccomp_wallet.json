@@ -3,6 +3,30 @@
         "mismatch_action": "kill_process",
         "match_action": "allow",
         "filter": [
+            {
+                "syscall": "read"
+            },
+            {
+                "syscall": "write"
+            },
+            {
+                "syscall": "close"
+            },
+            {
+                "syscall": "openat"
+            },
+            {
+                "syscall": "fstat"
+            },
+            {
+                "syscall": "pread64"
+            },
+            {
+                "syscall": "mmap"
+            },
+            {
+                "syscall": "mprotect"
+            }
         ]
     }
 }

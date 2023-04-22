@@ -15,6 +15,9 @@ use std::io::Write;
 use std::os::linux::raw;
 use serde::{Serialize, Deserialize};
 
+use seccompiler;
+use seccompiler::{BpfProgram, BpfMap};
+
 /// Read a string from a file (help with debugging)
 fn read_string_from_file(filepath: &str) -> String {
     let contents = fs::read_to_string(filepath)
@@ -77,14 +80,32 @@ fn main() {
     // If the argument is provided, bin_wallet will read and apply the seccomp policy at the beginning of the program
     // Otherwise, it will proceed to the normal execution
     
-    /* TODO!!!!!
     let maybe_policy_path = std::env::args().nth(1);
     if let Some(policy_path) = maybe_policy_path {
         // Please fill in the blank
         // If the first param is provided, read the seccomp config and apply it
-        
+
+        let json_input = read_string_from_file(&policy_path);
+        let filter_map: BpfMap = seccompiler::compile_from_json(
+            json_input.as_bytes(),
+            std::env::consts::ARCH.try_into().unwrap(),
+        )
+        .unwrap();
+        println!("pekopekopekopekopeko");
+        let maybefilter = filter_map.get("main_thread") ;
+    
+        match maybefilter {
+            Some(_) => { println!("nice"); },
+            _ => { println!("toh"); }
+        };
+        let filter = maybefilter.unwrap();
+
+        match seccompiler::apply_filter(&filter) {
+            Ok(()) => println!("very nice"),
+            Err(e) => eprintln!("tohtohtoh {}", e),
+        };
     }
-    */
+    
 
     // The main logic of the bin_wallet starts here
     // It reads IPC calls from stdin and write IPC responses to stdout in a loop.
@@ -191,4 +212,3 @@ mod test {
         assert!(!verify_result);
     }
 }
-
