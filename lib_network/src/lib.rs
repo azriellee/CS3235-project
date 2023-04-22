@@ -135,6 +135,7 @@ mod tests {
             network,
             upd_block_in_rx, 
             upd_trans_in_rx,
+            upd_block_id_in_rx,
             block_out_tx,
             trans_out_tx,
             req_block_id_out_tx,

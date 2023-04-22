@@ -165,9 +165,10 @@ impl Nakamoto {
         let (network_p, 
             block_rx, 
             trans_rx, 
+            blockid_rx,
             block_tx, 
             trans_tx, 
-            _)
+            blockid_tx)
              = P2PNetwork::create(user_config.addr, user_config.neighbors);
 
         let chain_p = Arc::new(Mutex::new(user_chain));
@@ -200,6 +201,13 @@ impl Nakamoto {
                         let initial_working_block = chain_p.lock().unwrap().working_block_id.clone();
                         chain_p.lock().unwrap().add_block(block.clone(), user_config.difficulty_leading_zero_len_acc);
                         block_tx_block.send(block.clone()).unwrap(); //possible err?
+
+                        // check if client has parent for that block, if no request the parent block
+                        let incoming_block_parent_id = block.header.parent.to_string();
+                        let has_parent_block_result = chain_p_block.lock().unwrap().all_blocks.contains_key(&incoming_block_parent_id);
+                        if !has_parent_block_result {
+                            blockid_tx.send(incoming_block_parent_id.clone()).unwrap(); //possible err?
+                        }
 
                         // if the working block is updated while miner is solving (a new block), restart the miner
                         let cur_working_block = chain_p.lock().unwrap().working_block_id.clone();
@@ -236,13 +244,34 @@ impl Nakamoto {
             }
         });
 
+        let chain_p_blockid = Arc::clone(&nakamoto.chain_p);
+        let blockid_tx_block = block_tx.clone();
+
+        // when receiving a request block id from neighbor
+        thread::spawn(move || {
+            loop {
+                // recv_timeout will get an error every 10 seconds when nothing is received REMOVED
+                let id_result = blockid_rx.recv();
+                match id_result {
+                    Ok(id) => {
+                        // get block
+                        let block_result = chain_p_blockid.lock().unwrap().get_block(id);
+                        match block_result {
+                            Some(block) => { blockid_tx_block.send(block).unwrap(); },
+                            None => { continue; }
+                        }
+                    },
+                    Err(_) => { continue; },
+                }
+            }
+        });
+
         let miner_p_puzzle = Arc::clone(&nakamoto.miner_p);
         let chain_p_puzzle = Arc::clone(&nakamoto.chain_p);
         let tx_pool_p_puzzle = Arc::clone(&nakamoto.tx_pool_p);
         let block_tx_puzzle = block_tx.clone();
 
         // create a miner to solve puzzle
-
         let _miner_thread = thread::spawn(move || {
             loop {
                 // constantly creates a puzzle from tx pool
