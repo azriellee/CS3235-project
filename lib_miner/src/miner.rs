@@ -90,6 +90,7 @@ impl Miner {
         for i in 0..thread_count {
             let cancel = cancellation_token.clone();
             let p = puzzle.clone();
+            let miner_clone = miner_p.clone();
             let thread_handle = thread::spawn(move || {
                 let mut seed = thread_0_seed + i as u64;
                 while !*cancel.read().unwrap() {
@@ -104,6 +105,8 @@ impl Miner {
                     }
                     seed += thread_count as u64;
                 }
+                // another node found the solution
+                miner_clone.lock().unwrap().is_running = false;
                 None
             });
             threads.push(thread_handle);
