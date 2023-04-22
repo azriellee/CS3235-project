@@ -166,7 +166,7 @@ fn main() {
                 println!("{}", serde_json::to_string(&IPCMessageResp::AddressBalance(user_id.to_string(), user_balance)).unwrap());
             }
             IPCMessageReq::PublishTx(data, sig) => {
-                println!("{}", serde_json::to_string(&IPCMessageResp::Notify("Published has arrived, doing now".to_string())).unwrap());
+                //println!("{}", serde_json::to_string(&IPCMessageResp::Notify("Published has arrived, doing now".to_string())).unwrap());
                 let tx_info: Vec<String> = serde_json::from_str(&data).unwrap();
                 let tx_sig: String = sig;
 

@@ -127,25 +127,7 @@ impl TxPool {
         // It should be displayed in the Client UI eventually.
         
         let mut status = BTreeMap::new();
-        let mut tx_ids = String::new();
-        let mut removed_ids = String::new();
-
         status.insert("#pool_tx_map".to_string(), self.pool_tx_ids.len().to_string());
-        /* 
-        status.insert("last finalized block id".to_string(), self.last_finalized_block_id.clone());
-
-        for id in self.pool_tx_ids.iter() {
-            tx_ids += id;
-            tx_ids += " ";
-        }
-        status.insert("transaction ids".to_string(), tx_ids);
-
-        for id in self.removed_tx_ids.iter() {
-            removed_ids += id;
-            removed_ids += " ";
-        }
-        status.insert("removed ids".to_string(), removed_ids);
-        */
 
         status
     }
