@@ -61,7 +61,7 @@ impl NetChannelTCP {
     pub fn from_addr(addr: &NetAddress) -> Result<Self,String> {
         // Please fill in the blank
         let socket_addr: SocketAddr = format!("{}:{}", addr.ip, addr.port).parse().unwrap();
-        let stream_result = TcpStream::connect_timeout(&socket_addr, Duration::from_secs(60));
+        let stream_result = TcpStream::connect(&socket_addr);
         match stream_result {
             Ok(stream) => {
                 let reader = BufReader::new(stream.try_clone().unwrap());
@@ -95,9 +95,15 @@ impl NetChannelTCP {
     pub fn read_msg(&mut self) -> Option<NetMessage> {
         // Please fill in the blank
         let mut msg = String::new();
-        self.reader.read_line(&mut msg).unwrap();
+        match self.reader.read_line(&mut msg) {
+            Ok(_) => { },
+            Err(_) => return None,
+        };
 
-        serde_json::from_str(&msg).unwrap()
+        match serde_json::from_str(&msg) {
+            Ok(m) => {return m;},
+            Err(_) => return None,
+        }
     }
 
     /// Write a NetMessage to the TCP stream.

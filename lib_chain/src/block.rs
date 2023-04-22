@@ -455,7 +455,6 @@ impl BlockTree {
         let mut statuses: BTreeMap<String, String> = BTreeMap::new();
         statuses.insert("root_id".to_string(), self.root_id.to_string());
         statuses.insert("finalized_id".to_string(), self.finalized_block_id.to_string());
-        //statuses.insert("finalized_block_id_depth".to_string(), self.block_depth.get(&self.finalized_block_id).unwrap().to_string());
         statuses.insert("working_id".to_string(), self.working_block_id.to_string());
         statuses.insert("working_depth".to_string(), self.block_depth.get(&self.working_block_id).unwrap().to_string());
         statuses.insert("#orphans".to_string(), self.orphans.len().to_string());
@@ -465,7 +464,7 @@ impl BlockTree {
     
     //Used in nakamoto.rs
     pub fn get_balance(&self, address : String) -> i64 {
-        let bal = self.finalized_balance_map.get(&address).unwrap();
+        let bal = self.finalized_balance_map.get(&address).unwrap_or(&0);
         return bal.clone();
     }
 
