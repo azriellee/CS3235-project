@@ -149,8 +149,8 @@ impl P2PNetwork {
                             break;
                         },
                         Err(_) => {
-                            eprintln!("Retrying connection to {}:{} in 3 seconds", neighbor.ip, neighbor.port);
-                            thread::sleep(Duration::from_secs(3));
+                            eprintln!("Retrying connection to {}:{}...", neighbor.ip, neighbor.port);
+                            thread::sleep(Duration::from_secs(1));
                             continue;
                         },
                     }
