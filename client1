@@ -1,0 +1,2473 @@
+5571<strace> execve("./target/debug/bin_client", ["./target/debug/bin_client", "./bin_client/policies/seccomp_cl"..., "./tests/nakamoto_config1", "./bin_client/policies/seccomp_na"..., "./tests/_secrets/Wallet.A.json", "./bin_client/policies/seccomp_wa"...], 0x7ffe371af708 /* 48 vars */) = 0
+5571<bin_client> brk(NULL)              = 0x555c2f608000
+5571<bin_client> arch_prctl(0x3001 /* ARCH_??? */, 0x7ffc5c44a030) = -1 EINVAL (Invalid argument)
+5571<bin_client> mmap(NULL, 8192, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0) = 0x7fbcc7ab5000
+5571<bin_client> access("/etc/ld.so.preload", R_OK) = -1 ENOENT (No such file or directory)
+5571<bin_client> openat(AT_FDCWD, "/etc/ld.so.cache", O_RDONLY|O_CLOEXEC) = 3
+5571<bin_client> newfstatat(3, "", {st_mode=S_IFREG|0644, st_size=55641, ...}, AT_EMPTY_PATH) = 0
+5571<bin_client> mmap(NULL, 55641, PROT_READ, MAP_PRIVATE, 3, 0) = 0x7fbcc7aa7000
+5571<bin_client> close(3)               = 0
+5571<bin_client> openat(AT_FDCWD, "/lib/x86_64-linux-gnu/libgcc_s.so.1", O_RDONLY|O_CLOEXEC) = 3
+5571<bin_client> read(3, "\177ELF\2\1\1\0\0\0\0\0\0\0\0\0\3\0>\0\1\0\0\0\0\0\0\0\0\0\0\0"..., 832) = 832
+5571<bin_client> newfstatat(3, "", {st_mode=S_IFREG|0644, st_size=141872, ...}, AT_EMPTY_PATH) = 0
+5571<bin_client> mmap(NULL, 144232, PROT_READ, MAP_PRIVATE|MAP_DENYWRITE, 3, 0) = 0x7fbcc7a83000
+5571<bin_client> mmap(0x7fbcc7a86000, 110592, PROT_READ|PROT_EXEC, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0x3000) = 0x7fbcc7a86000
+5571<bin_client> mmap(0x7fbcc7aa1000, 16384, PROT_READ, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0x1e000) = 0x7fbcc7aa1000
+5571<bin_client> mmap(0x7fbcc7aa5000, 8192, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0x21000) = 0x7fbcc7aa5000
+5571<bin_client> close(3)               = 0
+5571<bin_client> openat(AT_FDCWD, "/lib/x86_64-linux-gnu/libm.so.6", O_RDONLY|O_CLOEXEC) = 3
+5571<bin_client> read(3, "\177ELF\2\1\1\3\0\0\0\0\0\0\0\0\3\0>\0\1\0\0\0\0\0\0\0\0\0\0\0"..., 832) = 832
+5571<bin_client> newfstatat(3, "", {st_mode=S_IFREG|0644, st_size=948816, ...}, AT_EMPTY_PATH) = 0
+5571<bin_client> mmap(NULL, 950520, PROT_READ, MAP_PRIVATE|MAP_DENYWRITE, 3, 0) = 0x7fbcc799a000
+5571<bin_client> mmap(0x7fbcc79a8000, 516096, PROT_READ|PROT_EXEC, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0xe000) = 0x7fbcc79a8000
+5571<bin_client> mmap(0x7fbcc7a26000, 372736, PROT_READ, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0x8c000) = 0x7fbcc7a26000
+5571<bin_client> mmap(0x7fbcc7a81000, 8192, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0xe6000) = 0x7fbcc7a81000
+5571<bin_client> close(3)               = 0
+5571<bin_client> openat(AT_FDCWD, "/lib/x86_64-linux-gnu/libc.so.6", O_RDONLY|O_CLOEXEC) = 3
+5571<bin_client> read(3, "\177ELF\2\1\1\3\0\0\0\0\0\0\0\0\3\0>\0\1\0\0\0P<\2\0\0\0\0\0"..., 832) = 832
+5571<bin_client> pread64(3, "\6\0\0\0\4\0\0\0@\0\0\0\0\0\0\0@\0\0\0\0\0\0\0@\0\0\0\0\0\0\0"..., 784, 64) = 784
+5571<bin_client> newfstatat(3, "", {st_mode=S_IFREG|0644, st_size=2072888, ...}, AT_EMPTY_PATH) = 0
+5571<bin_client> pread64(3, "\6\0\0\0\4\0\0\0@\0\0\0\0\0\0\0@\0\0\0\0\0\0\0@\0\0\0\0\0\0\0"..., 784, 64) = 784
+5571<bin_client> mmap(NULL, 2117488, PROT_READ, MAP_PRIVATE|MAP_DENYWRITE, 3, 0) = 0x7fbcc7600000
+5571<bin_client> mmap(0x7fbcc7622000, 1540096, PROT_READ|PROT_EXEC, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0x22000) = 0x7fbcc7622000
+5571<bin_client> mmap(0x7fbcc779a000, 360448, PROT_READ, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0x19a000) = 0x7fbcc779a000
+5571<bin_client> mmap(0x7fbcc77f2000, 24576, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0x1f1000) = 0x7fbcc77f2000
+5571<bin_client> mmap(0x7fbcc77f8000, 53104, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED|MAP_ANONYMOUS, -1, 0) = 0x7fbcc77f8000
+5571<bin_client> close(3)               = 0
+5571<bin_client> mmap(NULL, 8192, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0) = 0x7fbcc7998000
+5571<bin_client> arch_prctl(ARCH_SET_FS, 0x7fbcc7998c40) = 0
+5571<bin_client> set_tid_address(0x7fbcc7998f10) = 5571
+5571<bin_client> set_robust_list(0x7fbcc7998f20, 24) = 0
+5571<bin_client> rseq(0x7fbcc7999560, 0x20, 0, 0x53053053) = 0
+5571<bin_client> mprotect(0x7fbcc77f2000, 16384, PROT_READ) = 0
+5571<bin_client> mprotect(0x7fbcc7a81000, 4096, PROT_READ) = 0
+5571<bin_client> mprotect(0x7fbcc7aa5000, 4096, PROT_READ) = 0
+5571<bin_client> mprotect(0x555c2dad2000, 77824, PROT_READ) = 0
+5571<bin_client> mprotect(0x7fbcc7aea000, 8192, PROT_READ) = 0
+5571<bin_client> prlimit64(0, RLIMIT_STACK, NULL, {rlim_cur=8192*1024, rlim_max=RLIM64_INFINITY}) = 0
+5571<bin_client> munmap(0x7fbcc7aa7000, 55641) = 0
+5571<bin_client> poll([{fd=0, events=0}, {fd=1, events=0}, {fd=2, events=0}], 3, 0) = 0 (Timeout)
+5571<bin_client> rt_sigaction(SIGPIPE, {sa_handler=SIG_IGN, sa_mask=[PIPE], sa_flags=SA_RESTORER|SA_RESTART, sa_restorer=0x7fbcc763c4b0}, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=0}, 8) = 0
+5571<bin_client> rt_sigaction(SIGSEGV, NULL, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=0}, 8) = 0
+5571<bin_client> rt_sigaction(SIGSEGV, {sa_handler=0x555c2da0f500, sa_mask=[], sa_flags=SA_RESTORER|SA_ONSTACK|SA_SIGINFO, sa_restorer=0x7fbcc763c4b0}, NULL, 8) = 0
+5571<bin_client> rt_sigaction(SIGBUS, NULL, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=0}, 8) = 0
+5571<bin_client> rt_sigaction(SIGBUS, {sa_handler=0x555c2da0f500, sa_mask=[], sa_flags=SA_RESTORER|SA_ONSTACK|SA_SIGINFO, sa_restorer=0x7fbcc763c4b0}, NULL, 8) = 0
+5571<bin_client> sigaltstack(NULL, {ss_sp=NULL, ss_flags=SS_DISABLE, ss_size=0}) = 0
+5571<bin_client> mmap(NULL, 12288, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_ANONYMOUS|MAP_STACK, -1, 0) = 0x7fbcc7ab2000
+5571<bin_client> mprotect(0x7fbcc7ab2000, 4096, PROT_NONE) = 0
+5571<bin_client> sigaltstack({ss_sp=0x7fbcc7ab3000, ss_flags=0, ss_size=8192}, NULL) = 0
+5571<bin_client> getrandom("\xd7\x8b\xd3\x88\x1b\x9f\x64\x7e", 8, GRND_NONBLOCK) = 8
+5571<bin_client> brk(NULL)              = 0x555c2f608000
+5571<bin_client> brk(0x555c2f629000)    = 0x555c2f629000
+5571<bin_client> openat(AT_FDCWD, "/proc/self/maps", O_RDONLY|O_CLOEXEC) = 3
+5571<bin_client> prlimit64(0, RLIMIT_STACK, NULL, {rlim_cur=8192*1024, rlim_max=RLIM64_INFINITY}) = 0
+5571<bin_client> newfstatat(3, "", {st_mode=S_IFREG|0444, st_size=0, ...}, AT_EMPTY_PATH) = 0
+5571<bin_client> read(3, "555c2d85c000-555c2d87f000 r--p 0"..., 1024) = 1024
+5571<bin_client> read(3, "2244449                    /usr/"..., 1024) = 1024
+5571<bin_client> read(3, "ibgcc_s.so.1\n7fbcc7a86000-7fbcc7"..., 1024) = 1024
+5571<bin_client> read(3, "-linux-x86-64.so.2\n7fbcc7aec000-"..., 1024) = 464
+5571<bin_client> close(3)               = 0
+5571<bin_client> sched_getaffinity(5571<bin_client>, 32, [0 1 2 3]) = 8
+5571<bin_client> pipe2([3, 4], O_CLOEXEC) = 0
+5571<bin_client> pipe2([5, 6], O_CLOEXEC) = 0
+5571<bin_client> pipe2([7, 8], O_CLOEXEC) = 0
+5571<bin_client> prlimit64(0, RLIMIT_NOFILE, NULL, {rlim_cur=1024, rlim_max=1024*1024}) = 0
+5571<bin_client> prlimit64(0, RLIMIT_NOFILE, NULL, {rlim_cur=1024, rlim_max=1024*1024}) = 0
+5571<bin_client> prlimit64(0, RLIMIT_NOFILE, NULL, {rlim_cur=1024, rlim_max=1024*1024}) = 0
+5571<bin_client> prlimit64(0, RLIMIT_NOFILE, NULL, {rlim_cur=1024, rlim_max=1024*1024}) = 0
+5571<bin_client> prlimit64(0, RLIMIT_NOFILE, NULL, {rlim_cur=1024, rlim_max=1024*1024}) = 0
+5571<bin_client> prlimit64(0, RLIMIT_NOFILE, NULL, {rlim_cur=1024, rlim_max=1024*1024}) = 0
+5571<bin_client> mmap(NULL, 36864, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_ANONYMOUS|MAP_STACK, -1, 0) = 0x7fbcc7aa9000
+5571<bin_client> rt_sigprocmask(SIG_BLOCK, ~[], [], 8) = 0
+5571<bin_client> clone3({flags=CLONE_VM|CLONE_VFORK, exit_signal=SIGCHLD, stack=0x7fbcc7aa9000, stack_size=0x9000}, 88 <unfinished ...>
+5572<bin_client> rt_sigprocmask(SIG_BLOCK, NULL, ~[KILL STOP], 8) = 0
+5572<bin_client> rt_sigaction(SIGHUP, NULL, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=0}, 8) = 0
+5572<bin_client> rt_sigaction(SIGHUP, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=SA_RESTORER, sa_restorer=0x7fbcc763c4b0}, NULL, 8) = 0
+5572<bin_client> rt_sigaction(SIGINT, NULL, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=0}, 8) = 0
+5572<bin_client> rt_sigaction(SIGINT, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=SA_RESTORER, sa_restorer=0x7fbcc763c4b0}, NULL, 8) = 0
+5572<bin_client> rt_sigaction(SIGQUIT, NULL, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=0}, 8) = 0
+5572<bin_client> rt_sigaction(SIGQUIT, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=SA_RESTORER, sa_restorer=0x7fbcc763c4b0}, NULL, 8) = 0
+5572<bin_client> rt_sigaction(SIGILL, NULL, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=0}, 8) = 0
+5572<bin_client> rt_sigaction(SIGILL, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=SA_RESTORER, sa_restorer=0x7fbcc763c4b0}, NULL, 8) = 0
+5572<bin_client> rt_sigaction(SIGTRAP, NULL, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=0}, 8) = 0
+5572<bin_client> rt_sigaction(SIGTRAP, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=SA_RESTORER, sa_restorer=0x7fbcc763c4b0}, NULL, 8) = 0
+5572<bin_client> rt_sigaction(SIGABRT, NULL, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=0}, 8) = 0
+5572<bin_client> rt_sigaction(SIGABRT, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=SA_RESTORER, sa_restorer=0x7fbcc763c4b0}, NULL, 8) = 0
+5572<bin_client> rt_sigaction(SIGBUS, NULL, {sa_handler=0x555c2da0f500, sa_mask=[], sa_flags=SA_RESTORER|SA_ONSTACK|SA_SIGINFO, sa_restorer=0x7fbcc763c4b0}, 8) = 0
+5572<bin_client> rt_sigaction(SIGBUS, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=SA_RESTORER|SA_ONSTACK|SA_SIGINFO, sa_restorer=0x7fbcc763c4b0}, NULL, 8) = 0
+5572<bin_client> rt_sigaction(SIGFPE, NULL, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=0}, 8) = 0
+5572<bin_client> rt_sigaction(SIGFPE, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=SA_RESTORER, sa_restorer=0x7fbcc763c4b0}, NULL, 8) = 0
+5572<bin_client> rt_sigaction(SIGUSR1, NULL, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=0}, 8) = 0
+5572<bin_client> rt_sigaction(SIGUSR1, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=SA_RESTORER, sa_restorer=0x7fbcc763c4b0}, NULL, 8) = 0
+5572<bin_client> rt_sigaction(SIGSEGV, NULL, {sa_handler=0x555c2da0f500, sa_mask=[], sa_flags=SA_RESTORER|SA_ONSTACK|SA_SIGINFO, sa_restorer=0x7fbcc763c4b0}, 8) = 0
+5572<bin_client> rt_sigaction(SIGSEGV, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=SA_RESTORER|SA_ONSTACK|SA_SIGINFO, sa_restorer=0x7fbcc763c4b0}, NULL, 8) = 0
+5572<bin_client> rt_sigaction(SIGUSR2, NULL, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=0}, 8) = 0
+5572<bin_client> rt_sigaction(SIGUSR2, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=SA_RESTORER, sa_restorer=0x7fbcc763c4b0}, NULL, 8) = 0
+5572<bin_client> rt_sigaction(SIGPIPE, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=SA_RESTORER, sa_restorer=0x7fbcc763c4b0}, NULL, 8) = 0
+5572<bin_client> rt_sigaction(SIGALRM, NULL, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=0}, 8) = 0
+5572<bin_client> rt_sigaction(SIGALRM, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=SA_RESTORER, sa_restorer=0x7fbcc763c4b0}, NULL, 8) = 0
+5572<bin_client> rt_sigaction(SIGTERM, NULL, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=0}, 8) = 0
+5572<bin_client> rt_sigaction(SIGTERM, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=SA_RESTORER, sa_restorer=0x7fbcc763c4b0}, NULL, 8) = 0
+5572<bin_client> rt_sigaction(SIGSTKFLT, NULL, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=0}, 8) = 0
+5572<bin_client> rt_sigaction(SIGSTKFLT, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=SA_RESTORER, sa_restorer=0x7fbcc763c4b0}, NULL, 8) = 0
+5572<bin_client> rt_sigaction(SIGCHLD, NULL, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=0}, 8) = 0
+5572<bin_client> rt_sigaction(SIGCHLD, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=SA_RESTORER, sa_restorer=0x7fbcc763c4b0}, NULL, 8) = 0
+5572<bin_client> rt_sigaction(SIGCONT, NULL, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=0}, 8) = 0
+5572<bin_client> rt_sigaction(SIGCONT, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=SA_RESTORER, sa_restorer=0x7fbcc763c4b0}, NULL, 8) = 0
+5572<bin_client> rt_sigaction(SIGTSTP, NULL, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=0}, 8) = 0
+5572<bin_client> rt_sigaction(SIGTSTP, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=SA_RESTORER, sa_restorer=0x7fbcc763c4b0}, NULL, 8) = 0
+5572<bin_client> rt_sigaction(SIGTTIN, NULL, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=0}, 8) = 0
+5572<bin_client> rt_sigaction(SIGTTIN, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=SA_RESTORER, sa_restorer=0x7fbcc763c4b0}, NULL, 8) = 0
+5572<bin_client> rt_sigaction(SIGTTOU, NULL, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=0}, 8) = 0
+5572<bin_client> rt_sigaction(SIGTTOU, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=SA_RESTORER, sa_restorer=0x7fbcc763c4b0}, NULL, 8) = 0
+5572<bin_client> rt_sigaction(SIGURG, NULL, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=0}, 8) = 0
+5572<bin_client> rt_sigaction(SIGURG, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=SA_RESTORER, sa_restorer=0x7fbcc763c4b0}, NULL, 8) = 0
+5572<bin_client> rt_sigaction(SIGXCPU, NULL, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=0}, 8) = 0
+5572<bin_client> rt_sigaction(SIGXCPU, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=SA_RESTORER, sa_restorer=0x7fbcc763c4b0}, NULL, 8) = 0
+5572<bin_client> rt_sigaction(SIGXFSZ, NULL, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=0}, 8) = 0
+5572<bin_client> rt_sigaction(SIGXFSZ, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=SA_RESTORER, sa_restorer=0x7fbcc763c4b0}, NULL, 8) = 0
+5572<bin_client> rt_sigaction(SIGVTALRM, NULL, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=0}, 8) = 0
+5572<bin_client> rt_sigaction(SIGVTALRM, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=SA_RESTORER, sa_restorer=0x7fbcc763c4b0}, NULL, 8) = 0
+5572<bin_client> rt_sigaction(SIGPROF, NULL, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=0}, 8) = 0
+5572<bin_client> rt_sigaction(SIGPROF, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=SA_RESTORER, sa_restorer=0x7fbcc763c4b0}, NULL, 8) = 0
+5572<bin_client> rt_sigaction(SIGWINCH, NULL, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=0}, 8) = 0
+5572<bin_client> rt_sigaction(SIGWINCH, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=SA_RESTORER, sa_restorer=0x7fbcc763c4b0}, NULL, 8) = 0
+5572<bin_client> rt_sigaction(SIGIO, NULL, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=0}, 8) = 0
+5572<bin_client> rt_sigaction(SIGIO, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=SA_RESTORER, sa_restorer=0x7fbcc763c4b0}, NULL, 8) = 0
+5572<bin_client> rt_sigaction(SIGPWR, NULL, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=0}, 8) = 0
+5572<bin_client> rt_sigaction(SIGPWR, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=SA_RESTORER, sa_restorer=0x7fbcc763c4b0}, NULL, 8) = 0
+5572<bin_client> rt_sigaction(SIGSYS, NULL, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=0}, 8) = 0
+5572<bin_client> rt_sigaction(SIGSYS, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=SA_RESTORER, sa_restorer=0x7fbcc763c4b0}, NULL, 8) = 0
+5572<bin_client> rt_sigaction(SIGRTMIN, {sa_handler=SIG_IGN, sa_mask=[], sa_flags=SA_RESTORER, sa_restorer=0x7fbcc763c4b0}, NULL, 8) = 0
+5572<bin_client> rt_sigaction(SIGRT_1, {sa_handler=SIG_IGN, sa_mask=[], sa_flags=SA_RESTORER, sa_restorer=0x7fbcc763c4b0}, NULL, 8) = 0
+5572<bin_client> rt_sigaction(SIGRT_2, NULL, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=0}, 8) = 0
+5572<bin_client> rt_sigaction(SIGRT_2, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=SA_RESTORER, sa_restorer=0x7fbcc763c4b0}, NULL, 8) = 0
+5572<bin_client> rt_sigaction(SIGRT_3, NULL, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=0}, 8) = 0
+5572<bin_client> rt_sigaction(SIGRT_3, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=SA_RESTORER, sa_restorer=0x7fbcc763c4b0}, NULL, 8) = 0
+5572<bin_client> rt_sigaction(SIGRT_4, NULL, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=0}, 8) = 0
+5572<bin_client> rt_sigaction(SIGRT_4, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=SA_RESTORER, sa_restorer=0x7fbcc763c4b0}, NULL, 8) = 0
+5572<bin_client> rt_sigaction(SIGRT_5, NULL, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=0}, 8) = 0
+5572<bin_client> rt_sigaction(SIGRT_5, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=SA_RESTORER, sa_restorer=0x7fbcc763c4b0}, NULL, 8) = 0
+5572<bin_client> rt_sigaction(SIGRT_6, NULL, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=0}, 8) = 0
+5572<bin_client> rt_sigaction(SIGRT_6, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=SA_RESTORER, sa_restorer=0x7fbcc763c4b0}, NULL, 8) = 0
+5572<bin_client> rt_sigaction(SIGRT_7, NULL, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=0}, 8) = 0
+5572<bin_client> rt_sigaction(SIGRT_7, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=SA_RESTORER, sa_restorer=0x7fbcc763c4b0}, NULL, 8) = 0
+5572<bin_client> rt_sigaction(SIGRT_8, NULL, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=0}, 8) = 0
+5572<bin_client> rt_sigaction(SIGRT_8, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=SA_RESTORER, sa_restorer=0x7fbcc763c4b0}, NULL, 8) = 0
+5572<bin_client> rt_sigaction(SIGRT_9, NULL, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=0}, 8) = 0
+5572<bin_client> rt_sigaction(SIGRT_9, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=SA_RESTORER, sa_restorer=0x7fbcc763c4b0}, NULL, 8) = 0
+5572<bin_client> rt_sigaction(SIGRT_10, NULL, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=0}, 8) = 0
+5572<bin_client> rt_sigaction(SIGRT_10, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=SA_RESTORER, sa_restorer=0x7fbcc763c4b0}, NULL, 8) = 0
+5572<bin_client> rt_sigaction(SIGRT_11, NULL, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=0}, 8) = 0
+5572<bin_client> rt_sigaction(SIGRT_11, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=SA_RESTORER, sa_restorer=0x7fbcc763c4b0}, NULL, 8) = 0
+5572<bin_client> rt_sigaction(SIGRT_12, NULL, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=0}, 8) = 0
+5572<bin_client> rt_sigaction(SIGRT_12, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=SA_RESTORER, sa_restorer=0x7fbcc763c4b0}, NULL, 8) = 0
+5572<bin_client> rt_sigaction(SIGRT_13, NULL, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=0}, 8) = 0
+5572<bin_client> rt_sigaction(SIGRT_13, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=SA_RESTORER, sa_restorer=0x7fbcc763c4b0}, NULL, 8) = 0
+5572<bin_client> rt_sigaction(SIGRT_14, NULL, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=0}, 8) = 0
+5572<bin_client> rt_sigaction(SIGRT_14, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=SA_RESTORER, sa_restorer=0x7fbcc763c4b0}, NULL, 8) = 0
+5572<bin_client> rt_sigaction(SIGRT_15, NULL, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=0}, 8) = 0
+5572<bin_client> rt_sigaction(SIGRT_15, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=SA_RESTORER, sa_restorer=0x7fbcc763c4b0}, NULL, 8) = 0
+5572<bin_client> rt_sigaction(SIGRT_16, NULL, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=0}, 8) = 0
+5572<bin_client> rt_sigaction(SIGRT_16, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=SA_RESTORER, sa_restorer=0x7fbcc763c4b0}, NULL, 8) = 0
+5572<bin_client> rt_sigaction(SIGRT_17, NULL, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=0}, 8) = 0
+5572<bin_client> rt_sigaction(SIGRT_17, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=SA_RESTORER, sa_restorer=0x7fbcc763c4b0}, NULL, 8) = 0
+5572<bin_client> rt_sigaction(SIGRT_18, NULL, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=0}, 8) = 0
+5572<bin_client> rt_sigaction(SIGRT_18, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=SA_RESTORER, sa_restorer=0x7fbcc763c4b0}, NULL, 8) = 0
+5572<bin_client> rt_sigaction(SIGRT_19, NULL, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=0}, 8) = 0
+5572<bin_client> rt_sigaction(SIGRT_19, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=SA_RESTORER, sa_restorer=0x7fbcc763c4b0}, NULL, 8) = 0
+5572<bin_client> rt_sigaction(SIGRT_20, NULL, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=0}, 8) = 0
+5572<bin_client> rt_sigaction(SIGRT_20, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=SA_RESTORER, sa_restorer=0x7fbcc763c4b0}, NULL, 8) = 0
+5572<bin_client> rt_sigaction(SIGRT_21, NULL, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=0}, 8) = 0
+5572<bin_client> rt_sigaction(SIGRT_21, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=SA_RESTORER, sa_restorer=0x7fbcc763c4b0}, NULL, 8) = 0
+5572<bin_client> rt_sigaction(SIGRT_22, NULL, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=0}, 8) = 0
+5572<bin_client> rt_sigaction(SIGRT_22, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=SA_RESTORER, sa_restorer=0x7fbcc763c4b0}, NULL, 8) = 0
+5572<bin_client> rt_sigaction(SIGRT_23, NULL, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=0}, 8) = 0
+5572<bin_client> rt_sigaction(SIGRT_23, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=SA_RESTORER, sa_restorer=0x7fbcc763c4b0}, NULL, 8) = 0
+5572<bin_client> rt_sigaction(SIGRT_24, NULL, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=0}, 8) = 0
+5572<bin_client> rt_sigaction(SIGRT_24, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=SA_RESTORER, sa_restorer=0x7fbcc763c4b0}, NULL, 8) = 0
+5572<bin_client> rt_sigaction(SIGRT_25, NULL, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=0}, 8) = 0
+5572<bin_client> rt_sigaction(SIGRT_25, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=SA_RESTORER, sa_restorer=0x7fbcc763c4b0}, NULL, 8) = 0
+5572<bin_client> rt_sigaction(SIGRT_26, NULL, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=0}, 8) = 0
+5572<bin_client> rt_sigaction(SIGRT_26, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=SA_RESTORER, sa_restorer=0x7fbcc763c4b0}, NULL, 8) = 0
+5572<bin_client> rt_sigaction(SIGRT_27, NULL, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=0}, 8) = 0
+5572<bin_client> rt_sigaction(SIGRT_27, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=SA_RESTORER, sa_restorer=0x7fbcc763c4b0}, NULL, 8) = 0
+5572<bin_client> rt_sigaction(SIGRT_28, NULL, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=0}, 8) = 0
+5572<bin_client> rt_sigaction(SIGRT_28, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=SA_RESTORER, sa_restorer=0x7fbcc763c4b0}, NULL, 8) = 0
+5572<bin_client> rt_sigaction(SIGRT_29, NULL, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=0}, 8) = 0
+5572<bin_client> rt_sigaction(SIGRT_29, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=SA_RESTORER, sa_restorer=0x7fbcc763c4b0}, NULL, 8) = 0
+5572<bin_client> rt_sigaction(SIGRT_30, NULL, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=0}, 8) = 0
+5572<bin_client> rt_sigaction(SIGRT_30, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=SA_RESTORER, sa_restorer=0x7fbcc763c4b0}, NULL, 8) = 0
+5572<bin_client> rt_sigaction(SIGRT_31, NULL, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=0}, 8) = 0
+5572<bin_client> rt_sigaction(SIGRT_31, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=SA_RESTORER, sa_restorer=0x7fbcc763c4b0}, NULL, 8) = 0
+5572<bin_client> rt_sigaction(SIGRT_32, NULL, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=0}, 8) = 0
+5572<bin_client> rt_sigaction(SIGRT_32, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=SA_RESTORER, sa_restorer=0x7fbcc763c4b0}, NULL, 8) = 0
+5572<bin_client> dup2(3, 0)             = 0
+5572<bin_client> dup2(6, 1)             = 1
+5572<bin_client> dup2(8, 2)             = 2
+5572<bin_client> rt_sigprocmask(SIG_SETMASK, [], NULL, 8) = 0
+5572<bin_client> execve("./target/debug/bin_nakamoto", ["./target/debug/bin_nakamoto", "./bin_client/policies/seccomp_na"...], 0x7ffc5c44a1c0 /* 48 vars */ <unfinished ...>
+5571<bin_client> <... clone3 resumed>)  = 5572<bin_nakamoto>
+5571<bin_client> munmap(0x7fbcc7aa9000, 36864 <unfinished ...>
+5572<bin_nakamoto> <... execve resumed>) = 0
+5571<bin_client> <... munmap resumed>)  = 0
+5571<bin_client> rt_sigprocmask(SIG_SETMASK, [], NULL, 8) = 0
+5572<bin_nakamoto> brk(NULL <unfinished ...>
+5571<bin_client> close(3 <unfinished ...>
+5572<bin_nakamoto> <... brk resumed>)   = 0x55803baaf000
+5571<bin_client> <... close resumed>)   = 0
+5571<bin_client> close(6 <unfinished ...>
+5572<bin_nakamoto> arch_prctl(0x3001 /* ARCH_??? */, 0x7fff1bf6f6c0 <unfinished ...>
+5571<bin_client> <... close resumed>)   = 0
+5572<bin_nakamoto> <... arch_prctl resumed>) = -1 EINVAL (Invalid argument)
+5571<bin_client> close(8)               = 0
+5571<bin_client> pipe2( <unfinished ...>
+5572<bin_nakamoto> mmap(NULL, 8192, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0 <unfinished ...>
+5571<bin_client> <... pipe2 resumed>[3, 6], O_CLOEXEC) = 0
+5572<bin_nakamoto> <... mmap resumed>)  = 0x7fd3cdf24000
+5571<bin_client> pipe2( <unfinished ...>
+5572<bin_nakamoto> access("/etc/ld.so.preload", R_OK <unfinished ...>
+5571<bin_client> <... pipe2 resumed>[8, 9], O_CLOEXEC) = 0
+5571<bin_client> pipe2( <unfinished ...>
+5572<bin_nakamoto> <... access resumed>) = -1 ENOENT (No such file or directory)
+5571<bin_client> <... pipe2 resumed>[10, 11], O_CLOEXEC) = 0
+5571<bin_client> prlimit64(0, RLIMIT_NOFILE, NULL,  <unfinished ...>
+5572<bin_nakamoto> openat(AT_FDCWD, "/etc/ld.so.cache", O_RDONLY|O_CLOEXEC) = 3
+5572<bin_nakamoto> newfstatat(3, "", {st_mode=S_IFREG|0644, st_size=55641, ...}, AT_EMPTY_PATH) = 0
+5572<bin_nakamoto> mmap(NULL, 55641, PROT_READ, MAP_PRIVATE, 3, 0) = 0x7fd3cdf16000
+5572<bin_nakamoto> close(3 <unfinished ...>
+5571<bin_client> <... prlimit64 resumed>{rlim_cur=1024, rlim_max=1024*1024}) = 0
+5572<bin_nakamoto> <... close resumed>) = 0
+5571<bin_client> prlimit64(0, RLIMIT_NOFILE, NULL,  <unfinished ...>
+5572<bin_nakamoto> openat(AT_FDCWD, "/lib/x86_64-linux-gnu/libgcc_s.so.1", O_RDONLY|O_CLOEXEC <unfinished ...>
+5571<bin_client> <... prlimit64 resumed>{rlim_cur=1024, rlim_max=1024*1024}) = 0
+5572<bin_nakamoto> <... openat resumed>) = 3
+5571<bin_client> prlimit64(0, RLIMIT_NOFILE, NULL,  <unfinished ...>
+5572<bin_nakamoto> read(3,  <unfinished ...>
+5571<bin_client> <... prlimit64 resumed>{rlim_cur=1024, rlim_max=1024*1024}) = 0
+5572<bin_nakamoto> <... read resumed>"\177ELF\2\1\1\0\0\0\0\0\0\0\0\0\3\0>\0\1\0\0\0\0\0\0\0\0\0\0\0"..., 832) = 832
+5571<bin_client> prlimit64(0, RLIMIT_NOFILE, NULL,  <unfinished ...>
+5572<bin_nakamoto> newfstatat(3, "",  <unfinished ...>
+5571<bin_client> <... prlimit64 resumed>{rlim_cur=1024, rlim_max=1024*1024}) = 0
+5572<bin_nakamoto> <... newfstatat resumed>{st_mode=S_IFREG|0644, st_size=141872, ...}, AT_EMPTY_PATH) = 0
+5571<bin_client> prlimit64(0, RLIMIT_NOFILE, NULL,  <unfinished ...>
+5572<bin_nakamoto> mmap(NULL, 144232, PROT_READ, MAP_PRIVATE|MAP_DENYWRITE, 3, 0 <unfinished ...>
+5571<bin_client> <... prlimit64 resumed>{rlim_cur=1024, rlim_max=1024*1024}) = 0
+5571<bin_client> prlimit64(0, RLIMIT_NOFILE, NULL,  <unfinished ...>
+5572<bin_nakamoto> <... mmap resumed>)  = 0x7fd3cdef2000
+5571<bin_client> <... prlimit64 resumed>{rlim_cur=1024, rlim_max=1024*1024}) = 0
+5572<bin_nakamoto> mmap(0x7fd3cdef5000, 110592, PROT_READ|PROT_EXEC, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0x3000 <unfinished ...>
+5571<bin_client> mmap(NULL, 36864, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_ANONYMOUS|MAP_STACK, -1, 0) = 0x7fbcc7aa9000
+5572<bin_nakamoto> <... mmap resumed>)  = 0x7fd3cdef5000
+5571<bin_client> rt_sigprocmask(SIG_BLOCK, ~[],  <unfinished ...>
+5572<bin_nakamoto> mmap(0x7fd3cdf10000, 16384, PROT_READ, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0x1e000 <unfinished ...>
+5571<bin_client> <... rt_sigprocmask resumed>[], 8) = 0
+5571<bin_client> clone3({flags=CLONE_VM|CLONE_VFORK, exit_signal=SIGCHLD, stack=0x7fbcc7aa9000, stack_size=0x9000}, 88 <unfinished ...>
+5572<bin_nakamoto> <... mmap resumed>)  = 0x7fd3cdf10000
+5572<bin_nakamoto> mmap(0x7fd3cdf14000, 8192, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0x21000) = 0x7fd3cdf14000
+5573<bin_client> rt_sigprocmask(SIG_BLOCK, NULL, ~[KILL STOP], 8) = 0
+5572<bin_nakamoto> close(3 <unfinished ...>
+5573<bin_client> rt_sigaction(SIGHUP, NULL, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=0}, 8) = 0
+5572<bin_nakamoto> <... close resumed>) = 0
+5573<bin_client> rt_sigaction(SIGHUP, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=SA_RESTORER, sa_restorer=0x7fbcc763c4b0}, NULL, 8) = 0
+5573<bin_client> rt_sigaction(SIGINT, NULL, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=0}, 8) = 0
+5572<bin_nakamoto> openat(AT_FDCWD, "/lib/x86_64-linux-gnu/libm.so.6", O_RDONLY|O_CLOEXEC <unfinished ...>
+5573<bin_client> rt_sigaction(SIGINT, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=SA_RESTORER, sa_restorer=0x7fbcc763c4b0}, NULL, 8) = 0
+5573<bin_client> rt_sigaction(SIGQUIT, NULL,  <unfinished ...>
+5572<bin_nakamoto> <... openat resumed>) = 3
+5573<bin_client> <... rt_sigaction resumed>{sa_handler=SIG_DFL, sa_mask=[], sa_flags=0}, 8) = 0
+5572<bin_nakamoto> read(3,  <unfinished ...>
+5573<bin_client> rt_sigaction(SIGQUIT, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=SA_RESTORER, sa_restorer=0x7fbcc763c4b0}, NULL, 8) = 0
+5572<bin_nakamoto> <... read resumed>"\177ELF\2\1\1\3\0\0\0\0\0\0\0\0\3\0>\0\1\0\0\0\0\0\0\0\0\0\0\0"..., 832) = 832
+5573<bin_client> rt_sigaction(SIGILL, NULL,  <unfinished ...>
+5572<bin_nakamoto> newfstatat(3, "",  <unfinished ...>
+5573<bin_client> <... rt_sigaction resumed>{sa_handler=SIG_DFL, sa_mask=[], sa_flags=0}, 8) = 0
+5572<bin_nakamoto> <... newfstatat resumed>{st_mode=S_IFREG|0644, st_size=948816, ...}, AT_EMPTY_PATH) = 0
+5573<bin_client> rt_sigaction(SIGILL, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=SA_RESTORER, sa_restorer=0x7fbcc763c4b0}, NULL, 8) = 0
+5572<bin_nakamoto> mmap(NULL, 950520, PROT_READ, MAP_PRIVATE|MAP_DENYWRITE, 3, 0 <unfinished ...>
+5573<bin_client> rt_sigaction(SIGTRAP, NULL, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=0}, 8) = 0
+5572<bin_nakamoto> <... mmap resumed>)  = 0x7fd3cde09000
+5573<bin_client> rt_sigaction(SIGTRAP, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=SA_RESTORER, sa_restorer=0x7fbcc763c4b0},  <unfinished ...>
+5572<bin_nakamoto> mmap(0x7fd3cde17000, 516096, PROT_READ|PROT_EXEC, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0xe000 <unfinished ...>
+5573<bin_client> <... rt_sigaction resumed>NULL, 8) = 0
+5573<bin_client> rt_sigaction(SIGABRT, NULL, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=0}, 8) = 0
+5573<bin_client> rt_sigaction(SIGABRT, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=SA_RESTORER, sa_restorer=0x7fbcc763c4b0}, NULL, 8) = 0
+5572<bin_nakamoto> <... mmap resumed>)  = 0x7fd3cde17000
+5573<bin_client> rt_sigaction(SIGBUS, NULL, {sa_handler=0x555c2da0f500, sa_mask=[], sa_flags=SA_RESTORER|SA_ONSTACK|SA_SIGINFO, sa_restorer=0x7fbcc763c4b0}, 8) = 0
+5572<bin_nakamoto> mmap(0x7fd3cde95000, 372736, PROT_READ, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0x8c000 <unfinished ...>
+5573<bin_client> rt_sigaction(SIGBUS, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=SA_RESTORER|SA_ONSTACK|SA_SIGINFO, sa_restorer=0x7fbcc763c4b0}, NULL, 8) = 0
+5572<bin_nakamoto> <... mmap resumed>)  = 0x7fd3cde95000
+5573<bin_client> rt_sigaction(SIGFPE, NULL, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=0}, 8) = 0
+5572<bin_nakamoto> mmap(0x7fd3cdef0000, 8192, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0xe6000 <unfinished ...>
+5573<bin_client> rt_sigaction(SIGFPE, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=SA_RESTORER, sa_restorer=0x7fbcc763c4b0}, NULL, 8) = 0
+5573<bin_client> rt_sigaction(SIGUSR1, NULL,  <unfinished ...>
+5572<bin_nakamoto> <... mmap resumed>)  = 0x7fd3cdef0000
+5573<bin_client> <... rt_sigaction resumed>{sa_handler=SIG_DFL, sa_mask=[], sa_flags=0}, 8) = 0
+5573<bin_client> rt_sigaction(SIGUSR1, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=SA_RESTORER, sa_restorer=0x7fbcc763c4b0},  <unfinished ...>
+5572<bin_nakamoto> close(3 <unfinished ...>
+5573<bin_client> <... rt_sigaction resumed>NULL, 8) = 0
+5573<bin_client> rt_sigaction(SIGSEGV, NULL,  <unfinished ...>
+5572<bin_nakamoto> <... close resumed>) = 0
+5573<bin_client> <... rt_sigaction resumed>{sa_handler=0x555c2da0f500, sa_mask=[], sa_flags=SA_RESTORER|SA_ONSTACK|SA_SIGINFO, sa_restorer=0x7fbcc763c4b0}, 8) = 0
+5573<bin_client> rt_sigaction(SIGSEGV, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=SA_RESTORER|SA_ONSTACK|SA_SIGINFO, sa_restorer=0x7fbcc763c4b0}, NULL, 8) = 0
+5572<bin_nakamoto> openat(AT_FDCWD, "/lib/x86_64-linux-gnu/libc.so.6", O_RDONLY|O_CLOEXEC <unfinished ...>
+5573<bin_client> rt_sigaction(SIGUSR2, NULL, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=0}, 8) = 0
+5572<bin_nakamoto> <... openat resumed>) = 3
+5573<bin_client> rt_sigaction(SIGUSR2, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=SA_RESTORER, sa_restorer=0x7fbcc763c4b0}, NULL, 8) = 0
+5573<bin_client> rt_sigaction(SIGPIPE, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=SA_RESTORER, sa_restorer=0x7fbcc763c4b0}, NULL, 8) = 0
+5573<bin_client> rt_sigaction(SIGALRM, NULL, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=0}, 8) = 0
+5573<bin_client> rt_sigaction(SIGALRM, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=SA_RESTORER, sa_restorer=0x7fbcc763c4b0}, NULL, 8) = 0
+5573<bin_client> rt_sigaction(SIGTERM, NULL,  <unfinished ...>
+5572<bin_nakamoto> read(3,  <unfinished ...>
+5573<bin_client> <... rt_sigaction resumed>{sa_handler=SIG_DFL, sa_mask=[], sa_flags=0}, 8) = 0
+5572<bin_nakamoto> <... read resumed>"\177ELF\2\1\1\3\0\0\0\0\0\0\0\0\3\0>\0\1\0\0\0P<\2\0\0\0\0\0"..., 832) = 832
+5573<bin_client> rt_sigaction(SIGTERM, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=SA_RESTORER, sa_restorer=0x7fbcc763c4b0}, NULL, 8) = 0
+5572<bin_nakamoto> pread64(3,  <unfinished ...>
+5573<bin_client> rt_sigaction(SIGSTKFLT, NULL, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=0}, 8) = 0
+5572<bin_nakamoto> <... pread64 resumed>"\6\0\0\0\4\0\0\0@\0\0\0\0\0\0\0@\0\0\0\0\0\0\0@\0\0\0\0\0\0\0"..., 784, 64) = 784
+5573<bin_client> rt_sigaction(SIGSTKFLT, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=SA_RESTORER, sa_restorer=0x7fbcc763c4b0}, NULL, 8) = 0
+5573<bin_client> rt_sigaction(SIGCHLD, NULL, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=0}, 8) = 0
+5573<bin_client> rt_sigaction(SIGCHLD, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=SA_RESTORER, sa_restorer=0x7fbcc763c4b0}, NULL, 8) = 0
+5573<bin_client> rt_sigaction(SIGCONT, NULL,  <unfinished ...>
+5572<bin_nakamoto> newfstatat(3, "",  <unfinished ...>
+5573<bin_client> <... rt_sigaction resumed>{sa_handler=SIG_DFL, sa_mask=[], sa_flags=0}, 8) = 0
+5573<bin_client> rt_sigaction(SIGCONT, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=SA_RESTORER, sa_restorer=0x7fbcc763c4b0}, NULL, 8) = 0
+5573<bin_client> rt_sigaction(SIGTSTP, NULL,  <unfinished ...>
+5572<bin_nakamoto> <... newfstatat resumed>{st_mode=S_IFREG|0644, st_size=2072888, ...}, AT_EMPTY_PATH) = 0
+5573<bin_client> <... rt_sigaction resumed>{sa_handler=SIG_DFL, sa_mask=[], sa_flags=0}, 8) = 0
+5573<bin_client> rt_sigaction(SIGTSTP, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=SA_RESTORER, sa_restorer=0x7fbcc763c4b0},  <unfinished ...>
+5572<bin_nakamoto> pread64(3,  <unfinished ...>
+5573<bin_client> <... rt_sigaction resumed>NULL, 8) = 0
+5573<bin_client> rt_sigaction(SIGTTIN, NULL,  <unfinished ...>
+5572<bin_nakamoto> <... pread64 resumed>"\6\0\0\0\4\0\0\0@\0\0\0\0\0\0\0@\0\0\0\0\0\0\0@\0\0\0\0\0\0\0"..., 784, 64) = 784
+5573<bin_client> <... rt_sigaction resumed>{sa_handler=SIG_DFL, sa_mask=[], sa_flags=0}, 8) = 0
+5572<bin_nakamoto> mmap(NULL, 2117488, PROT_READ, MAP_PRIVATE|MAP_DENYWRITE, 3, 0 <unfinished ...>
+5573<bin_client> rt_sigaction(SIGTTIN, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=SA_RESTORER, sa_restorer=0x7fbcc763c4b0}, NULL, 8) = 0
+5573<bin_client> rt_sigaction(SIGTTOU, NULL, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=0}, 8) = 0
+5573<bin_client> rt_sigaction(SIGTTOU, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=SA_RESTORER, sa_restorer=0x7fbcc763c4b0}, NULL, 8) = 0
+5572<bin_nakamoto> <... mmap resumed>)  = 0x7fd3cdc00000
+5573<bin_client> rt_sigaction(SIGURG, NULL, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=0}, 8) = 0
+5572<bin_nakamoto> mmap(0x7fd3cdc22000, 1540096, PROT_READ|PROT_EXEC, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0x22000 <unfinished ...>
+5573<bin_client> rt_sigaction(SIGURG, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=SA_RESTORER, sa_restorer=0x7fbcc763c4b0}, NULL, 8) = 0
+5573<bin_client> rt_sigaction(SIGXCPU, NULL, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=0}, 8) = 0
+5573<bin_client> rt_sigaction(SIGXCPU, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=SA_RESTORER, sa_restorer=0x7fbcc763c4b0}, NULL, 8) = 0
+5573<bin_client> rt_sigaction(SIGXFSZ, NULL, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=0}, 8) = 0
+5573<bin_client> rt_sigaction(SIGXFSZ, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=SA_RESTORER, sa_restorer=0x7fbcc763c4b0}, NULL, 8) = 0
+5573<bin_client> rt_sigaction(SIGVTALRM, NULL, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=0}, 8) = 0
+5573<bin_client> rt_sigaction(SIGVTALRM, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=SA_RESTORER, sa_restorer=0x7fbcc763c4b0},  <unfinished ...>
+5572<bin_nakamoto> <... mmap resumed>)  = 0x7fd3cdc22000
+5573<bin_client> <... rt_sigaction resumed>NULL, 8) = 0
+5573<bin_client> rt_sigaction(SIGPROF, NULL,  <unfinished ...>
+5572<bin_nakamoto> mmap(0x7fd3cdd9a000, 360448, PROT_READ, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0x19a000 <unfinished ...>
+5573<bin_client> <... rt_sigaction resumed>{sa_handler=SIG_DFL, sa_mask=[], sa_flags=0}, 8) = 0
+5573<bin_client> rt_sigaction(SIGPROF, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=SA_RESTORER, sa_restorer=0x7fbcc763c4b0}, NULL, 8) = 0
+5572<bin_nakamoto> <... mmap resumed>)  = 0x7fd3cdd9a000
+5573<bin_client> rt_sigaction(SIGWINCH, NULL, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=0}, 8) = 0
+5572<bin_nakamoto> mmap(0x7fd3cddf2000, 24576, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0x1f1000 <unfinished ...>
+5573<bin_client> rt_sigaction(SIGWINCH, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=SA_RESTORER, sa_restorer=0x7fbcc763c4b0}, NULL, 8) = 0
+5573<bin_client> rt_sigaction(SIGIO, NULL, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=0}, 8) = 0
+5572<bin_nakamoto> <... mmap resumed>)  = 0x7fd3cddf2000
+5573<bin_client> rt_sigaction(SIGIO, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=SA_RESTORER, sa_restorer=0x7fbcc763c4b0}, NULL, 8) = 0
+5572<bin_nakamoto> mmap(0x7fd3cddf8000, 53104, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED|MAP_ANONYMOUS, -1, 0 <unfinished ...>
+5573<bin_client> rt_sigaction(SIGPWR, NULL, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=0}, 8) = 0
+5572<bin_nakamoto> <... mmap resumed>)  = 0x7fd3cddf8000
+5573<bin_client> rt_sigaction(SIGPWR, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=SA_RESTORER, sa_restorer=0x7fbcc763c4b0}, NULL, 8) = 0
+5572<bin_nakamoto> close(3 <unfinished ...>
+5573<bin_client> rt_sigaction(SIGSYS, NULL, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=0}, 8) = 0
+5572<bin_nakamoto> <... close resumed>) = 0
+5573<bin_client> rt_sigaction(SIGSYS, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=SA_RESTORER, sa_restorer=0x7fbcc763c4b0}, NULL, 8) = 0
+5573<bin_client> rt_sigaction(SIGRTMIN, {sa_handler=SIG_IGN, sa_mask=[], sa_flags=SA_RESTORER, sa_restorer=0x7fbcc763c4b0},  <unfinished ...>
+5572<bin_nakamoto> mmap(NULL, 8192, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0 <unfinished ...>
+5573<bin_client> <... rt_sigaction resumed>NULL, 8) = 0
+5572<bin_nakamoto> <... mmap resumed>)  = 0x7fd3cde07000
+5573<bin_client> rt_sigaction(SIGRT_1, {sa_handler=SIG_IGN, sa_mask=[], sa_flags=SA_RESTORER, sa_restorer=0x7fbcc763c4b0},  <unfinished ...>
+5572<bin_nakamoto> arch_prctl(ARCH_SET_FS, 0x7fd3cde07c00 <unfinished ...>
+5573<bin_client> <... rt_sigaction resumed>NULL, 8) = 0
+5572<bin_nakamoto> <... arch_prctl resumed>) = 0
+5573<bin_client> rt_sigaction(SIGRT_2, NULL,  <unfinished ...>
+5572<bin_nakamoto> set_tid_address(0x7fd3cde07ed0 <unfinished ...>
+5573<bin_client> <... rt_sigaction resumed>{sa_handler=SIG_DFL, sa_mask=[], sa_flags=0}, 8) = 0
+5572<bin_nakamoto> <... set_tid_address resumed>) = 5572
+5573<bin_client> rt_sigaction(SIGRT_2, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=SA_RESTORER, sa_restorer=0x7fbcc763c4b0},  <unfinished ...>
+5572<bin_nakamoto> set_robust_list(0x7fd3cde07ee0, 24 <unfinished ...>
+5573<bin_client> <... rt_sigaction resumed>NULL, 8) = 0
+5572<bin_nakamoto> <... set_robust_list resumed>) = 0
+5573<bin_client> rt_sigaction(SIGRT_3, NULL,  <unfinished ...>
+5572<bin_nakamoto> rseq(0x7fd3cde08520, 0x20, 0, 0x53053053 <unfinished ...>
+5573<bin_client> <... rt_sigaction resumed>{sa_handler=SIG_DFL, sa_mask=[], sa_flags=0}, 8) = 0
+5572<bin_nakamoto> <... rseq resumed>)  = 0
+5573<bin_client> rt_sigaction(SIGRT_3, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=SA_RESTORER, sa_restorer=0x7fbcc763c4b0}, NULL, 8) = 0
+5573<bin_client> rt_sigaction(SIGRT_4, NULL, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=0}, 8) = 0
+5573<bin_client> rt_sigaction(SIGRT_4, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=SA_RESTORER, sa_restorer=0x7fbcc763c4b0}, NULL, 8) = 0
+5573<bin_client> rt_sigaction(SIGRT_5, NULL,  <unfinished ...>
+5572<bin_nakamoto> mprotect(0x7fd3cddf2000, 16384, PROT_READ <unfinished ...>
+5573<bin_client> <... rt_sigaction resumed>{sa_handler=SIG_DFL, sa_mask=[], sa_flags=0}, 8) = 0
+5573<bin_client> rt_sigaction(SIGRT_5, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=SA_RESTORER, sa_restorer=0x7fbcc763c4b0}, NULL, 8) = 0
+5573<bin_client> rt_sigaction(SIGRT_6, NULL, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=0}, 8) = 0
+5573<bin_client> rt_sigaction(SIGRT_6, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=SA_RESTORER, sa_restorer=0x7fbcc763c4b0}, NULL, 8) = 0
+5573<bin_client> rt_sigaction(SIGRT_7, NULL, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=0}, 8) = 0
+5573<bin_client> rt_sigaction(SIGRT_7, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=SA_RESTORER, sa_restorer=0x7fbcc763c4b0}, NULL, 8) = 0
+5573<bin_client> rt_sigaction(SIGRT_8, NULL, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=0}, 8) = 0
+5573<bin_client> rt_sigaction(SIGRT_8, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=SA_RESTORER, sa_restorer=0x7fbcc763c4b0},  <unfinished ...>
+5572<bin_nakamoto> <... mprotect resumed>) = 0
+5573<bin_client> <... rt_sigaction resumed>NULL, 8) = 0
+5573<bin_client> rt_sigaction(SIGRT_9, NULL, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=0}, 8) = 0
+5573<bin_client> rt_sigaction(SIGRT_9, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=SA_RESTORER, sa_restorer=0x7fbcc763c4b0}, NULL, 8) = 0
+5572<bin_nakamoto> mprotect(0x7fd3cdef0000, 4096, PROT_READ <unfinished ...>
+5573<bin_client> rt_sigaction(SIGRT_10, NULL, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=0}, 8) = 0
+5573<bin_client> rt_sigaction(SIGRT_10, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=SA_RESTORER, sa_restorer=0x7fbcc763c4b0},  <unfinished ...>
+5572<bin_nakamoto> <... mprotect resumed>) = 0
+5573<bin_client> <... rt_sigaction resumed>NULL, 8) = 0
+5572<bin_nakamoto> mprotect(0x7fd3cdf14000, 4096, PROT_READ <unfinished ...>
+5573<bin_client> rt_sigaction(SIGRT_11, NULL, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=0}, 8) = 0
+5572<bin_nakamoto> <... mprotect resumed>) = 0
+5573<bin_client> rt_sigaction(SIGRT_11, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=SA_RESTORER, sa_restorer=0x7fbcc763c4b0}, NULL, 8) = 0
+5573<bin_client> rt_sigaction(SIGRT_12, NULL, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=0}, 8) = 0
+5573<bin_client> rt_sigaction(SIGRT_12, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=SA_RESTORER, sa_restorer=0x7fbcc763c4b0}, NULL, 8) = 0
+5573<bin_client> rt_sigaction(SIGRT_13, NULL, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=0}, 8) = 0
+5573<bin_client> rt_sigaction(SIGRT_13, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=SA_RESTORER, sa_restorer=0x7fbcc763c4b0}, NULL, 8) = 0
+5573<bin_client> rt_sigaction(SIGRT_14, NULL, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=0}, 8) = 0
+5572<bin_nakamoto> mprotect(0x55803aefe000, 90112, PROT_READ <unfinished ...>
+5573<bin_client> rt_sigaction(SIGRT_14, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=SA_RESTORER, sa_restorer=0x7fbcc763c4b0}, NULL, 8) = 0
+5572<bin_nakamoto> <... mprotect resumed>) = 0
+5573<bin_client> rt_sigaction(SIGRT_15, NULL, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=0}, 8) = 0
+5572<bin_nakamoto> mprotect(0x7fd3cdf59000, 8192, PROT_READ <unfinished ...>
+5573<bin_client> rt_sigaction(SIGRT_15, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=SA_RESTORER, sa_restorer=0x7fbcc763c4b0}, NULL, 8) = 0
+5572<bin_nakamoto> <... mprotect resumed>) = 0
+5573<bin_client> rt_sigaction(SIGRT_16, NULL, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=0}, 8) = 0
+5572<bin_nakamoto> prlimit64(0, RLIMIT_STACK, NULL,  <unfinished ...>
+5573<bin_client> rt_sigaction(SIGRT_16, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=SA_RESTORER, sa_restorer=0x7fbcc763c4b0},  <unfinished ...>
+5572<bin_nakamoto> <... prlimit64 resumed>{rlim_cur=8192*1024, rlim_max=RLIM64_INFINITY}) = 0
+5573<bin_client> <... rt_sigaction resumed>NULL, 8) = 0
+5573<bin_client> rt_sigaction(SIGRT_17, NULL,  <unfinished ...>
+5572<bin_nakamoto> munmap(0x7fd3cdf16000, 55641 <unfinished ...>
+5573<bin_client> <... rt_sigaction resumed>{sa_handler=SIG_DFL, sa_mask=[], sa_flags=0}, 8) = 0
+5573<bin_client> rt_sigaction(SIGRT_17, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=SA_RESTORER, sa_restorer=0x7fbcc763c4b0}, NULL, 8) = 0
+5573<bin_client> rt_sigaction(SIGRT_18, NULL, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=0}, 8) = 0
+5573<bin_client> rt_sigaction(SIGRT_18, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=SA_RESTORER, sa_restorer=0x7fbcc763c4b0}, NULL, 8) = 0
+5572<bin_nakamoto> <... munmap resumed>) = 0
+5573<bin_client> rt_sigaction(SIGRT_19, NULL, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=0}, 8) = 0
+5573<bin_client> rt_sigaction(SIGRT_19, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=SA_RESTORER, sa_restorer=0x7fbcc763c4b0}, NULL, 8) = 0
+5573<bin_client> rt_sigaction(SIGRT_20, NULL, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=0}, 8) = 0
+5573<bin_client> rt_sigaction(SIGRT_20, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=SA_RESTORER, sa_restorer=0x7fbcc763c4b0}, NULL, 8) = 0
+5572<bin_nakamoto> poll([{fd=0, events=0}, {fd=1, events=0}, {fd=2, events=0}], 3, 0 <unfinished ...>
+5573<bin_client> rt_sigaction(SIGRT_21, NULL,  <unfinished ...>
+5572<bin_nakamoto> <... poll resumed>)  = 0 (Timeout)
+5573<bin_client> <... rt_sigaction resumed>{sa_handler=SIG_DFL, sa_mask=[], sa_flags=0}, 8) = 0
+5572<bin_nakamoto> rt_sigaction(SIGPIPE, {sa_handler=SIG_IGN, sa_mask=[PIPE], sa_flags=SA_RESTORER|SA_RESTART, sa_restorer=0x7fd3cdc3c4b0},  <unfinished ...>
+5573<bin_client> rt_sigaction(SIGRT_21, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=SA_RESTORER, sa_restorer=0x7fbcc763c4b0},  <unfinished ...>
+5572<bin_nakamoto> <... rt_sigaction resumed>{sa_handler=SIG_DFL, sa_mask=[], sa_flags=0}, 8) = 0
+5573<bin_client> <... rt_sigaction resumed>NULL, 8) = 0
+5572<bin_nakamoto> rt_sigaction(SIGSEGV, NULL,  <unfinished ...>
+5573<bin_client> rt_sigaction(SIGRT_22, NULL,  <unfinished ...>
+5572<bin_nakamoto> <... rt_sigaction resumed>{sa_handler=SIG_DFL, sa_mask=[], sa_flags=0}, 8) = 0
+5573<bin_client> <... rt_sigaction resumed>{sa_handler=SIG_DFL, sa_mask=[], sa_flags=0}, 8) = 0
+5572<bin_nakamoto> rt_sigaction(SIGSEGV, {sa_handler=0x55803ae39400, sa_mask=[], sa_flags=SA_RESTORER|SA_ONSTACK|SA_SIGINFO, sa_restorer=0x7fd3cdc3c4b0},  <unfinished ...>
+5573<bin_client> rt_sigaction(SIGRT_22, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=SA_RESTORER, sa_restorer=0x7fbcc763c4b0},  <unfinished ...>
+5572<bin_nakamoto> <... rt_sigaction resumed>NULL, 8) = 0
+5573<bin_client> <... rt_sigaction resumed>NULL, 8) = 0
+5572<bin_nakamoto> rt_sigaction(SIGBUS, NULL,  <unfinished ...>
+5573<bin_client> rt_sigaction(SIGRT_23, NULL,  <unfinished ...>
+5572<bin_nakamoto> <... rt_sigaction resumed>{sa_handler=SIG_DFL, sa_mask=[], sa_flags=0}, 8) = 0
+5573<bin_client> <... rt_sigaction resumed>{sa_handler=SIG_DFL, sa_mask=[], sa_flags=0}, 8) = 0
+5572<bin_nakamoto> rt_sigaction(SIGBUS, {sa_handler=0x55803ae39400, sa_mask=[], sa_flags=SA_RESTORER|SA_ONSTACK|SA_SIGINFO, sa_restorer=0x7fd3cdc3c4b0},  <unfinished ...>
+5573<bin_client> rt_sigaction(SIGRT_23, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=SA_RESTORER, sa_restorer=0x7fbcc763c4b0},  <unfinished ...>
+5572<bin_nakamoto> <... rt_sigaction resumed>NULL, 8) = 0
+5573<bin_client> <... rt_sigaction resumed>NULL, 8) = 0
+5573<bin_client> rt_sigaction(SIGRT_24, NULL,  <unfinished ...>
+5572<bin_nakamoto> sigaltstack(NULL,  <unfinished ...>
+5573<bin_client> <... rt_sigaction resumed>{sa_handler=SIG_DFL, sa_mask=[], sa_flags=0}, 8) = 0
+5572<bin_nakamoto> <... sigaltstack resumed>{ss_sp=NULL, ss_flags=SS_DISABLE, ss_size=0}) = 0
+5573<bin_client> rt_sigaction(SIGRT_24, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=SA_RESTORER, sa_restorer=0x7fbcc763c4b0}, NULL, 8) = 0
+5572<bin_nakamoto> mmap(NULL, 12288, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_ANONYMOUS|MAP_STACK, -1, 0 <unfinished ...>
+5573<bin_client> rt_sigaction(SIGRT_25, NULL, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=0}, 8) = 0
+5572<bin_nakamoto> <... mmap resumed>)  = 0x7fd3cdf21000
+5573<bin_client> rt_sigaction(SIGRT_25, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=SA_RESTORER, sa_restorer=0x7fbcc763c4b0},  <unfinished ...>
+5572<bin_nakamoto> mprotect(0x7fd3cdf21000, 4096, PROT_NONE <unfinished ...>
+5573<bin_client> <... rt_sigaction resumed>NULL, 8) = 0
+5573<bin_client> rt_sigaction(SIGRT_26, NULL,  <unfinished ...>
+5572<bin_nakamoto> <... mprotect resumed>) = 0
+5573<bin_client> <... rt_sigaction resumed>{sa_handler=SIG_DFL, sa_mask=[], sa_flags=0}, 8) = 0
+5572<bin_nakamoto> sigaltstack({ss_sp=0x7fd3cdf22000, ss_flags=0, ss_size=8192},  <unfinished ...>
+5573<bin_client> rt_sigaction(SIGRT_26, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=SA_RESTORER, sa_restorer=0x7fbcc763c4b0},  <unfinished ...>
+5572<bin_nakamoto> <... sigaltstack resumed>NULL) = 0
+5573<bin_client> <... rt_sigaction resumed>NULL, 8) = 0
+5573<bin_client> rt_sigaction(SIGRT_27, NULL,  <unfinished ...>
+5572<bin_nakamoto> getrandom( <unfinished ...>
+5573<bin_client> <... rt_sigaction resumed>{sa_handler=SIG_DFL, sa_mask=[], sa_flags=0}, 8) = 0
+5572<bin_nakamoto> <... getrandom resumed>"\x43\xdc\x45\x57\x84\x53\xe3\x47", 8, GRND_NONBLOCK) = 8
+5573<bin_client> rt_sigaction(SIGRT_27, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=SA_RESTORER, sa_restorer=0x7fbcc763c4b0},  <unfinished ...>
+5572<bin_nakamoto> brk(NULL <unfinished ...>
+5573<bin_client> <... rt_sigaction resumed>NULL, 8) = 0
+5572<bin_nakamoto> <... brk resumed>)   = 0x55803baaf000
+5573<bin_client> rt_sigaction(SIGRT_28, NULL,  <unfinished ...>
+5572<bin_nakamoto> brk(0x55803bad0000 <unfinished ...>
+5573<bin_client> <... rt_sigaction resumed>{sa_handler=SIG_DFL, sa_mask=[], sa_flags=0}, 8) = 0
+5572<bin_nakamoto> <... brk resumed>)   = 0x55803bad0000
+5573<bin_client> rt_sigaction(SIGRT_28, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=SA_RESTORER, sa_restorer=0x7fbcc763c4b0}, NULL, 8) = 0
+5573<bin_client> rt_sigaction(SIGRT_29, NULL,  <unfinished ...>
+5572<bin_nakamoto> openat(AT_FDCWD, "/proc/self/maps", O_RDONLY|O_CLOEXEC <unfinished ...>
+5573<bin_client> <... rt_sigaction resumed>{sa_handler=SIG_DFL, sa_mask=[], sa_flags=0}, 8) = 0
+5573<bin_client> rt_sigaction(SIGRT_29, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=SA_RESTORER, sa_restorer=0x7fbcc763c4b0}, NULL, 8) = 0
+5572<bin_nakamoto> <... openat resumed>) = 3
+5573<bin_client> rt_sigaction(SIGRT_30, NULL, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=0}, 8) = 0
+5572<bin_nakamoto> prlimit64(0, RLIMIT_STACK, NULL,  <unfinished ...>
+5573<bin_client> rt_sigaction(SIGRT_30, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=SA_RESTORER, sa_restorer=0x7fbcc763c4b0},  <unfinished ...>
+5572<bin_nakamoto> <... prlimit64 resumed>{rlim_cur=8192*1024, rlim_max=RLIM64_INFINITY}) = 0
+5573<bin_client> <... rt_sigaction resumed>NULL, 8) = 0
+5573<bin_client> rt_sigaction(SIGRT_31, NULL,  <unfinished ...>
+5572<bin_nakamoto> newfstatat(3, "",  <unfinished ...>
+5573<bin_client> <... rt_sigaction resumed>{sa_handler=SIG_DFL, sa_mask=[], sa_flags=0}, 8) = 0
+5572<bin_nakamoto> <... newfstatat resumed>{st_mode=S_IFREG|0444, st_size=0, ...}, AT_EMPTY_PATH) = 0
+5573<bin_client> rt_sigaction(SIGRT_31, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=SA_RESTORER, sa_restorer=0x7fbcc763c4b0},  <unfinished ...>
+5572<bin_nakamoto> read(3,  <unfinished ...>
+5573<bin_client> <... rt_sigaction resumed>NULL, 8) = 0
+5573<bin_client> rt_sigaction(SIGRT_32, NULL, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=0}, 8) = 0
+5572<bin_nakamoto> <... read resumed>"55803ac23000-55803ac4b000 r--p 0"..., 1024) = 1024
+5573<bin_client> rt_sigaction(SIGRT_32, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=SA_RESTORER, sa_restorer=0x7fbcc763c4b0}, NULL, 8) = 0
+5572<bin_nakamoto> read(3,  <unfinished ...>
+5573<bin_client> dup2(3, 0)             = 0
+5572<bin_nakamoto> <... read resumed>"000 08:02 2244449               "..., 1024) = 1024
+5573<bin_client> dup2(9, 1 <unfinished ...>
+5572<bin_nakamoto> read(3,  <unfinished ...>
+5573<bin_client> <... dup2 resumed>)    = 1
+5573<bin_client> dup2(11, 2 <unfinished ...>
+5572<bin_nakamoto> <... read resumed>"inux-gnu/libgcc_s.so.1\n7fd3cdef5"..., 1024) = 1024
+5573<bin_client> <... dup2 resumed>)    = 2
+5573<bin_client> rt_sigprocmask(SIG_SETMASK, [],  <unfinished ...>
+5572<bin_nakamoto> read(3,  <unfinished ...>
+5573<bin_client> <... rt_sigprocmask resumed>NULL, 8) = 0
+5573<bin_client> execve("./target/debug/bin_wallet", ["./target/debug/bin_wallet", "./bin_client/policies/seccomp_wa"...], 0x7ffc5c44a1c0 /* 48 vars */ <unfinished ...>
+5572<bin_nakamoto> <... read resumed>"nux-gnu/ld-linux-x86-64.so.2\n7fd"..., 1024) = 474
+5572<bin_nakamoto> close(3 <unfinished ...>
+5571<bin_client> <... clone3 resumed>)  = 5573<bin_wallet>
+5572<bin_nakamoto> <... close resumed>) = 0
+5571<bin_client> munmap(0x7fbcc7aa9000, 36864 <unfinished ...>
+5572<bin_nakamoto> sched_getaffinity(5572<bin_nakamoto>, 32,  <unfinished ...>
+5571<bin_client> <... munmap resumed>)  = 0
+5571<bin_client> rt_sigprocmask(SIG_SETMASK, [],  <unfinished ...>
+5572<bin_nakamoto> <... sched_getaffinity resumed>[0 1 2 3]) = 8
+5571<bin_client> <... rt_sigprocmask resumed>NULL, 8) = 0
+5571<bin_client> close(3)               = 0
+5572<bin_nakamoto> openat(AT_FDCWD, "./bin_client/policies/seccomp_nakamoto.json", O_RDONLY|O_CLOEXEC <unfinished ...>
+5571<bin_client> close(9)               = 0
+5572<bin_nakamoto> <... openat resumed>) = 3
+5571<bin_client> close(11 <unfinished ...>
+5572<bin_nakamoto> statx(0, NULL, AT_STATX_SYNC_AS_STAT, STATX_ALL,  <unfinished ...>
+5571<bin_client> <... close resumed>)   = 0
+5573<bin_wallet> <... execve resumed>)  = 0
+5572<bin_nakamoto> <... statx resumed>NULL) = -1 EFAULT (Bad address)
+5571<bin_client> openat(AT_FDCWD, "./tests/nakamoto_config1/Config.json", O_RDONLY|O_CLOEXEC <unfinished ...>
+5572<bin_nakamoto> statx(3, "", AT_STATX_SYNC_AS_STAT|AT_EMPTY_PATH, STATX_ALL,  <unfinished ...>
+5571<bin_client> <... openat resumed>)  = 3
+5572<bin_nakamoto> <... statx resumed>{stx_mask=STATX_ALL|STATX_MNT_ID, stx_attributes=0, stx_mode=S_IFREG|0664, stx_size=1502, ...}) = 0
+5571<bin_client> statx(0, NULL, AT_STATX_SYNC_AS_STAT, STATX_ALL,  <unfinished ...>
+5573<bin_wallet> brk(NULL <unfinished ...>
+5571<bin_client> <... statx resumed>NULL) = -1 EFAULT (Bad address)
+5573<bin_wallet> <... brk resumed>)     = 0x55cc8b0a8000
+5572<bin_nakamoto> lseek(3, 0, SEEK_CUR <unfinished ...>
+5571<bin_client> statx(3, "", AT_STATX_SYNC_AS_STAT|AT_EMPTY_PATH, STATX_ALL,  <unfinished ...>
+5572<bin_nakamoto> <... lseek resumed>) = 0
+5571<bin_client> <... statx resumed>{stx_mask=STATX_ALL|STATX_MNT_ID, stx_attributes=0, stx_mode=S_IFREG|0664, stx_size=629, ...}) = 0
+5572<bin_nakamoto> read(3,  <unfinished ...>
+5571<bin_client> lseek(3, 0, SEEK_CUR)  = 0
+5572<bin_nakamoto> <... read resumed>"{\r\n    \"main_thread\": {\r\n       "..., 1502) = 1502
+5571<bin_client> read(3,  <unfinished ...>
+5572<bin_nakamoto> read(3,  <unfinished ...>
+5571<bin_client> <... read resumed>"{\n    \"neighbors\": [\n        {\n "..., 629) = 629
+5572<bin_nakamoto> <... read resumed>"", 32) = 0
+5571<bin_client> read(3,  <unfinished ...>
+5572<bin_nakamoto> close(3 <unfinished ...>
+5571<bin_client> <... read resumed>"", 32) = 0
+5572<bin_nakamoto> <... close resumed>) = 0
+5571<bin_client> close(3)               = 0
+5573<bin_wallet> arch_prctl(0x3001 /* ARCH_??? */, 0x7ffdbb4c67d0 <unfinished ...>
+5571<bin_client> openat(AT_FDCWD, "./tests/nakamoto_config1/BlockTree.json", O_RDONLY|O_CLOEXEC <unfinished ...>
+5573<bin_wallet> <... arch_prctl resumed>) = -1 EINVAL (Invalid argument)
+5572<bin_nakamoto> getrandom( <unfinished ...>
+5571<bin_client> <... openat resumed>)  = 3
+5571<bin_client> statx(3, "", AT_STATX_SYNC_AS_STAT|AT_EMPTY_PATH, STATX_ALL,  <unfinished ...>
+5572<bin_nakamoto> <... getrandom resumed>"\x94\x55\xa6\x9b\x95\xb9\x29\x79\x61\xf7\x74\x84\xe8\x87\x8a\x7f", 16, GRND_INSECURE) = 16
+5571<bin_client> <... statx resumed>{stx_mask=STATX_ALL|STATX_MNT_ID, stx_attributes=0, stx_mode=S_IFREG|0664, stx_size=1125, ...}) = 0
+5571<bin_client> lseek(3, 0, SEEK_CUR)  = 0
+5573<bin_wallet> mmap(NULL, 8192, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0 <unfinished ...>
+5571<bin_client> read(3, "{\n    \"all_blocks\": {\n        \"0"..., 1125) = 1125
+5573<bin_wallet> <... mmap resumed>)    = 0x7f4d329b7000
+5571<bin_client> read(3,  <unfinished ...>
+5573<bin_wallet> access("/etc/ld.so.preload", R_OK <unfinished ...>
+5571<bin_client> <... read resumed>"", 32) = 0
+5571<bin_client> close(3 <unfinished ...>
+5573<bin_wallet> <... access resumed>)  = -1 ENOENT (No such file or directory)
+5571<bin_client> <... close resumed>)   = 0
+5573<bin_wallet> openat(AT_FDCWD, "/etc/ld.so.cache", O_RDONLY|O_CLOEXEC <unfinished ...>
+5571<bin_client> openat(AT_FDCWD, "./tests/nakamoto_config1/TxPool.json", O_RDONLY|O_CLOEXEC <unfinished ...>
+5573<bin_wallet> <... openat resumed>)  = 3
+5573<bin_wallet> newfstatat(3, "",  <unfinished ...>
+5571<bin_client> <... openat resumed>)  = 3
+5573<bin_wallet> <... newfstatat resumed>{st_mode=S_IFREG|0644, st_size=55641, ...}, AT_EMPTY_PATH) = 0
+5571<bin_client> statx(3, "", AT_STATX_SYNC_AS_STAT|AT_EMPTY_PATH, STATX_ALL, {stx_mask=STATX_ALL|STATX_MNT_ID, stx_attributes=0, stx_mode=S_IFREG|0664, stx_size=140, ...}) = 0
+5573<bin_wallet> mmap(NULL, 55641, PROT_READ, MAP_PRIVATE, 3, 0 <unfinished ...>
+5572<bin_nakamoto> prctl(PR_SET_NO_NEW_PRIVS, 1, 0, 0, 0 <unfinished ...>
+5571<bin_client> lseek(3, 0, SEEK_CUR <unfinished ...>
+5572<bin_nakamoto> <... prctl resumed>) = 0
+5571<bin_client> <... lseek resumed>)   = 0
+5572<bin_nakamoto> prctl(PR_SET_SECCOMP, SECCOMP_MODE_FILTER, {len=180, filter=0x55803bab2d30} <unfinished ...>
+5571<bin_client> read(3, "{\n    \"pool_tx_ids\": [],\n    \"po"..., 140) = 140
+5573<bin_wallet> <... mmap resumed>)    = 0x7f4d329a9000
+5571<bin_client> read(3,  <unfinished ...>
+5573<bin_wallet> close(3)               = 0
+5571<bin_client> <... read resumed>"", 32) = 0
+5571<bin_client> close(3 <unfinished ...>
+5573<bin_wallet> openat(AT_FDCWD, "/lib/x86_64-linux-gnu/libgcc_s.so.1", O_RDONLY|O_CLOEXEC <unfinished ...>
+5572<bin_nakamoto> <... prctl resumed>) = 0
+5571<bin_client> <... close resumed>)   = 0
+5573<bin_wallet> <... openat resumed>)  = 3
+5573<bin_wallet> read(3,  <unfinished ...>
+5572<bin_nakamoto> write(1, "{\"Notify\":\"# Waiting for IPC Req"..., 44 <unfinished ...>
+5573<bin_wallet> <... read resumed>"\177ELF\2\1\1\0\0\0\0\0\0\0\0\0\3\0>\0\1\0\0\0\0\0\0\0\0\0\0\0"..., 832) = 832
+5573<bin_wallet> newfstatat(3, "",  <unfinished ...>
+5572<bin_nakamoto> <... write resumed>) = 44
+5573<bin_wallet> <... newfstatat resumed>{st_mode=S_IFREG|0644, st_size=141872, ...}, AT_EMPTY_PATH) = 0
+5572<bin_nakamoto> read(0,  <unfinished ...>
+5571<bin_client> write(4, "{\"Initialize\":[\"{\\n    \\\"all_blo"..., 2124 <unfinished ...>
+5573<bin_wallet> mmap(NULL, 144232, PROT_READ, MAP_PRIVATE|MAP_DENYWRITE, 3, 0) = 0x7f4d32985000
+5573<bin_wallet> mmap(0x7f4d32988000, 110592, PROT_READ|PROT_EXEC, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0x3000) = 0x7f4d32988000
+5571<bin_client> <... write resumed>)   = 2124
+5572<bin_nakamoto> <... read resumed>"{\"Initialize\":[\"{\\n    \\\"all_blo"..., 8192) = 2124
+5571<bin_client> openat(AT_FDCWD, "./tests/_secrets/Wallet.A.json", O_RDONLY|O_CLOEXEC <unfinished ...>
+5573<bin_wallet> mmap(0x7f4d329a3000, 16384, PROT_READ, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0x1e000 <unfinished ...>
+5571<bin_client> <... openat resumed>)  = 3
+5571<bin_client> statx(3, "", AT_STATX_SYNC_AS_STAT|AT_EMPTY_PATH, STATX_ALL,  <unfinished ...>
+5573<bin_wallet> <... mmap resumed>)    = 0x7f4d329a3000
+5572<bin_nakamoto> write(1, "{\"Notify\":\"[Main] Start receivin"..., 49 <unfinished ...>
+5571<bin_client> <... statx resumed>{stx_mask=STATX_ALL|STATX_MNT_ID, stx_attributes=0, stx_mode=S_IFREG|0664, stx_size=619, ...}) = 0
+5572<bin_nakamoto> <... write resumed>) = 49
+5571<bin_client> lseek(3, 0, SEEK_CUR <unfinished ...>
+5573<bin_wallet> mmap(0x7f4d329a7000, 8192, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0x21000 <unfinished ...>
+5571<bin_client> <... lseek resumed>)   = 0
+5571<bin_client> read(3,  <unfinished ...>
+5573<bin_wallet> <... mmap resumed>)    = 0x7f4d329a7000
+5571<bin_client> <... read resumed>"{\n  \"user_name\": \"Alice\",\n  \"pri"..., 619) = 619
+5571<bin_client> read(3,  <unfinished ...>
+5573<bin_wallet> close(3 <unfinished ...>
+5572<bin_nakamoto> socket(AF_INET, SOCK_STREAM|SOCK_CLOEXEC, IPPROTO_IP <unfinished ...>
+5571<bin_client> <... read resumed>"", 32) = 0
+5573<bin_wallet> <... close resumed>)   = 0
+5571<bin_client> close(3 <unfinished ...>
+5572<bin_nakamoto> <... socket resumed>) = 3
+5571<bin_client> <... close resumed>)   = 0
+5573<bin_wallet> openat(AT_FDCWD, "/lib/x86_64-linux-gnu/libc.so.6", O_RDONLY|O_CLOEXEC) = 3
+5572<bin_nakamoto> setsockopt(3, SOL_SOCKET, SO_REUSEADDR, [1], 4 <unfinished ...>
+5571<bin_client> write(6, "{\"Initialize\":\"{\\n  \\\"user_name\\"..., 665) = 665
+5573<bin_wallet> read(3,  <unfinished ...>
+5572<bin_nakamoto> <... setsockopt resumed>) = 0
+5571<bin_client> openat(AT_FDCWD, "./bin_client/policies/seccomp_client.json", O_RDONLY|O_CLOEXEC <unfinished ...>
+5572<bin_nakamoto> bind(3, {sa_family=AF_INET, sin_port=htons(9011), sin_addr=inet_addr("127.0.0.1")}, 16 <unfinished ...>
+5571<bin_client> <... openat resumed>)  = 3
+5573<bin_wallet> <... read resumed>"\177ELF\2\1\1\3\0\0\0\0\0\0\0\0\3\0>\0\1\0\0\0P<\2\0\0\0\0\0"..., 832) = 832
+5571<bin_client> statx(3, "", AT_STATX_SYNC_AS_STAT|AT_EMPTY_PATH, STATX_ALL,  <unfinished ...>
+5573<bin_wallet> pread64(3,  <unfinished ...>
+5572<bin_nakamoto> <... bind resumed>)  = 0
+5571<bin_client> <... statx resumed>{stx_mask=STATX_ALL|STATX_MNT_ID, stx_attributes=0, stx_mode=S_IFREG|0664, stx_size=1790, ...}) = 0
+5573<bin_wallet> <... pread64 resumed>"\6\0\0\0\4\0\0\0@\0\0\0\0\0\0\0@\0\0\0\0\0\0\0@\0\0\0\0\0\0\0"..., 784, 64) = 784
+5572<bin_nakamoto> listen(3, 128 <unfinished ...>
+5571<bin_client> lseek(3, 0, SEEK_CUR)  = 0
+5573<bin_wallet> newfstatat(3, "",  <unfinished ...>
+5572<bin_nakamoto> <... listen resumed>) = 0
+5571<bin_client> read(3,  <unfinished ...>
+5572<bin_nakamoto> rt_sigaction(SIGRT_1, {sa_handler=0x7fd3cdc8bf20, sa_mask=[], sa_flags=SA_RESTORER|SA_ONSTACK|SA_RESTART|SA_SIGINFO, sa_restorer=0x7fd3cdc3c4b0},  <unfinished ...>
+5571<bin_client> <... read resumed>"{\r\n    \"main_thread\": {\r\n       "..., 1790) = 1790
+5571<bin_client> read(3,  <unfinished ...>
+5573<bin_wallet> <... newfstatat resumed>{st_mode=S_IFREG|0644, st_size=2072888, ...}, AT_EMPTY_PATH) = 0
+5572<bin_nakamoto> <... rt_sigaction resumed>NULL, 8) = 13
+5571<bin_client> <... read resumed>"", 32) = 0
+5573<bin_wallet> pread64(3, "\6\0\0\0\4\0\0\0@\0\0\0\0\0\0\0@\0\0\0\0\0\0\0@\0\0\0\0\0\0\0"..., 784, 64) = 784
+5571<bin_client> close(3 <unfinished ...>
+5573<bin_wallet> mmap(NULL, 2117488, PROT_READ, MAP_PRIVATE|MAP_DENYWRITE, 3, 0 <unfinished ...>
+5571<bin_client> <... close resumed>)   = 0
+5573<bin_wallet> <... mmap resumed>)    = 0x7f4d32600000
+5573<bin_wallet> mmap(0x7f4d32622000, 1540096, PROT_READ|PROT_EXEC, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0x22000) = 0x7f4d32622000
+5573<bin_wallet> mmap(0x7f4d3279a000, 360448, PROT_READ, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0x19a000) = 0x7f4d3279a000
+5573<bin_wallet> mmap(0x7f4d327f2000, 24576, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0x1f1000) = 0x7f4d327f2000
+5573<bin_wallet> mmap(0x7f4d327f8000, 53104, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED|MAP_ANONYMOUS, -1, 0) = 0x7f4d327f8000
+5573<bin_wallet> close(3)               = 0
+5573<bin_wallet> mmap(NULL, 12288, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0) = 0x7f4d32982000
+5573<bin_wallet> arch_prctl(ARCH_SET_FS, 0x7f4d32982780) = 0
+5573<bin_wallet> set_tid_address(0x7f4d32982a50) = 5573
+5573<bin_wallet> set_robust_list(0x7f4d32982a60, 24) = 0
+5573<bin_wallet> rseq(0x7f4d329830a0, 0x20, 0, 0x53053053) = 0
+5573<bin_wallet> mprotect(0x7f4d327f2000, 16384, PROT_READ) = 0
+5573<bin_wallet> mprotect(0x7f4d329a7000, 4096, PROT_READ) = 0
+5573<bin_wallet> mprotect(0x55cc895e4000, 61440, PROT_READ) = 0
+5573<bin_wallet> mprotect(0x7f4d329ec000, 8192, PROT_READ) = 0
+5573<bin_wallet> prlimit64(0, RLIMIT_STACK, NULL, {rlim_cur=8192*1024, rlim_max=RLIM64_INFINITY}) = 0
+5573<bin_wallet> munmap(0x7f4d329a9000, 55641) = 0
+5573<bin_wallet> poll([{fd=0, events=0}, {fd=1, events=0}, {fd=2, events=0}], 3, 0) = 0 (Timeout)
+5573<bin_wallet> rt_sigaction(SIGPIPE, {sa_handler=SIG_IGN, sa_mask=[PIPE], sa_flags=SA_RESTORER|SA_RESTART, sa_restorer=0x7f4d3263c4b0}, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=0}, 8) = 0
+5573<bin_wallet> rt_sigaction(SIGSEGV, NULL, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=0}, 8) = 0
+5573<bin_wallet> rt_sigaction(SIGSEGV, {sa_handler=0x55cc8955b3c0, sa_mask=[], sa_flags=SA_RESTORER|SA_ONSTACK|SA_SIGINFO, sa_restorer=0x7f4d3263c4b0}, NULL, 8) = 0
+5573<bin_wallet> rt_sigaction(SIGBUS, NULL, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=0}, 8) = 0
+5573<bin_wallet> rt_sigaction(SIGBUS, {sa_handler=0x55cc8955b3c0, sa_mask=[], sa_flags=SA_RESTORER|SA_ONSTACK|SA_SIGINFO, sa_restorer=0x7f4d3263c4b0}, NULL, 8) = 0
+5573<bin_wallet> sigaltstack(NULL, {ss_sp=NULL, ss_flags=SS_DISABLE, ss_size=0}) = 0
+5573<bin_wallet> mmap(NULL, 12288, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_ANONYMOUS|MAP_STACK, -1, 0) = 0x7f4d329b4000
+5573<bin_wallet> mprotect(0x7f4d329b4000, 4096, PROT_NONE) = 0
+5573<bin_wallet> sigaltstack({ss_sp=0x7f4d329b5000, ss_flags=0, ss_size=8192}, NULL) = 0
+5573<bin_wallet> getrandom("\x5b\x8f\x0c\x4c\xd0\x55\xfe\x7d", 8, GRND_NONBLOCK) = 8
+5573<bin_wallet> brk(NULL)              = 0x55cc8b0a8000
+5573<bin_wallet> brk(0x55cc8b0c9000)    = 0x55cc8b0c9000
+5573<bin_wallet> openat(AT_FDCWD, "/proc/self/maps", O_RDONLY|O_CLOEXEC) = 3
+5573<bin_wallet> prlimit64(0, RLIMIT_STACK, NULL, {rlim_cur=8192*1024, rlim_max=RLIM64_INFINITY}) = 0
+5573<bin_wallet> newfstatat(3, "", {st_mode=S_IFREG|0444, st_size=0, ...}, AT_EMPTY_PATH) = 0
+5573<bin_wallet> read(3, "55cc89446000-55cc8945e000 r--p 0"..., 1024) = 1024
+5573<bin_wallet> read(3, "2244449                    /usr/"..., 1024) = 1024
+5573<bin_wallet> read(3, "00000000 00:00 0 \n7f4d329b9000-7"..., 1024) = 943
+5573<bin_wallet> close(3)               = 0
+5573<bin_wallet> sched_getaffinity(5573<bin_wallet>, 32, [0 1 2 3]) = 8
+5573<bin_wallet> openat(AT_FDCWD, "./bin_client/policies/seccomp_wallet.json", O_RDONLY|O_CLOEXEC) = 3
+5573<bin_wallet> statx(0, NULL, AT_STATX_SYNC_AS_STAT, STATX_ALL, NULL) = -1 EFAULT (Bad address)
+5573<bin_wallet> statx(3, "", AT_STATX_SYNC_AS_STAT|AT_EMPTY_PATH, STATX_ALL, {stx_mask=STATX_ALL|STATX_MNT_ID, stx_attributes=0, stx_mode=S_IFREG|0664, stx_size=1006, ...}) = 0
+5573<bin_wallet> lseek(3, 0, SEEK_CUR)  = 0
+5573<bin_wallet> read(3, "{\r\n    \"main_thread\": {\r\n       "..., 1006) = 1006
+5573<bin_wallet> read(3, "", 32)        = 0
+5573<bin_wallet> close(3)               = 0
+5573<bin_wallet> getrandom("\x55\xac\x50\x0a\xc3\x62\x31\xee\x09\x0b\x71\xa3\xd8\x3b\xfd\x7a", 16, GRND_INSECURE) = 16
+5573<bin_wallet> prctl(PR_SET_NO_NEW_PRIVS, 1, 0, 0, 0) = 0
+5573<bin_wallet> prctl(PR_SET_SECCOMP, SECCOMP_MODE_FILTER, {len=115, filter=0x55cc8b0ab0b0}) = 0
+5573<bin_wallet> read(0, "{\"Initialize\":\"{\\n  \\\"user_name\\"..., 8192) = 665
+5573<bin_wallet> write(1, "\"Initialized\"\n", 14) = 14
+5573<bin_wallet> read(0,  <unfinished ...>
+5571<bin_client> getrandom("\x9f\xf3\x3a\x91\xa3\x60\x5c\x62\x20\x81\x34\x80\x63\xa5\x36\x51", 16, GRND_INSECURE) = 16
+5571<bin_client> prctl(PR_SET_NO_NEW_PRIVS, 1, 0, 0, 0) = 0
+5571<bin_client> prctl(PR_SET_SECCOMP, SECCOMP_MODE_FILTER, {len=215, filter=0x555c2f610230}) = 0
+5571<bin_client> read(8, "\"Initialized\"\n", 8192) = 14
+5571<bin_client> write(6, "\"GetUserInfo\"\n", 14) = 14
+5573<bin_wallet> <... read resumed>"\"GetUserInfo\"\n", 8192) = 14
+5573<bin_wallet> write(1, "{\"UserInfo\":[\"Alice\",\"MDgCMQCqrJ"..., 106) = 106
+5573<bin_wallet> read(0,  <unfinished ...>
+5571<bin_client> read(8, "{\"UserInfo\":[\"Alice\",\"MDgCMQCqrJ"..., 8192) = 106
+5571<bin_client> rt_sigaction(SIGRT_1, {sa_handler=0x7fbcc768bf20, sa_mask=[], sa_flags=SA_RESTORER|SA_ONSTACK|SA_RESTART|SA_SIGINFO, sa_restorer=0x7fbcc763c4b0}, NULL, 8) = 0
+5571<bin_client> rt_sigprocmask(SIG_UNBLOCK, [RTMIN RT_1], NULL, 8) = 0
+5571<bin_client> mmap(NULL, 2101248, PROT_NONE, MAP_PRIVATE|MAP_ANONYMOUS|MAP_STACK, -1, 0) = 0x7fbcc73ff000
+5571<bin_client> mprotect(0x7fbcc7400000, 2097152, PROT_READ|PROT_WRITE) = 0
+5571<bin_client> rt_sigprocmask(SIG_BLOCK, ~[], [], 8) = 0
+5571<bin_client> clone3({flags=CLONE_VM|CLONE_FS|CLONE_FILES|CLONE_SIGHAND|CLONE_THREAD|CLONE_SYSVSEM|CLONE_SETTLS|CLONE_PARENT_SETTID|CLONE_CHILD_CLEARTID, child_tid=0x7fbcc75ff990, parent_tid=0x7fbcc75ff990, exit_signal=0, stack=0x7fbcc73ff000, stack_size=0x1ffec0, tls=0x7fbcc75ff6c0} => {parent_tid=[5575<bin_client>]}, 88) = 5575<bin_client>
+5571<bin_client> rt_sigprocmask(SIG_SETMASK, [],  <unfinished ...>
+5575<bin_client> rseq(0x7fbcc75fffe0, 0x20, 0, 0x53053053 <unfinished ...>
+5571<bin_client> <... rt_sigprocmask resumed>NULL, 8) = 0
+5575<bin_client> <... rseq resumed>)    = 0
+5571<bin_client> mmap(NULL, 2101248, PROT_NONE, MAP_PRIVATE|MAP_ANONYMOUS|MAP_STACK, -1, 0 <unfinished ...>
+5575<bin_client> set_robust_list(0x7fbcc75ff9a0, 24 <unfinished ...>
+5571<bin_client> <... mmap resumed>)    = 0x7fbcc71fe000
+5575<bin_client> <... set_robust_list resumed>) = 0
+5571<bin_client> mprotect(0x7fbcc71ff000, 2097152, PROT_READ|PROT_WRITE <unfinished ...>
+5575<bin_client> rt_sigprocmask(SIG_SETMASK, [],  <unfinished ...>
+5571<bin_client> <... mprotect resumed>) = 0
+5575<bin_client> <... rt_sigprocmask resumed>NULL, 8) = 0
+5571<bin_client> rt_sigprocmask(SIG_BLOCK, ~[],  <unfinished ...>
+5575<bin_client> sigaltstack(NULL,  <unfinished ...>
+5571<bin_client> <... rt_sigprocmask resumed>[], 8) = 0
+5575<bin_client> <... sigaltstack resumed>{ss_sp=NULL, ss_flags=SS_DISABLE, ss_size=0}) = 0
+5571<bin_client> clone3({flags=CLONE_VM|CLONE_FS|CLONE_FILES|CLONE_SIGHAND|CLONE_THREAD|CLONE_SYSVSEM|CLONE_SETTLS|CLONE_PARENT_SETTID|CLONE_CHILD_CLEARTID, child_tid=0x7fbcc73fe990, parent_tid=0x7fbcc73fe990, exit_signal=0, stack=0x7fbcc71fe000, stack_size=0x1ffec0, tls=0x7fbcc73fe6c0} <unfinished ...>
+5575<bin_client> mmap(NULL, 12288, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_ANONYMOUS|MAP_STACK, -1, 0) = 0x7fbcc7aaf000
+5571<bin_client> <... clone3 resumed> => {parent_tid=[5576<bin_client>]}, 88) = 5576<bin_client>
+5575<bin_client> mprotect(0x7fbcc7aaf000, 4096, PROT_NONE <unfinished ...>
+5571<bin_client> rt_sigprocmask(SIG_SETMASK, [],  <unfinished ...>
+5576<bin_client> rseq(0x7fbcc73fefe0, 0x20, 0, 0x53053053 <unfinished ...>
+5575<bin_client> <... mprotect resumed>) = 0
+5571<bin_client> <... rt_sigprocmask resumed>NULL, 8) = 0
+5576<bin_client> <... rseq resumed>)    = 0
+5575<bin_client> sigaltstack({ss_sp=0x7fbcc7ab0000, ss_flags=0, ss_size=8192},  <unfinished ...>
+5576<bin_client> set_robust_list(0x7fbcc73fe9a0, 24 <unfinished ...>
+5575<bin_client> <... sigaltstack resumed>NULL) = 0
+5571<bin_client> mmap(NULL, 2101248, PROT_NONE, MAP_PRIVATE|MAP_ANONYMOUS|MAP_STACK, -1, 0 <unfinished ...>
+5576<bin_client> <... set_robust_list resumed>) = 0
+5575<bin_client> mmap(NULL, 134217728, PROT_NONE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0 <unfinished ...>
+5571<bin_client> <... mmap resumed>)    = 0x7fbcc6ffd000
+5576<bin_client> rt_sigprocmask(SIG_SETMASK, [],  <unfinished ...>
+5575<bin_client> <... mmap resumed>)    = 0x7fbcbeffd000
+5571<bin_client> mprotect(0x7fbcc6ffe000, 2097152, PROT_READ|PROT_WRITE <unfinished ...>
+5576<bin_client> <... rt_sigprocmask resumed>NULL, 8) = 0
+5575<bin_client> munmap(0x7fbcbeffd000, 16789504 <unfinished ...>
+5576<bin_client> sigaltstack(NULL,  <unfinished ...>
+5571<bin_client> <... mprotect resumed>) = 0
+5576<bin_client> <... sigaltstack resumed>{ss_sp=NULL, ss_flags=SS_DISABLE, ss_size=0}) = 0
+5575<bin_client> <... munmap resumed>)  = 0
+5576<bin_client> mmap(NULL, 12288, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_ANONYMOUS|MAP_STACK, -1, 0 <unfinished ...>
+5575<bin_client> munmap(0x7fbcc4000000, 50319360 <unfinished ...>
+5571<bin_client> rt_sigprocmask(SIG_BLOCK, ~[],  <unfinished ...>
+5576<bin_client> <... mmap resumed>)    = 0x7fbcc7aac000
+5575<bin_client> <... munmap resumed>)  = 0
+5571<bin_client> <... rt_sigprocmask resumed>[], 8) = 0
+5576<bin_client> mprotect(0x7fbcc7aac000, 4096, PROT_NONE <unfinished ...>
+5575<bin_client> mprotect(0x7fbcc0000000, 135168, PROT_READ|PROT_WRITE <unfinished ...>
+5571<bin_client> clone3({flags=CLONE_VM|CLONE_FS|CLONE_FILES|CLONE_SIGHAND|CLONE_THREAD|CLONE_SYSVSEM|CLONE_SETTLS|CLONE_PARENT_SETTID|CLONE_CHILD_CLEARTID, child_tid=0x7fbcc71fd990, parent_tid=0x7fbcc71fd990, exit_signal=0, stack=0x7fbcc6ffd000, stack_size=0x1ffec0, tls=0x7fbcc71fd6c0} <unfinished ...>
+5576<bin_client> <... mprotect resumed>) = 0
+5575<bin_client> <... mprotect resumed>) = 0
+5576<bin_client> sigaltstack({ss_sp=0x7fbcc7aad000, ss_flags=0, ss_size=8192},  <unfinished ...>
+5575<bin_client> sched_getaffinity(5575<bin_client>, 32,  <unfinished ...>
+5576<bin_client> <... sigaltstack resumed>NULL) = 0
+5576<bin_client> mmap(NULL, 134217728, PROT_NONE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0 <unfinished ...>
+5575<bin_client> <... sched_getaffinity resumed>[0 1 2 3]) = 8
+5576<bin_client> <... mmap resumed>)    = 0x7fbcb8000000
+5575<bin_client> write(4, "\"RequestChainStatus\"\n", 21 <unfinished ...>
+5576<bin_client> munmap(0x7fbcbc000000, 67108864 <unfinished ...>
+5575<bin_client> <... write resumed>)   = 21
+5576<bin_client> <... munmap resumed>)  = 0
+5575<bin_client> write(4, "\"RequestMinerStatus\"\n", 21 <unfinished ...>
+5577<bin_client> rseq(0x7fbcc71fdfe0, 0x20, 0, 0x53053053 <unfinished ...>
+5576<bin_client> mprotect(0x7fbcb8000000, 135168, PROT_READ|PROT_WRITE <unfinished ...>
+5577<bin_client> <... rseq resumed>)    = 0
+5575<bin_client> <... write resumed>)   = 21
+5571<bin_client> <... clone3 resumed> => {parent_tid=[5577<bin_client>]}, 88) = 5577<bin_client>
+5577<bin_client> set_robust_list(0x7fbcc71fd9a0, 24 <unfinished ...>
+5576<bin_client> <... mprotect resumed>) = 0
+5575<bin_client> write(4, "\"RequestNetStatus\"\n", 19 <unfinished ...>
+5571<bin_client> rt_sigprocmask(SIG_SETMASK, [], NULL, 8) = 0
+5575<bin_client> <... write resumed>)   = 19
+5577<bin_client> <... set_robust_list resumed>) = 0
+5576<bin_client> sched_getaffinity(5576<bin_client>, 32,  <unfinished ...>
+5577<bin_client> rt_sigprocmask(SIG_SETMASK, [],  <unfinished ...>
+5575<bin_client> write(4, "\"RequestTxPoolStatus\"\n", 22 <unfinished ...>
+5576<bin_client> <... sched_getaffinity resumed>[0 1 2 3]) = 8
+5577<bin_client> <... rt_sigprocmask resumed>NULL, 8) = 0
+5575<bin_client> <... write resumed>)   = 22
+5577<bin_client> sigaltstack(NULL,  <unfinished ...>
+5576<bin_client> read(8,  <unfinished ...>
+5575<bin_client> write(4, "{\"GetAddressBalance\":\"MDgCMQCqrJ"..., 105 <unfinished ...>
+5577<bin_client> <... sigaltstack resumed>{ss_sp=NULL, ss_flags=SS_DISABLE, ss_size=0}) = 0
+5575<bin_client> <... write resumed>)   = 105
+5571<bin_client> mmap(NULL, 2101248, PROT_NONE, MAP_PRIVATE|MAP_ANONYMOUS|MAP_STACK, -1, 0 <unfinished ...>
+5575<bin_client> clock_nanosleep(CLOCK_REALTIME, 0, {tv_sec=3, tv_nsec=0},  <unfinished ...>
+5577<bin_client> mmap(NULL, 12288, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_ANONYMOUS|MAP_STACK, -1, 0 <unfinished ...>
+5571<bin_client> <... mmap resumed>)    = 0x7fbcc6dfc000
+5577<bin_client> <... mmap resumed>)    = 0x7fbcc7aa9000
+5571<bin_client> mprotect(0x7fbcc6dfd000, 2097152, PROT_READ|PROT_WRITE <unfinished ...>
+5577<bin_client> mprotect(0x7fbcc7aa9000, 4096, PROT_NONE <unfinished ...>
+5571<bin_client> <... mprotect resumed>) = 0
+5577<bin_client> <... mprotect resumed>) = 0
+5577<bin_client> sigaltstack({ss_sp=0x7fbcc7aaa000, ss_flags=0, ss_size=8192},  <unfinished ...>
+5571<bin_client> rt_sigprocmask(SIG_BLOCK, ~[],  <unfinished ...>
+5577<bin_client> <... sigaltstack resumed>NULL) = 0
+5571<bin_client> <... rt_sigprocmask resumed>[], 8) = 0
+5577<bin_client> mmap(0x7fbcbc000000, 67108864, PROT_NONE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0 <unfinished ...>
+5571<bin_client> clone3({flags=CLONE_VM|CLONE_FS|CLONE_FILES|CLONE_SIGHAND|CLONE_THREAD|CLONE_SYSVSEM|CLONE_SETTLS|CLONE_PARENT_SETTID|CLONE_CHILD_CLEARTID, child_tid=0x7fbcc6ffc990, parent_tid=0x7fbcc6ffc990, exit_signal=0, stack=0x7fbcc6dfc000, stack_size=0x1ffec0, tls=0x7fbcc6ffc6c0} <unfinished ...>
+5577<bin_client> <... mmap resumed>)    = 0x7fbcbc000000
+5577<bin_client> mprotect(0x7fbcbc000000, 135168, PROT_READ|PROT_WRITE) = 0
+5577<bin_client> sched_getaffinity(5577<bin_client>, 32,  <unfinished ...>
+5578<bin_client> rseq(0x7fbcc6ffcfe0, 0x20, 0, 0x53053053 <unfinished ...>
+5571<bin_client> <... clone3 resumed> => {parent_tid=[5578<bin_client>]}, 88) = 5578<bin_client>
+5578<bin_client> <... rseq resumed>)    = 0
+5577<bin_client> <... sched_getaffinity resumed>[0 1 2 3]) = 8
+5571<bin_client> rt_sigprocmask(SIG_SETMASK, [],  <unfinished ...>
+5578<bin_client> set_robust_list(0x7fbcc6ffc9a0, 24 <unfinished ...>
+5577<bin_client> read(5,  <unfinished ...>
+5578<bin_client> <... set_robust_list resumed>) = 0
+5571<bin_client> <... rt_sigprocmask resumed>NULL, 8) = 0
+5578<bin_client> rt_sigprocmask(SIG_SETMASK, [],  <unfinished ...>
+5577<bin_client> <... read resumed>"{\"Notify\":\"# Waiting for IPC Req"..., 8192) = 93
+5578<bin_client> <... rt_sigprocmask resumed>NULL, 8) = 0
+5577<bin_client> read(5,  <unfinished ...>
+5578<bin_client> sigaltstack(NULL,  <unfinished ...>
+5571<bin_client> mmap(NULL, 2101248, PROT_NONE, MAP_PRIVATE|MAP_ANONYMOUS|MAP_STACK, -1, 0 <unfinished ...>
+5578<bin_client> <... sigaltstack resumed>{ss_sp=NULL, ss_flags=SS_DISABLE, ss_size=0}) = 0
+5571<bin_client> <... mmap resumed>)    = 0x7fbcc6bfb000
+5578<bin_client> mmap(NULL, 12288, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_ANONYMOUS|MAP_STACK, -1, 0 <unfinished ...>
+5571<bin_client> mprotect(0x7fbcc6bfc000, 2097152, PROT_READ|PROT_WRITE) = 0
+5578<bin_client> <... mmap resumed>)    = 0x7fbcc7995000
+5571<bin_client> rt_sigprocmask(SIG_BLOCK, ~[],  <unfinished ...>
+5578<bin_client> mprotect(0x7fbcc7995000, 4096, PROT_NONE <unfinished ...>
+5571<bin_client> <... rt_sigprocmask resumed>[], 8) = 0
+5578<bin_client> <... mprotect resumed>) = 0
+5571<bin_client> clone3({flags=CLONE_VM|CLONE_FS|CLONE_FILES|CLONE_SIGHAND|CLONE_THREAD|CLONE_SYSVSEM|CLONE_SETTLS|CLONE_PARENT_SETTID|CLONE_CHILD_CLEARTID, child_tid=0x7fbcc6dfb990, parent_tid=0x7fbcc6dfb990, exit_signal=0, stack=0x7fbcc6bfb000, stack_size=0x1ffec0, tls=0x7fbcc6dfb6c0} <unfinished ...>
+5578<bin_client> sigaltstack({ss_sp=0x7fbcc7996000, ss_flags=0, ss_size=8192}, NULL) = 0
+5578<bin_client> mmap(NULL, 134217728, PROT_NONE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0) = 0x7fbcb0000000
+5571<bin_client> <... clone3 resumed> => {parent_tid=[5579<bin_client>]}, 88) = 5579<bin_client>
+5579<bin_client> rseq(0x7fbcc6dfbfe0, 0x20, 0, 0x53053053 <unfinished ...>
+5578<bin_client> munmap(0x7fbcb4000000, 67108864 <unfinished ...>
+5579<bin_client> <... rseq resumed>)    = 0
+5571<bin_client> rt_sigprocmask(SIG_SETMASK, [],  <unfinished ...>
+5579<bin_client> set_robust_list(0x7fbcc6dfb9a0, 24 <unfinished ...>
+5578<bin_client> <... munmap resumed>)  = 0
+5579<bin_client> <... set_robust_list resumed>) = 0
+5571<bin_client> <... rt_sigprocmask resumed>NULL, 8) = 0
+5579<bin_client> rt_sigprocmask(SIG_SETMASK, [],  <unfinished ...>
+5578<bin_client> mprotect(0x7fbcb0000000, 135168, PROT_READ|PROT_WRITE <unfinished ...>
+5579<bin_client> <... rt_sigprocmask resumed>NULL, 8) = 0
+5578<bin_client> <... mprotect resumed>) = 0
+5571<bin_client> mmap(NULL, 2101248, PROT_NONE, MAP_PRIVATE|MAP_ANONYMOUS|MAP_STACK, -1, 0 <unfinished ...>
+5579<bin_client> sigaltstack(NULL,  <unfinished ...>
+5578<bin_client> sched_getaffinity(5578<bin_client>, 32,  <unfinished ...>
+5579<bin_client> <... sigaltstack resumed>{ss_sp=NULL, ss_flags=SS_DISABLE, ss_size=0}) = 0
+5571<bin_client> <... mmap resumed>)    = 0x7fbcc69fa000
+5579<bin_client> mmap(NULL, 12288, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_ANONYMOUS|MAP_STACK, -1, 0 <unfinished ...>
+5578<bin_client> <... sched_getaffinity resumed>[0 1 2 3]) = 8
+5571<bin_client> mprotect(0x7fbcc69fb000, 2097152, PROT_READ|PROT_WRITE <unfinished ...>
+5579<bin_client> <... mmap resumed>)    = 0x7fbcc7992000
+5579<bin_client> mprotect(0x7fbcc7992000, 4096, PROT_NONE <unfinished ...>
+5578<bin_client> read(7,  <unfinished ...>
+5571<bin_client> <... mprotect resumed>) = 0
+5579<bin_client> <... mprotect resumed>) = 0
+5571<bin_client> rt_sigprocmask(SIG_BLOCK, ~[],  <unfinished ...>
+5579<bin_client> sigaltstack({ss_sp=0x7fbcc7993000, ss_flags=0, ss_size=8192},  <unfinished ...>
+5571<bin_client> <... rt_sigprocmask resumed>[], 8) = 0
+5579<bin_client> <... sigaltstack resumed>NULL) = 0
+5571<bin_client> clone3({flags=CLONE_VM|CLONE_FS|CLONE_FILES|CLONE_SIGHAND|CLONE_THREAD|CLONE_SYSVSEM|CLONE_SETTLS|CLONE_PARENT_SETTID|CLONE_CHILD_CLEARTID, child_tid=0x7fbcc6bfa990, parent_tid=0x7fbcc6bfa990, exit_signal=0, stack=0x7fbcc69fa000, stack_size=0x1ffec0, tls=0x7fbcc6bfa6c0} <unfinished ...>
+5579<bin_client> mmap(0x7fbcb4000000, 67108864, PROT_NONE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0) = 0x7fbcb4000000
+5579<bin_client> mprotect(0x7fbcb4000000, 135168, PROT_READ|PROT_WRITE <unfinished ...>
+5571<bin_client> <... clone3 resumed> => {parent_tid=[5580<bin_client>]}, 88) = 5580<bin_client>
+5580<bin_client> rseq(0x7fbcc6bfafe0, 0x20, 0, 0x53053053 <unfinished ...>
+5579<bin_client> <... mprotect resumed>) = 0
+5580<bin_client> <... rseq resumed>)    = 0
+5571<bin_client> rt_sigprocmask(SIG_SETMASK, [],  <unfinished ...>
+5579<bin_client> sched_getaffinity(5579<bin_client>, 32,  <unfinished ...>
+5580<bin_client> set_robust_list(0x7fbcc6bfa9a0, 24 <unfinished ...>
+5579<bin_client> <... sched_getaffinity resumed>[0 1 2 3]) = 8
+5580<bin_client> <... set_robust_list resumed>) = 0
+5571<bin_client> <... rt_sigprocmask resumed>NULL, 8) = 0
+5580<bin_client> rt_sigprocmask(SIG_SETMASK, [],  <unfinished ...>
+5579<bin_client> read(10,  <unfinished ...>
+5571<bin_client> futex(0x7fbcc6bfa990, FUTEX_WAIT_BITSET|FUTEX_CLOCK_REALTIME, 5580, NULL, FUTEX_BITSET_MATCH_ANY <unfinished ...>
+5580<bin_client> <... rt_sigprocmask resumed>NULL, 8) = 0
+5580<bin_client> sigaltstack(NULL, {ss_sp=NULL, ss_flags=SS_DISABLE, ss_size=0}) = 0
+5580<bin_client> mmap(NULL, 12288, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_ANONYMOUS|MAP_STACK, -1, 0) = 0x7fbcc798f000
+5580<bin_client> mprotect(0x7fbcc798f000, 4096, PROT_NONE) = 0
+5580<bin_client> sigaltstack({ss_sp=0x7fbcc7990000, ss_flags=0, ss_size=8192}, NULL) = 0
+5580<bin_client> mmap(NULL, 134217728, PROT_NONE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0) = 0x7fbca8000000
+5580<bin_client> munmap(0x7fbcac000000, 67108864) = 0
+5580<bin_client> mprotect(0x7fbca8000000, 135168, PROT_READ|PROT_WRITE) = 0
+5580<bin_client> sched_getaffinity(5580<bin_client>, 32, [0 1 2 3]) = 8
+5580<bin_client> ioctl(0, TCGETS, {c_iflag=ICRNL|IXON|IUTF8, c_oflag=NL0|CR0|TAB0|BS0|VT0|FF0|OPOST|ONLCR, c_cflag=B38400|CS8|CREAD, c_lflag=ISIG|ICANON|ECHO|ECHOE|ECHOK|IEXTEN|ECHOCTL|ECHOKE, ...}) = 0
+5580<bin_client> ioctl(0, TCGETS, {c_iflag=ICRNL|IXON|IUTF8, c_oflag=NL0|CR0|TAB0|BS0|VT0|FF0|OPOST|ONLCR, c_cflag=B38400|CS8|CREAD, c_lflag=ISIG|ICANON|ECHO|ECHOE|ECHOK|IEXTEN|ECHOCTL|ECHOKE, ...}) = 0
+5580<bin_client> ioctl(0, TCGETS, {c_iflag=ICRNL|IXON|IUTF8, c_oflag=NL0|CR0|TAB0|BS0|VT0|FF0|OPOST|ONLCR, c_cflag=B38400|CS8|CREAD, c_lflag=ISIG|ICANON|ECHO|ECHOE|ECHOK|IEXTEN|ECHOCTL|ECHOKE, ...}) = 0
+5580<bin_client> ioctl(0, TCSETS, {c_iflag=IUTF8, c_oflag=NL0|CR0|TAB0|BS0|VT0|FF0|ONLCR, c_cflag=B38400|CS8|CREAD, c_lflag=ECHOE|ECHOK|ECHOCTL|ECHOKE, ...}) = 0
+5580<bin_client> ioctl(0, TCGETS, {c_iflag=IUTF8, c_oflag=NL0|CR0|TAB0|BS0|VT0|FF0|ONLCR, c_cflag=B38400|CS8|CREAD, c_lflag=ECHOE|ECHOK|ECHOCTL|ECHOKE, ...}) = 0
+5580<bin_client> write(1, "\33[?1049h\33[?1000h\33[?1002h\33[?1003h"..., 48) = 48
+5580<bin_client> openat(AT_FDCWD, "/dev/tty", O_RDONLY|O_CLOEXEC) = 3
+5580<bin_client> ioctl(3, TIOCGWINSZ, {ws_row=34, ws_col=119, ws_xpixel=0, ws_ypixel=0}) = 0
+5580<bin_client> close(3)               = 0
+5580<bin_client> mmap(NULL, 163840, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0) = 0x7fbcc7967000
+5580<bin_client> mmap(NULL, 163840, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0) = 0x7fbcc793f000
+5580<bin_client> mprotect(0x7fbca8021000, 4096, PROT_READ|PROT_WRITE) = 0
+5580<bin_client> mprotect(0x7fbca8022000, 4096, PROT_READ|PROT_WRITE) = 0
+5580<bin_client> mprotect(0x7fbca8023000, 4096, PROT_READ|PROT_WRITE) = 0
+5580<bin_client> mprotect(0x7fbca8024000, 4096, PROT_READ|PROT_WRITE) = 0
+5580<bin_client> mprotect(0x7fbca8025000, 4096, PROT_READ|PROT_WRITE) = 0
+5580<bin_client> mprotect(0x7fbca8026000, 4096, PROT_READ|PROT_WRITE) = 0
+5580<bin_client> mprotect(0x7fbca8027000, 4096, PROT_READ|PROT_WRITE) = 0
+5580<bin_client> mprotect(0x7fbca8028000, 4096, PROT_READ|PROT_WRITE) = 0
+5580<bin_client> mprotect(0x7fbca8029000, 4096, PROT_READ|PROT_WRITE) = 0
+5580<bin_client> mprotect(0x7fbca802a000, 4096, PROT_READ|PROT_WRITE) = 0
+5580<bin_client> mprotect(0x7fbca802b000, 4096, PROT_READ|PROT_WRITE) = 0
+5580<bin_client> mprotect(0x7fbca802c000, 4096, PROT_READ|PROT_WRITE) = 0
+5580<bin_client> mprotect(0x7fbca802d000, 4096, PROT_READ|PROT_WRITE) = 0
+5580<bin_client> mprotect(0x7fbca802e000, 4096, PROT_READ|PROT_WRITE) = 0
+5580<bin_client> mprotect(0x7fbca802f000, 4096, PROT_READ|PROT_WRITE) = 0
+5580<bin_client> mprotect(0x7fbca8030000, 4096, PROT_READ|PROT_WRITE) = 0
+5580<bin_client> mprotect(0x7fbca8031000, 4096, PROT_READ|PROT_WRITE) = 0
+5580<bin_client> mprotect(0x7fbca8032000, 4096, PROT_READ|PROT_WRITE) = 0
+5580<bin_client> mprotect(0x7fbca8033000, 4096, PROT_READ|PROT_WRITE) = 0
+5580<bin_client> mprotect(0x7fbca8034000, 4096, PROT_READ|PROT_WRITE) = 0
+5580<bin_client> mprotect(0x7fbca8035000, 4096, PROT_READ|PROT_WRITE) = 0
+5580<bin_client> mprotect(0x7fbca8036000, 4096, PROT_READ|PROT_WRITE) = 0
+5580<bin_client> mprotect(0x7fbca8037000, 4096, PROT_READ|PROT_WRITE) = 0
+5580<bin_client> mprotect(0x7fbca8038000, 4096, PROT_READ|PROT_WRITE) = 0
+5580<bin_client> mprotect(0x7fbca8039000, 4096, PROT_READ|PROT_WRITE) = 0
+5580<bin_client> mprotect(0x7fbca803a000, 4096, PROT_READ|PROT_WRITE) = 0
+5580<bin_client> mprotect(0x7fbca803b000, 4096, PROT_READ|PROT_WRITE) = 0
+5580<bin_client> mprotect(0x7fbca803c000, 4096, PROT_READ|PROT_WRITE) = 0
+5580<bin_client> mprotect(0x7fbca803d000, 4096, PROT_READ|PROT_WRITE) = 0
+5580<bin_client> mprotect(0x7fbca803e000, 4096, PROT_READ|PROT_WRITE) = 0
+5580<bin_client> mprotect(0x7fbca803f000, 4096, PROT_READ|PROT_WRITE) = 0
+5580<bin_client> mprotect(0x7fbca8040000, 4096, PROT_READ|PROT_WRITE) = 0
+5580<bin_client> openat(AT_FDCWD, "/dev/tty", O_RDONLY|O_CLOEXEC) = 3
+5580<bin_client> ioctl(3, TIOCGWINSZ, {ws_row=34, ws_col=119, ws_xpixel=0, ws_ypixel=0}) = 0
+5580<bin_client> close(3)               = 0
+5580<bin_client> getrandom("\xc9\x0d\x64\x47\x4c\xb7\x7b\x87\xb0\x24\x97\xa1\x67\x20\x3e\x10", 16, GRND_INSECURE) = 16
+5580<bin_client> mprotect(0x7fbca8041000, 4096, PROT_READ|PROT_WRITE) = 0
+5580<bin_client> mprotect(0x7fbca8042000, 4096, PROT_READ|PROT_WRITE) = 0
+5580<bin_client> mprotect(0x7fbca8043000, 4096, PROT_READ|PROT_WRITE) = 0
+5580<bin_client> mprotect(0x7fbca8044000, 4096, PROT_READ|PROT_WRITE) = 0
+5580<bin_client> mprotect(0x7fbca8045000, 4096, PROT_READ|PROT_WRITE) = 0
+5580<bin_client> mprotect(0x7fbca8046000, 4096, PROT_READ|PROT_WRITE) = 0
+5580<bin_client> mprotect(0x7fbca8047000, 4096, PROT_READ|PROT_WRITE) = 0
+5580<bin_client> mprotect(0x7fbca8048000, 4096, PROT_READ|PROT_WRITE) = 0
+5580<bin_client> mprotect(0x7fbca8049000, 4096, PROT_READ|PROT_WRITE) = 0
+5580<bin_client> mprotect(0x7fbca804a000, 4096, PROT_READ|PROT_WRITE) = 0
+5580<bin_client> mprotect(0x7fbca804b000, 4096, PROT_READ|PROT_WRITE) = 0
+5580<bin_client> mprotect(0x7fbca804c000, 8192, PROT_READ|PROT_WRITE) = 0
+5580<bin_client> mprotect(0x7fbca804e000, 12288, PROT_READ|PROT_WRITE) = 0
+5580<bin_client> mprotect(0x7fbca8051000, 24576, PROT_READ|PROT_WRITE) = 0
+5580<bin_client> write(1, "\33[2;2H\342\224\214BlockTree\33[2;13HStatus\342"..., 1024) = 1024
+5580<bin_client> write(1, "                 \342\224\202\33[39m\342\224\202\33[8;"..., 1023) = 1023
+5580<bin_client> write(1, "79H\342\224\202\33[12;118H\342\224\202\33[13;2H\342\224\202\33[13"..., 1022) = 1022
+5580<bin_client> write(1, "\342\224\200\342\224\200\342\224\200\342\224\200\342\224\200\342\224\200\342\224\200\342\224\200\342\224\200\342\224\200\342\224"..., 1024) = 1024
+5580<bin_client> write(1, "\342\224\200\342\224\200\342\224\200\342\224\200\342\224\200\342\224\200\342\224\200\342\224\200\342\224\200\342\224\200\342\224"..., 275) = 275
+5580<bin_client> ioctl(0, TCGETS, {c_iflag=IUTF8, c_oflag=NL0|CR0|TAB0|BS0|VT0|FF0|ONLCR, c_cflag=B38400|CS8|CREAD, c_lflag=ECHOE|ECHOK|ECHOCTL|ECHOKE, ...}) = 0
+5580<bin_client> epoll_create1(EPOLL_CLOEXEC) = 3
+5580<bin_client> epoll_ctl(3, EPOLL_CTL_ADD, 0, {events=EPOLLIN|EPOLLRDHUP|EPOLLET, data={u32=0, u64=0}}) = 0
+5580<bin_client> socketpair(AF_UNIX, SOCK_STREAM|SOCK_CLOEXEC|SOCK_NONBLOCK, 0, [9, 11]) = 0
+5580<bin_client> rt_sigaction(SIGWINCH, NULL, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=0}, 8) = 0
+5580<bin_client> rt_sigaction(SIGWINCH, {sa_handler=0x555c2d9af180, sa_mask=[], sa_flags=SA_RESTORER|SA_RESTART|SA_SIGINFO, sa_restorer=0x7fbcc763c4b0}, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=0}, 8) = 0
+5580<bin_client> epoll_ctl(3, EPOLL_CTL_ADD, 9, {events=EPOLLIN|EPOLLRDHUP|EPOLLET, data={u32=1, u64=1}}) = 0
+5580<bin_client> epoll_wait(3,  <unfinished ...>
+5578<bin_client> <... read resumed>"", 8192) = 0
+5572<bin_nakamoto> +++ killed by SIGSYS (core dumped) +++
+5577<bin_client> <... read resumed>"", 8192) = 0
+5571<bin_client> <... futex resumed>)   = ? ERESTARTSYS (To be restarted if SA_RESTART is set)
+5578<bin_client> --- SIGCHLD {si_signo=SIGCHLD, si_code=CLD_DUMPED, si_pid=5572<bin_nakamoto>, si_uid=1000, si_status=SIGSYS, si_utime=0, si_stime=0} ---
+5571<bin_client> futex(0x7fbcc6bfa990, FUTEX_WAIT_BITSET|FUTEX_CLOCK_REALTIME, 5580, NULL, FUTEX_BITSET_MATCH_ANY <unfinished ...>
+5577<bin_client> write(2, "thread '", 8 <unfinished ...>
+5578<bin_client> clock_nanosleep(CLOCK_REALTIME, 0, {tv_sec=1, tv_nsec=0},  <unfinished ...>
+5577<bin_client> <... write resumed>)   = 8
+5577<bin_client> write(2, "<unnamed>", 9) = 9
+5577<bin_client> write(2, "' panicked at '", 15) = 15
+5577<bin_client> write(2, "called `Result::unwrap()` on an "..., 99) = 99
+5577<bin_client> write(2, "', ", 3)     = 3
+5577<bin_client> write(2, "bin_client/./src/main.rs", 24) = 24
+5577<bin_client> write(2, ":", 1)       = 1
+5577<bin_client> write(2, "347", 3)     = 3
+5577<bin_client> write(2, ":", 1)       = 1
+5577<bin_client> write(2, "58", 2)      = 2
+5577<bin_client> write(2, "\n", 1)      = 1
+5577<bin_client> write(2, "note: run with `RUST_BACKTRACE=1"..., 78) = 78
+5577<bin_client> futex(0x7fbcc7aa6210, FUTEX_WAKE_PRIVATE, 2147483647) = 0
+5577<bin_client> close(5)               = 0
+5577<bin_client> sigaltstack({ss_sp=NULL, ss_flags=SS_DISABLE, ss_size=8192}, NULL) = 0
+5577<bin_client> munmap(0x7fbcc7aa9000, 12288) = 0
+5577<bin_client> rt_sigprocmask(SIG_BLOCK, ~[RT_1], NULL, 8) = 0
+5577<bin_client> madvise(0x7fbcc6ffd000, 2076672, MADV_DONTNEED) = 0
+5577<bin_client> exit(0)                = ?
+5577<bin_client> +++ exited with 0 +++
+5580<bin_client> <... epoll_wait resumed>[], 3, 187) = 0
+5580<bin_client> openat(AT_FDCWD, "/dev/tty", O_RDONLY|O_CLOEXEC) = 5
+5580<bin_client> ioctl(5, TIOCGWINSZ, {ws_row=34, ws_col=119, ws_xpixel=0, ws_ypixel=0}) = 0
+5580<bin_client> close(5)               = 0
+5580<bin_client> write(1, "\33[39m\33[49m\33[0m\33[?25l", 20) = 20
+5580<bin_client> epoll_wait(3, [], 3, 196) = 0
+5580<bin_client> openat(AT_FDCWD, "/dev/tty", O_RDONLY|O_CLOEXEC) = 5
+5580<bin_client> ioctl(5, TIOCGWINSZ, {ws_row=34, ws_col=119, ws_xpixel=0, ws_ypixel=0}) = 0
+5580<bin_client> close(5)               = 0
+5580<bin_client> write(1, "\33[39m\33[49m\33[0m\33[?25l", 20) = 20
+5580<bin_client> epoll_wait(3, [], 3, 197) = 0
+5580<bin_client> openat(AT_FDCWD, "/dev/tty", O_RDONLY|O_CLOEXEC) = 5
+5580<bin_client> ioctl(5, TIOCGWINSZ, {ws_row=34, ws_col=119, ws_xpixel=0, ws_ypixel=0}) = 0
+5580<bin_client> close(5)               = 0
+5580<bin_client> write(1, "\33[39m\33[49m\33[0m\33[?25l", 20) = 20
+5580<bin_client> epoll_wait(3, [], 3, 197) = 0
+5580<bin_client> openat(AT_FDCWD, "/dev/tty", O_RDONLY|O_CLOEXEC) = 5
+5580<bin_client> ioctl(5, TIOCGWINSZ, {ws_row=34, ws_col=119, ws_xpixel=0, ws_ypixel=0}) = 0
+5580<bin_client> close(5)               = 0
+5580<bin_client> write(1, "\33[39m\33[49m\33[0m\33[?25l", 20) = 20
+5580<bin_client> epoll_wait(3, [], 3, 197) = 0
+5580<bin_client> openat(AT_FDCWD, "/dev/tty", O_RDONLY|O_CLOEXEC) = 5
+5580<bin_client> ioctl(5, TIOCGWINSZ, {ws_row=34, ws_col=119, ws_xpixel=0, ws_ypixel=0}) = 0
+5580<bin_client> close(5)               = 0
+5580<bin_client> write(1, "\33[39m\33[49m\33[0m\33[?25l", 20) = 20
+5580<bin_client> epoll_wait(3,  <unfinished ...>
+5578<bin_client> <... clock_nanosleep resumed>0x7fbcc6ffb900) = 0
+5578<bin_client> read(7, "", 8192)      = 0
+5578<bin_client> clock_nanosleep(CLOCK_REALTIME, 0, {tv_sec=1, tv_nsec=0},  <unfinished ...>
+5580<bin_client> <... epoll_wait resumed>[], 3, 197) = 0
+5580<bin_client> openat(AT_FDCWD, "/dev/tty", O_RDONLY|O_CLOEXEC) = 5
+5580<bin_client> ioctl(5, TIOCGWINSZ, {ws_row=34, ws_col=119, ws_xpixel=0, ws_ypixel=0}) = 0
+5580<bin_client> close(5)               = 0
+5580<bin_client> write(1, "\33[39m\33[49m\33[0m\33[?25l", 20) = 20
+5580<bin_client> epoll_wait(3, [], 3, 197) = 0
+5580<bin_client> openat(AT_FDCWD, "/dev/tty", O_RDONLY|O_CLOEXEC) = 5
+5580<bin_client> ioctl(5, TIOCGWINSZ, {ws_row=34, ws_col=119, ws_xpixel=0, ws_ypixel=0}) = 0
+5580<bin_client> close(5)               = 0
+5580<bin_client> write(1, "\33[39m\33[49m\33[0m\33[?25l", 20) = 20
+5580<bin_client> epoll_wait(3, [], 3, 197) = 0
+5580<bin_client> openat(AT_FDCWD, "/dev/tty", O_RDONLY|O_CLOEXEC) = 5
+5580<bin_client> ioctl(5, TIOCGWINSZ, {ws_row=34, ws_col=119, ws_xpixel=0, ws_ypixel=0}) = 0
+5580<bin_client> close(5)               = 0
+5580<bin_client> write(1, "\33[39m\33[49m\33[0m\33[?25l", 20) = 20
+5580<bin_client> epoll_wait(3, [], 3, 197) = 0
+5580<bin_client> openat(AT_FDCWD, "/dev/tty", O_RDONLY|O_CLOEXEC) = 5
+5580<bin_client> ioctl(5, TIOCGWINSZ, {ws_row=34, ws_col=119, ws_xpixel=0, ws_ypixel=0}) = 0
+5580<bin_client> close(5)               = 0
+5580<bin_client> write(1, "\33[39m\33[49m\33[0m\33[?25l", 20) = 20
+5580<bin_client> epoll_wait(3, [], 3, 197) = 0
+5580<bin_client> openat(AT_FDCWD, "/dev/tty", O_RDONLY|O_CLOEXEC) = 5
+5580<bin_client> ioctl(5, TIOCGWINSZ, {ws_row=34, ws_col=119, ws_xpixel=0, ws_ypixel=0}) = 0
+5580<bin_client> close(5)               = 0
+5580<bin_client> write(1, "\33[39m\33[49m\33[0m\33[?25l", 20) = 20
+5580<bin_client> epoll_wait(3,  <unfinished ...>
+5578<bin_client> <... clock_nanosleep resumed>0x7fbcc6ffb900) = 0
+5578<bin_client> read(7, "", 8192)      = 0
+5578<bin_client> clock_nanosleep(CLOCK_REALTIME, 0, {tv_sec=1, tv_nsec=0},  <unfinished ...>
+5580<bin_client> <... epoll_wait resumed>[], 3, 197) = 0
+5580<bin_client> openat(AT_FDCWD, "/dev/tty", O_RDONLY|O_CLOEXEC) = 5
+5580<bin_client> ioctl(5, TIOCGWINSZ, {ws_row=34, ws_col=119, ws_xpixel=0, ws_ypixel=0}) = 0
+5580<bin_client> close(5)               = 0
+5580<bin_client> write(1, "\33[39m\33[49m\33[0m\33[?25l", 20) = 20
+5580<bin_client> epoll_wait(3, [], 3, 197) = 0
+5580<bin_client> openat(AT_FDCWD, "/dev/tty", O_RDONLY|O_CLOEXEC) = 5
+5580<bin_client> ioctl(5, TIOCGWINSZ, {ws_row=34, ws_col=119, ws_xpixel=0, ws_ypixel=0}) = 0
+5580<bin_client> close(5)               = 0
+5580<bin_client> write(1, "\33[39m\33[49m\33[0m\33[?25l", 20) = 20
+5580<bin_client> epoll_wait(3, [], 3, 197) = 0
+5580<bin_client> openat(AT_FDCWD, "/dev/tty", O_RDONLY|O_CLOEXEC) = 5
+5580<bin_client> ioctl(5, TIOCGWINSZ, {ws_row=34, ws_col=119, ws_xpixel=0, ws_ypixel=0}) = 0
+5580<bin_client> close(5)               = 0
+5580<bin_client> write(1, "\33[39m\33[49m\33[0m\33[?25l", 20) = 20
+5580<bin_client> epoll_wait(3, [], 3, 197) = 0
+5580<bin_client> openat(AT_FDCWD, "/dev/tty", O_RDONLY|O_CLOEXEC) = 5
+5580<bin_client> ioctl(5, TIOCGWINSZ, {ws_row=34, ws_col=119, ws_xpixel=0, ws_ypixel=0}) = 0
+5580<bin_client> close(5)               = 0
+5580<bin_client> write(1, "\33[39m\33[49m\33[0m\33[?25l", 20) = 20
+5580<bin_client> epoll_wait(3,  <unfinished ...>
+5575<bin_client> <... clock_nanosleep resumed>0x7fbcc75fe250) = 0
+5575<bin_client> write(4, "\"RequestChainStatus\"\n", 21) = -1 EPIPE (Broken pipe)
+5575<bin_client> --- SIGPIPE {si_signo=SIGPIPE, si_code=SI_USER, si_pid=5571<bin_client>, si_uid=1000} ---
+5575<bin_client> write(2, "thread '", 8) = 8
+5575<bin_client> write(2, "<unnamed>", 9) = 9
+5575<bin_client> write(2, "' panicked at '", 15) = 15
+5575<bin_client> write(2, "called `Result::unwrap()` on an "..., 102) = 102
+5575<bin_client> write(2, "', ", 3)     = 3
+5575<bin_client> write(2, "bin_client/./src/main.rs", 24) = 24
+5575<bin_client> write(2, ":", 1)       = 1
+5575<bin_client> write(2, "303", 3)     = 3
+5575<bin_client> write(2, ":", 1)       = 1
+5575<bin_client> write(2, "116", 3)     = 3
+5575<bin_client> write(2, "\n", 1)      = 1
+5575<bin_client> sigaltstack({ss_sp=NULL, ss_flags=SS_DISABLE, ss_size=8192}, NULL) = 0
+5575<bin_client> munmap(0x7fbcc7aaf000, 12288) = 0
+5575<bin_client> rt_sigprocmask(SIG_BLOCK, ~[RT_1], NULL, 8) = 0
+5575<bin_client> madvise(0x7fbcc73ff000, 2076672, MADV_DONTNEED) = 0
+5575<bin_client> exit(0)                = ?
+5575<bin_client> +++ exited with 0 +++
+5580<bin_client> <... epoll_wait resumed>[], 3, 197) = 0
+5580<bin_client> openat(AT_FDCWD, "/dev/tty", O_RDONLY|O_CLOEXEC) = 5
+5580<bin_client> ioctl(5, TIOCGWINSZ, {ws_row=34, ws_col=119, ws_xpixel=0, ws_ypixel=0}) = 0
+5580<bin_client> close(5)               = 0
+5580<bin_client> write(1, "\33[39m\33[49m\33[0m\33[?25l", 20) = 20
+5580<bin_client> epoll_wait(3,  <unfinished ...>
+5578<bin_client> <... clock_nanosleep resumed>0x7fbcc6ffb900) = 0
+5578<bin_client> read(7, "", 8192)      = 0
+5578<bin_client> clock_nanosleep(CLOCK_REALTIME, 0, {tv_sec=1, tv_nsec=0},  <unfinished ...>
+5580<bin_client> <... epoll_wait resumed>[], 3, 196) = 0
+5580<bin_client> openat(AT_FDCWD, "/dev/tty", O_RDONLY|O_CLOEXEC) = 5
+5580<bin_client> ioctl(5, TIOCGWINSZ, {ws_row=34, ws_col=119, ws_xpixel=0, ws_ypixel=0}) = 0
+5580<bin_client> close(5)               = 0
+5580<bin_client> write(1, "\33[39m\33[49m\33[0m\33[?25l", 20) = 20
+5580<bin_client> epoll_wait(3, [], 3, 197) = 0
+5580<bin_client> openat(AT_FDCWD, "/dev/tty", O_RDONLY|O_CLOEXEC) = 5
+5580<bin_client> ioctl(5, TIOCGWINSZ, {ws_row=34, ws_col=119, ws_xpixel=0, ws_ypixel=0}) = 0
+5580<bin_client> close(5)               = 0
+5580<bin_client> write(1, "\33[39m\33[49m\33[0m\33[?25l", 20) = 20
+5580<bin_client> epoll_wait(3, [], 3, 197) = 0
+5580<bin_client> openat(AT_FDCWD, "/dev/tty", O_RDONLY|O_CLOEXEC) = 5
+5580<bin_client> ioctl(5, TIOCGWINSZ, {ws_row=34, ws_col=119, ws_xpixel=0, ws_ypixel=0}) = 0
+5580<bin_client> close(5)               = 0
+5580<bin_client> write(1, "\33[39m\33[49m\33[0m\33[?25l", 20) = 20
+5580<bin_client> epoll_wait(3, [], 3, 197) = 0
+5580<bin_client> openat(AT_FDCWD, "/dev/tty", O_RDONLY|O_CLOEXEC) = 5
+5580<bin_client> ioctl(5, TIOCGWINSZ, {ws_row=34, ws_col=119, ws_xpixel=0, ws_ypixel=0}) = 0
+5580<bin_client> close(5)               = 0
+5580<bin_client> write(1, "\33[39m\33[49m\33[0m\33[?25l", 20) = 20
+5580<bin_client> epoll_wait(3, [], 3, 197) = 0
+5580<bin_client> openat(AT_FDCWD, "/dev/tty", O_RDONLY|O_CLOEXEC) = 5
+5580<bin_client> ioctl(5, TIOCGWINSZ, {ws_row=34, ws_col=119, ws_xpixel=0, ws_ypixel=0}) = 0
+5580<bin_client> close(5)               = 0
+5580<bin_client> write(1, "\33[39m\33[49m\33[0m\33[?25l", 20) = 20
+5580<bin_client> epoll_wait(3,  <unfinished ...>
+5578<bin_client> <... clock_nanosleep resumed>0x7fbcc6ffb900) = 0
+5578<bin_client> read(7, "", 8192)      = 0
+5578<bin_client> clock_nanosleep(CLOCK_REALTIME, 0, {tv_sec=1, tv_nsec=0},  <unfinished ...>
+5580<bin_client> <... epoll_wait resumed>[], 3, 197) = 0
+5580<bin_client> openat(AT_FDCWD, "/dev/tty", O_RDONLY|O_CLOEXEC) = 5
+5580<bin_client> ioctl(5, TIOCGWINSZ, {ws_row=34, ws_col=119, ws_xpixel=0, ws_ypixel=0}) = 0
+5580<bin_client> close(5)               = 0
+5580<bin_client> write(1, "\33[39m\33[49m\33[0m\33[?25l", 20) = 20
+5580<bin_client> epoll_wait(3, [], 3, 197) = 0
+5580<bin_client> openat(AT_FDCWD, "/dev/tty", O_RDONLY|O_CLOEXEC) = 5
+5580<bin_client> ioctl(5, TIOCGWINSZ, {ws_row=34, ws_col=119, ws_xpixel=0, ws_ypixel=0}) = 0
+5580<bin_client> close(5)               = 0
+5580<bin_client> write(1, "\33[39m\33[49m\33[0m\33[?25l", 20) = 20
+5580<bin_client> epoll_wait(3, [], 3, 195) = 0
+5580<bin_client> openat(AT_FDCWD, "/dev/tty", O_RDONLY|O_CLOEXEC) = 5
+5580<bin_client> ioctl(5, TIOCGWINSZ, {ws_row=34, ws_col=119, ws_xpixel=0, ws_ypixel=0}) = 0
+5580<bin_client> close(5)               = 0
+5580<bin_client> write(1, "\33[39m\33[49m\33[0m\33[?25l", 20) = 20
+5580<bin_client> epoll_wait(3, [], 3, 197) = 0
+5580<bin_client> openat(AT_FDCWD, "/dev/tty", O_RDONLY|O_CLOEXEC) = 5
+5580<bin_client> ioctl(5, TIOCGWINSZ, {ws_row=34, ws_col=119, ws_xpixel=0, ws_ypixel=0}) = 0
+5580<bin_client> close(5)               = 0
+5580<bin_client> write(1, "\33[39m\33[49m\33[0m\33[?25l", 20) = 20
+5580<bin_client> epoll_wait(3, [], 3, 197) = 0
+5580<bin_client> openat(AT_FDCWD, "/dev/tty", O_RDONLY|O_CLOEXEC) = 5
+5580<bin_client> ioctl(5, TIOCGWINSZ, {ws_row=34, ws_col=119, ws_xpixel=0, ws_ypixel=0}) = 0
+5580<bin_client> close(5)               = 0
+5580<bin_client> write(1, "\33[39m\33[49m\33[0m\33[?25l", 20) = 20
+5580<bin_client> epoll_wait(3,  <unfinished ...>
+5578<bin_client> <... clock_nanosleep resumed>0x7fbcc6ffb900) = 0
+5578<bin_client> read(7, "", 8192)      = 0
+5578<bin_client> clock_nanosleep(CLOCK_REALTIME, 0, {tv_sec=1, tv_nsec=0},  <unfinished ...>
+5580<bin_client> <... epoll_wait resumed>[], 3, 197) = 0
+5580<bin_client> openat(AT_FDCWD, "/dev/tty", O_RDONLY|O_CLOEXEC) = 5
+5580<bin_client> ioctl(5, TIOCGWINSZ, {ws_row=34, ws_col=119, ws_xpixel=0, ws_ypixel=0}) = 0
+5580<bin_client> close(5)               = 0
+5580<bin_client> write(1, "\33[39m\33[49m\33[0m\33[?25l", 20) = 20
+5580<bin_client> epoll_wait(3, [], 3, 197) = 0
+5580<bin_client> openat(AT_FDCWD, "/dev/tty", O_RDONLY|O_CLOEXEC) = 5
+5580<bin_client> ioctl(5, TIOCGWINSZ, {ws_row=34, ws_col=119, ws_xpixel=0, ws_ypixel=0}) = 0
+5580<bin_client> close(5)               = 0
+5580<bin_client> write(1, "\33[39m\33[49m\33[0m\33[?25l", 20) = 20
+5580<bin_client> epoll_wait(3, [], 3, 196) = 0
+5580<bin_client> openat(AT_FDCWD, "/dev/tty", O_RDONLY|O_CLOEXEC) = 5
+5580<bin_client> ioctl(5, TIOCGWINSZ, {ws_row=34, ws_col=119, ws_xpixel=0, ws_ypixel=0}) = 0
+5580<bin_client> close(5)               = 0
+5580<bin_client> write(1, "\33[39m\33[49m\33[0m\33[?25l", 20) = 20
+5580<bin_client> epoll_wait(3, [], 3, 197) = 0
+5580<bin_client> openat(AT_FDCWD, "/dev/tty", O_RDONLY|O_CLOEXEC) = 5
+5580<bin_client> ioctl(5, TIOCGWINSZ, {ws_row=34, ws_col=119, ws_xpixel=0, ws_ypixel=0}) = 0
+5580<bin_client> close(5)               = 0
+5580<bin_client> write(1, "\33[39m\33[49m\33[0m\33[?25l", 20) = 20
+5580<bin_client> epoll_wait(3, [], 3, 197) = 0
+5580<bin_client> openat(AT_FDCWD, "/dev/tty", O_RDONLY|O_CLOEXEC) = 5
+5580<bin_client> ioctl(5, TIOCGWINSZ, {ws_row=34, ws_col=119, ws_xpixel=0, ws_ypixel=0}) = 0
+5580<bin_client> close(5)               = 0
+5580<bin_client> write(1, "\33[39m\33[49m\33[0m\33[?25l", 20) = 20
+5580<bin_client> epoll_wait(3,  <unfinished ...>
+5578<bin_client> <... clock_nanosleep resumed>0x7fbcc6ffb900) = 0
+5578<bin_client> read(7, "", 8192)      = 0
+5578<bin_client> clock_nanosleep(CLOCK_REALTIME, 0, {tv_sec=1, tv_nsec=0},  <unfinished ...>
+5580<bin_client> <... epoll_wait resumed>[], 3, 197) = 0
+5580<bin_client> openat(AT_FDCWD, "/dev/tty", O_RDONLY|O_CLOEXEC) = 5
+5580<bin_client> ioctl(5, TIOCGWINSZ, {ws_row=34, ws_col=119, ws_xpixel=0, ws_ypixel=0}) = 0
+5580<bin_client> close(5)               = 0
+5580<bin_client> write(1, "\33[39m\33[49m\33[0m\33[?25l", 20) = 20
+5580<bin_client> epoll_wait(3, [], 3, 197) = 0
+5580<bin_client> openat(AT_FDCWD, "/dev/tty", O_RDONLY|O_CLOEXEC) = 5
+5580<bin_client> ioctl(5, TIOCGWINSZ, {ws_row=34, ws_col=119, ws_xpixel=0, ws_ypixel=0}) = 0
+5580<bin_client> close(5)               = 0
+5580<bin_client> write(1, "\33[39m\33[49m\33[0m\33[?25l", 20) = 20
+5580<bin_client> epoll_wait(3, [], 3, 197) = 0
+5580<bin_client> openat(AT_FDCWD, "/dev/tty", O_RDONLY|O_CLOEXEC) = 5
+5580<bin_client> ioctl(5, TIOCGWINSZ, {ws_row=34, ws_col=119, ws_xpixel=0, ws_ypixel=0}) = 0
+5580<bin_client> close(5)               = 0
+5580<bin_client> write(1, "\33[39m\33[49m\33[0m\33[?25l", 20) = 20
+5580<bin_client> epoll_wait(3, [], 3, 197) = 0
+5580<bin_client> openat(AT_FDCWD, "/dev/tty", O_RDONLY|O_CLOEXEC) = 5
+5580<bin_client> ioctl(5, TIOCGWINSZ, {ws_row=34, ws_col=119, ws_xpixel=0, ws_ypixel=0}) = 0
+5580<bin_client> close(5)               = 0
+5580<bin_client> write(1, "\33[39m\33[49m\33[0m\33[?25l", 20) = 20
+5580<bin_client> epoll_wait(3, [], 3, 197) = 0
+5580<bin_client> openat(AT_FDCWD, "/dev/tty", O_RDONLY|O_CLOEXEC) = 5
+5580<bin_client> ioctl(5, TIOCGWINSZ, {ws_row=34, ws_col=119, ws_xpixel=0, ws_ypixel=0}) = 0
+5580<bin_client> close(5)               = 0
+5580<bin_client> write(1, "\33[39m\33[49m\33[0m\33[?25l", 20) = 20
+5580<bin_client> epoll_wait(3,  <unfinished ...>
+5578<bin_client> <... clock_nanosleep resumed>0x7fbcc6ffb900) = 0
+5578<bin_client> read(7, "", 8192)      = 0
+5578<bin_client> clock_nanosleep(CLOCK_REALTIME, 0, {tv_sec=1, tv_nsec=0},  <unfinished ...>
+5580<bin_client> <... epoll_wait resumed>[], 3, 197) = 0
+5580<bin_client> openat(AT_FDCWD, "/dev/tty", O_RDONLY|O_CLOEXEC) = 5
+5580<bin_client> ioctl(5, TIOCGWINSZ, {ws_row=34, ws_col=119, ws_xpixel=0, ws_ypixel=0}) = 0
+5580<bin_client> close(5)               = 0
+5580<bin_client> write(1, "\33[39m\33[49m\33[0m\33[?25l", 20) = 20
+5580<bin_client> epoll_wait(3, [], 3, 197) = 0
+5580<bin_client> openat(AT_FDCWD, "/dev/tty", O_RDONLY|O_CLOEXEC) = 5
+5580<bin_client> ioctl(5, TIOCGWINSZ, {ws_row=34, ws_col=119, ws_xpixel=0, ws_ypixel=0}) = 0
+5580<bin_client> close(5)               = 0
+5580<bin_client> write(1, "\33[39m\33[49m\33[0m\33[?25l", 20) = 20
+5580<bin_client> epoll_wait(3, [], 3, 197) = 0
+5580<bin_client> openat(AT_FDCWD, "/dev/tty", O_RDONLY|O_CLOEXEC) = 5
+5580<bin_client> ioctl(5, TIOCGWINSZ, {ws_row=34, ws_col=119, ws_xpixel=0, ws_ypixel=0}) = 0
+5580<bin_client> close(5)               = 0
+5580<bin_client> write(1, "\33[39m\33[49m\33[0m\33[?25l", 20) = 20
+5580<bin_client> epoll_wait(3, [], 3, 197) = 0
+5580<bin_client> openat(AT_FDCWD, "/dev/tty", O_RDONLY|O_CLOEXEC) = 5
+5580<bin_client> ioctl(5, TIOCGWINSZ, {ws_row=34, ws_col=119, ws_xpixel=0, ws_ypixel=0}) = 0
+5580<bin_client> close(5)               = 0
+5580<bin_client> write(1, "\33[39m\33[49m\33[0m\33[?25l", 20) = 20
+5580<bin_client> epoll_wait(3, [], 3, 197) = 0
+5580<bin_client> openat(AT_FDCWD, "/dev/tty", O_RDONLY|O_CLOEXEC) = 5
+5580<bin_client> ioctl(5, TIOCGWINSZ, {ws_row=34, ws_col=119, ws_xpixel=0, ws_ypixel=0}) = 0
+5580<bin_client> close(5)               = 0
+5580<bin_client> write(1, "\33[39m\33[49m\33[0m\33[?25l", 20) = 20
+5580<bin_client> epoll_wait(3,  <unfinished ...>
+5578<bin_client> <... clock_nanosleep resumed>0x7fbcc6ffb900) = 0
+5578<bin_client> read(7, "", 8192)      = 0
+5578<bin_client> clock_nanosleep(CLOCK_REALTIME, 0, {tv_sec=1, tv_nsec=0},  <unfinished ...>
+5580<bin_client> <... epoll_wait resumed>[], 3, 197) = 0
+5580<bin_client> openat(AT_FDCWD, "/dev/tty", O_RDONLY|O_CLOEXEC) = 5
+5580<bin_client> ioctl(5, TIOCGWINSZ, {ws_row=34, ws_col=119, ws_xpixel=0, ws_ypixel=0}) = 0
+5580<bin_client> close(5)               = 0
+5580<bin_client> write(1, "\33[39m\33[49m\33[0m\33[?25l", 20) = 20
+5580<bin_client> epoll_wait(3, [], 3, 197) = 0
+5580<bin_client> openat(AT_FDCWD, "/dev/tty", O_RDONLY|O_CLOEXEC) = 5
+5580<bin_client> ioctl(5, TIOCGWINSZ, {ws_row=34, ws_col=119, ws_xpixel=0, ws_ypixel=0}) = 0
+5580<bin_client> close(5)               = 0
+5580<bin_client> write(1, "\33[39m\33[49m\33[0m\33[?25l", 20) = 20
+5580<bin_client> epoll_wait(3, [], 3, 197) = 0
+5580<bin_client> openat(AT_FDCWD, "/dev/tty", O_RDONLY|O_CLOEXEC) = 5
+5580<bin_client> ioctl(5, TIOCGWINSZ, {ws_row=34, ws_col=119, ws_xpixel=0, ws_ypixel=0}) = 0
+5580<bin_client> close(5)               = 0
+5580<bin_client> write(1, "\33[39m\33[49m\33[0m\33[?25l", 20) = 20
+5580<bin_client> epoll_wait(3, [], 3, 197) = 0
+5580<bin_client> openat(AT_FDCWD, "/dev/tty", O_RDONLY|O_CLOEXEC) = 5
+5580<bin_client> ioctl(5, TIOCGWINSZ, {ws_row=34, ws_col=119, ws_xpixel=0, ws_ypixel=0}) = 0
+5580<bin_client> close(5)               = 0
+5580<bin_client> write(1, "\33[39m\33[49m\33[0m\33[?25l", 20) = 20
+5580<bin_client> epoll_wait(3, [], 3, 197) = 0
+5580<bin_client> openat(AT_FDCWD, "/dev/tty", O_RDONLY|O_CLOEXEC) = 5
+5580<bin_client> ioctl(5, TIOCGWINSZ, {ws_row=34, ws_col=119, ws_xpixel=0, ws_ypixel=0}) = 0
+5580<bin_client> close(5)               = 0
+5580<bin_client> write(1, "\33[39m\33[49m\33[0m\33[?25l", 20) = 20
+5580<bin_client> epoll_wait(3,  <unfinished ...>
+5578<bin_client> <... clock_nanosleep resumed>0x7fbcc6ffb900) = 0
+5578<bin_client> read(7, "", 8192)      = 0
+5578<bin_client> clock_nanosleep(CLOCK_REALTIME, 0, {tv_sec=1, tv_nsec=0},  <unfinished ...>
+5580<bin_client> <... epoll_wait resumed>[], 3, 197) = 0
+5580<bin_client> openat(AT_FDCWD, "/dev/tty", O_RDONLY|O_CLOEXEC) = 5
+5580<bin_client> ioctl(5, TIOCGWINSZ, {ws_row=34, ws_col=119, ws_xpixel=0, ws_ypixel=0}) = 0
+5580<bin_client> close(5)               = 0
+5580<bin_client> write(1, "\33[39m\33[49m\33[0m\33[?25l", 20) = 20
+5580<bin_client> epoll_wait(3, [], 3, 197) = 0
+5580<bin_client> openat(AT_FDCWD, "/dev/tty", O_RDONLY|O_CLOEXEC) = 5
+5580<bin_client> ioctl(5, TIOCGWINSZ, {ws_row=34, ws_col=119, ws_xpixel=0, ws_ypixel=0}) = 0
+5580<bin_client> close(5)               = 0
+5580<bin_client> write(1, "\33[39m\33[49m\33[0m\33[?25l", 20) = 20
+5580<bin_client> epoll_wait(3, [], 3, 197) = 0
+5580<bin_client> openat(AT_FDCWD, "/dev/tty", O_RDONLY|O_CLOEXEC) = 5
+5580<bin_client> ioctl(5, TIOCGWINSZ, {ws_row=34, ws_col=119, ws_xpixel=0, ws_ypixel=0}) = 0
+5580<bin_client> close(5)               = 0
+5580<bin_client> write(1, "\33[39m\33[49m\33[0m\33[?25l", 20) = 20
+5580<bin_client> epoll_wait(3, [], 3, 197) = 0
+5580<bin_client> openat(AT_FDCWD, "/dev/tty", O_RDONLY|O_CLOEXEC) = 5
+5580<bin_client> ioctl(5, TIOCGWINSZ, {ws_row=34, ws_col=119, ws_xpixel=0, ws_ypixel=0}) = 0
+5580<bin_client> close(5)               = 0
+5580<bin_client> write(1, "\33[39m\33[49m\33[0m\33[?25l", 20) = 20
+5580<bin_client> epoll_wait(3, [], 3, 197) = 0
+5580<bin_client> openat(AT_FDCWD, "/dev/tty", O_RDONLY|O_CLOEXEC) = 5
+5580<bin_client> ioctl(5, TIOCGWINSZ, {ws_row=34, ws_col=119, ws_xpixel=0, ws_ypixel=0}) = 0
+5580<bin_client> close(5)               = 0
+5580<bin_client> write(1, "\33[39m\33[49m\33[0m\33[?25l", 20) = 20
+5580<bin_client> epoll_wait(3,  <unfinished ...>
+5578<bin_client> <... clock_nanosleep resumed>0x7fbcc6ffb900) = 0
+5578<bin_client> read(7, "", 8192)      = 0
+5578<bin_client> clock_nanosleep(CLOCK_REALTIME, 0, {tv_sec=1, tv_nsec=0},  <unfinished ...>
+5580<bin_client> <... epoll_wait resumed>[], 3, 197) = 0
+5580<bin_client> openat(AT_FDCWD, "/dev/tty", O_RDONLY|O_CLOEXEC) = 5
+5580<bin_client> ioctl(5, TIOCGWINSZ, {ws_row=34, ws_col=119, ws_xpixel=0, ws_ypixel=0}) = 0
+5580<bin_client> close(5)               = 0
+5580<bin_client> write(1, "\33[39m\33[49m\33[0m\33[?25l", 20) = 20
+5580<bin_client> epoll_wait(3, [], 3, 197) = 0
+5580<bin_client> openat(AT_FDCWD, "/dev/tty", O_RDONLY|O_CLOEXEC) = 5
+5580<bin_client> ioctl(5, TIOCGWINSZ, {ws_row=34, ws_col=119, ws_xpixel=0, ws_ypixel=0}) = 0
+5580<bin_client> close(5)               = 0
+5580<bin_client> write(1, "\33[39m\33[49m\33[0m\33[?25l", 20) = 20
+5580<bin_client> epoll_wait(3, [], 3, 197) = 0
+5580<bin_client> openat(AT_FDCWD, "/dev/tty", O_RDONLY|O_CLOEXEC) = 5
+5580<bin_client> ioctl(5, TIOCGWINSZ, {ws_row=34, ws_col=119, ws_xpixel=0, ws_ypixel=0}) = 0
+5580<bin_client> close(5)               = 0
+5580<bin_client> write(1, "\33[39m\33[49m\33[0m\33[?25l", 20) = 20
+5580<bin_client> epoll_wait(3, [], 3, 197) = 0
+5580<bin_client> openat(AT_FDCWD, "/dev/tty", O_RDONLY|O_CLOEXEC) = 5
+5580<bin_client> ioctl(5, TIOCGWINSZ, {ws_row=34, ws_col=119, ws_xpixel=0, ws_ypixel=0}) = 0
+5580<bin_client> close(5)               = 0
+5580<bin_client> write(1, "\33[39m\33[49m\33[0m\33[?25l", 20) = 20
+5580<bin_client> epoll_wait(3, [], 3, 197) = 0
+5580<bin_client> openat(AT_FDCWD, "/dev/tty", O_RDONLY|O_CLOEXEC) = 5
+5580<bin_client> ioctl(5, TIOCGWINSZ, {ws_row=34, ws_col=119, ws_xpixel=0, ws_ypixel=0}) = 0
+5580<bin_client> close(5)               = 0
+5580<bin_client> write(1, "\33[39m\33[49m\33[0m\33[?25l", 20) = 20
+5580<bin_client> epoll_wait(3,  <unfinished ...>
+5578<bin_client> <... clock_nanosleep resumed>0x7fbcc6ffb900) = 0
+5578<bin_client> read(7, "", 8192)      = 0
+5578<bin_client> clock_nanosleep(CLOCK_REALTIME, 0, {tv_sec=1, tv_nsec=0},  <unfinished ...>
+5580<bin_client> <... epoll_wait resumed>[], 3, 197) = 0
+5580<bin_client> openat(AT_FDCWD, "/dev/tty", O_RDONLY|O_CLOEXEC) = 5
+5580<bin_client> ioctl(5, TIOCGWINSZ, {ws_row=34, ws_col=119, ws_xpixel=0, ws_ypixel=0}) = 0
+5580<bin_client> close(5)               = 0
+5580<bin_client> write(1, "\33[39m\33[49m\33[0m\33[?25l", 20) = 20
+5580<bin_client> epoll_wait(3, [], 3, 197) = 0
+5580<bin_client> openat(AT_FDCWD, "/dev/tty", O_RDONLY|O_CLOEXEC) = 5
+5580<bin_client> ioctl(5, TIOCGWINSZ, {ws_row=34, ws_col=119, ws_xpixel=0, ws_ypixel=0}) = 0
+5580<bin_client> close(5)               = 0
+5580<bin_client> write(1, "\33[39m\33[49m\33[0m\33[?25l", 20) = 20
+5580<bin_client> epoll_wait(3, [], 3, 197) = 0
+5580<bin_client> openat(AT_FDCWD, "/dev/tty", O_RDONLY|O_CLOEXEC) = 5
+5580<bin_client> ioctl(5, TIOCGWINSZ, {ws_row=34, ws_col=119, ws_xpixel=0, ws_ypixel=0}) = 0
+5580<bin_client> close(5)               = 0
+5580<bin_client> write(1, "\33[39m\33[49m\33[0m\33[?25l", 20) = 20
+5580<bin_client> epoll_wait(3, [], 3, 197) = 0
+5580<bin_client> openat(AT_FDCWD, "/dev/tty", O_RDONLY|O_CLOEXEC) = 5
+5580<bin_client> ioctl(5, TIOCGWINSZ, {ws_row=34, ws_col=119, ws_xpixel=0, ws_ypixel=0}) = 0
+5580<bin_client> close(5)               = 0
+5580<bin_client> write(1, "\33[39m\33[49m\33[0m\33[?25l", 20) = 20
+5580<bin_client> epoll_wait(3, [], 3, 197) = 0
+5580<bin_client> openat(AT_FDCWD, "/dev/tty", O_RDONLY|O_CLOEXEC) = 5
+5580<bin_client> ioctl(5, TIOCGWINSZ, {ws_row=34, ws_col=119, ws_xpixel=0, ws_ypixel=0}) = 0
+5580<bin_client> close(5)               = 0
+5580<bin_client> write(1, "\33[39m\33[49m\33[0m\33[?25l", 20) = 20
+5580<bin_client> epoll_wait(3,  <unfinished ...>
+5578<bin_client> <... clock_nanosleep resumed>0x7fbcc6ffb900) = 0
+5578<bin_client> read(7, "", 8192)      = 0
+5578<bin_client> clock_nanosleep(CLOCK_REALTIME, 0, {tv_sec=1, tv_nsec=0},  <unfinished ...>
+5580<bin_client> <... epoll_wait resumed>[], 3, 197) = 0
+5580<bin_client> openat(AT_FDCWD, "/dev/tty", O_RDONLY|O_CLOEXEC) = 5
+5580<bin_client> ioctl(5, TIOCGWINSZ, {ws_row=34, ws_col=119, ws_xpixel=0, ws_ypixel=0}) = 0
+5580<bin_client> close(5)               = 0
+5580<bin_client> write(1, "\33[39m\33[49m\33[0m\33[?25l", 20) = 20
+5580<bin_client> epoll_wait(3, [], 3, 197) = 0
+5580<bin_client> openat(AT_FDCWD, "/dev/tty", O_RDONLY|O_CLOEXEC) = 5
+5580<bin_client> ioctl(5, TIOCGWINSZ, {ws_row=34, ws_col=119, ws_xpixel=0, ws_ypixel=0}) = 0
+5580<bin_client> close(5)               = 0
+5580<bin_client> write(1, "\33[39m\33[49m\33[0m\33[?25l", 20) = 20
+5580<bin_client> epoll_wait(3, [], 3, 197) = 0
+5580<bin_client> openat(AT_FDCWD, "/dev/tty", O_RDONLY|O_CLOEXEC) = 5
+5580<bin_client> ioctl(5, TIOCGWINSZ, {ws_row=34, ws_col=119, ws_xpixel=0, ws_ypixel=0}) = 0
+5580<bin_client> close(5)               = 0
+5580<bin_client> write(1, "\33[39m\33[49m\33[0m\33[?25l", 20) = 20
+5580<bin_client> epoll_wait(3, [], 3, 197) = 0
+5580<bin_client> openat(AT_FDCWD, "/dev/tty", O_RDONLY|O_CLOEXEC) = 5
+5580<bin_client> ioctl(5, TIOCGWINSZ, {ws_row=34, ws_col=119, ws_xpixel=0, ws_ypixel=0}) = 0
+5580<bin_client> close(5)               = 0
+5580<bin_client> write(1, "\33[39m\33[49m\33[0m\33[?25l", 20) = 20
+5580<bin_client> epoll_wait(3, [], 3, 197) = 0
+5580<bin_client> openat(AT_FDCWD, "/dev/tty", O_RDONLY|O_CLOEXEC) = 5
+5580<bin_client> ioctl(5, TIOCGWINSZ, {ws_row=34, ws_col=119, ws_xpixel=0, ws_ypixel=0}) = 0
+5580<bin_client> close(5)               = 0
+5580<bin_client> write(1, "\33[39m\33[49m\33[0m\33[?25l", 20) = 20
+5580<bin_client> epoll_wait(3,  <unfinished ...>
+5578<bin_client> <... clock_nanosleep resumed>0x7fbcc6ffb900) = 0
+5578<bin_client> read(7, "", 8192)      = 0
+5578<bin_client> clock_nanosleep(CLOCK_REALTIME, 0, {tv_sec=1, tv_nsec=0},  <unfinished ...>
+5580<bin_client> <... epoll_wait resumed>[], 3, 197) = 0
+5580<bin_client> openat(AT_FDCWD, "/dev/tty", O_RDONLY|O_CLOEXEC) = 5
+5580<bin_client> ioctl(5, TIOCGWINSZ, {ws_row=34, ws_col=119, ws_xpixel=0, ws_ypixel=0}) = 0
+5580<bin_client> close(5)               = 0
+5580<bin_client> write(1, "\33[39m\33[49m\33[0m\33[?25l", 20) = 20
+5580<bin_client> epoll_wait(3, [], 3, 197) = 0
+5580<bin_client> openat(AT_FDCWD, "/dev/tty", O_RDONLY|O_CLOEXEC) = 5
+5580<bin_client> ioctl(5, TIOCGWINSZ, {ws_row=34, ws_col=119, ws_xpixel=0, ws_ypixel=0}) = 0
+5580<bin_client> close(5)               = 0
+5580<bin_client> write(1, "\33[39m\33[49m\33[0m\33[?25l", 20) = 20
+5580<bin_client> epoll_wait(3, [], 3, 197) = 0
+5580<bin_client> openat(AT_FDCWD, "/dev/tty", O_RDONLY|O_CLOEXEC) = 5
+5580<bin_client> ioctl(5, TIOCGWINSZ, {ws_row=34, ws_col=119, ws_xpixel=0, ws_ypixel=0}) = 0
+5580<bin_client> close(5)               = 0
+5580<bin_client> write(1, "\33[39m\33[49m\33[0m\33[?25l", 20) = 20
+5580<bin_client> epoll_wait(3, [], 3, 197) = 0
+5580<bin_client> openat(AT_FDCWD, "/dev/tty", O_RDONLY|O_CLOEXEC) = 5
+5580<bin_client> ioctl(5, TIOCGWINSZ, {ws_row=34, ws_col=119, ws_xpixel=0, ws_ypixel=0}) = 0
+5580<bin_client> close(5)               = 0
+5580<bin_client> write(1, "\33[39m\33[49m\33[0m\33[?25l", 20) = 20
+5580<bin_client> epoll_wait(3, [], 3, 197) = 0
+5580<bin_client> openat(AT_FDCWD, "/dev/tty", O_RDONLY|O_CLOEXEC) = 5
+5580<bin_client> ioctl(5, TIOCGWINSZ, {ws_row=34, ws_col=119, ws_xpixel=0, ws_ypixel=0}) = 0
+5580<bin_client> close(5)               = 0
+5580<bin_client> write(1, "\33[39m\33[49m\33[0m\33[?25l", 20) = 20
+5580<bin_client> epoll_wait(3,  <unfinished ...>
+5578<bin_client> <... clock_nanosleep resumed>0x7fbcc6ffb900) = 0
+5578<bin_client> read(7, "", 8192)      = 0
+5578<bin_client> clock_nanosleep(CLOCK_REALTIME, 0, {tv_sec=1, tv_nsec=0},  <unfinished ...>
+5580<bin_client> <... epoll_wait resumed>[], 3, 197) = 0
+5580<bin_client> openat(AT_FDCWD, "/dev/tty", O_RDONLY|O_CLOEXEC) = 5
+5580<bin_client> ioctl(5, TIOCGWINSZ, {ws_row=34, ws_col=119, ws_xpixel=0, ws_ypixel=0}) = 0
+5580<bin_client> close(5)               = 0
+5580<bin_client> write(1, "\33[39m\33[49m\33[0m\33[?25l", 20) = 20
+5580<bin_client> epoll_wait(3, [], 3, 197) = 0
+5580<bin_client> openat(AT_FDCWD, "/dev/tty", O_RDONLY|O_CLOEXEC) = 5
+5580<bin_client> ioctl(5, TIOCGWINSZ, {ws_row=34, ws_col=119, ws_xpixel=0, ws_ypixel=0}) = 0
+5580<bin_client> close(5)               = 0
+5580<bin_client> write(1, "\33[39m\33[49m\33[0m\33[?25l", 20) = 20
+5580<bin_client> epoll_wait(3, [], 3, 197) = 0
+5580<bin_client> openat(AT_FDCWD, "/dev/tty", O_RDONLY|O_CLOEXEC) = 5
+5580<bin_client> ioctl(5, TIOCGWINSZ, {ws_row=34, ws_col=119, ws_xpixel=0, ws_ypixel=0}) = 0
+5580<bin_client> close(5)               = 0
+5580<bin_client> write(1, "\33[39m\33[49m\33[0m\33[?25l", 20) = 20
+5580<bin_client> epoll_wait(3, [], 3, 197) = 0
+5580<bin_client> openat(AT_FDCWD, "/dev/tty", O_RDONLY|O_CLOEXEC) = 5
+5580<bin_client> ioctl(5, TIOCGWINSZ, {ws_row=34, ws_col=119, ws_xpixel=0, ws_ypixel=0}) = 0
+5580<bin_client> close(5)               = 0
+5580<bin_client> write(1, "\33[39m\33[49m\33[0m\33[?25l", 20) = 20
+5580<bin_client> epoll_wait(3, [], 3, 197) = 0
+5580<bin_client> openat(AT_FDCWD, "/dev/tty", O_RDONLY|O_CLOEXEC) = 5
+5580<bin_client> ioctl(5, TIOCGWINSZ, {ws_row=34, ws_col=119, ws_xpixel=0, ws_ypixel=0}) = 0
+5580<bin_client> close(5)               = 0
+5578<bin_client> <... clock_nanosleep resumed>0x7fbcc6ffb900) = 0
+5578<bin_client> read(7, "", 8192)      = 0
+5578<bin_client> futex(0x555c2f60b540, FUTEX_WAIT_BITSET_PRIVATE, 2, NULL, FUTEX_BITSET_MATCH_ANY <unfinished ...>
+5580<bin_client> futex(0x555c2f60b540, FUTEX_WAKE_PRIVATE, 1) = 1
+5578<bin_client> <... futex resumed>)   = 0
+5578<bin_client> futex(0x555c2f60b540, FUTEX_WAKE_PRIVATE, 1) = 0
+5578<bin_client> clock_nanosleep(CLOCK_REALTIME, 0, {tv_sec=1, tv_nsec=0},  <unfinished ...>
+5580<bin_client> write(1, "\33[39m\33[49m\33[0m\33[?25l", 20) = 20
+5580<bin_client> epoll_wait(3, [], 3, 197) = 0
+5580<bin_client> openat(AT_FDCWD, "/dev/tty", O_RDONLY|O_CLOEXEC) = 5
+5580<bin_client> ioctl(5, TIOCGWINSZ, {ws_row=34, ws_col=119, ws_xpixel=0, ws_ypixel=0}) = 0
+5580<bin_client> close(5)               = 0
+5580<bin_client> write(1, "\33[39m\33[49m\33[0m\33[?25l", 20) = 20
+5580<bin_client> epoll_wait(3, [], 3, 197) = 0
+5580<bin_client> openat(AT_FDCWD, "/dev/tty", O_RDONLY|O_CLOEXEC) = 5
+5580<bin_client> ioctl(5, TIOCGWINSZ, {ws_row=34, ws_col=119, ws_xpixel=0, ws_ypixel=0}) = 0
+5580<bin_client> close(5)               = 0
+5580<bin_client> write(1, "\33[39m\33[49m\33[0m\33[?25l", 20) = 20
+5580<bin_client> epoll_wait(3, [], 3, 197) = 0
+5580<bin_client> openat(AT_FDCWD, "/dev/tty", O_RDONLY|O_CLOEXEC) = 5
+5580<bin_client> ioctl(5, TIOCGWINSZ, {ws_row=34, ws_col=119, ws_xpixel=0, ws_ypixel=0}) = 0
+5580<bin_client> close(5)               = 0
+5580<bin_client> write(1, "\33[39m\33[49m\33[0m\33[?25l", 20) = 20
+5580<bin_client> epoll_wait(3, [], 3, 197) = 0
+5580<bin_client> openat(AT_FDCWD, "/dev/tty", O_RDONLY|O_CLOEXEC) = 5
+5580<bin_client> ioctl(5, TIOCGWINSZ, {ws_row=34, ws_col=119, ws_xpixel=0, ws_ypixel=0}) = 0
+5580<bin_client> close(5)               = 0
+5580<bin_client> write(1, "\33[39m\33[49m\33[0m\33[?25l", 20) = 20
+5580<bin_client> epoll_wait(3,  <unfinished ...>
+5578<bin_client> <... clock_nanosleep resumed>0x7fbcc6ffb900) = 0
+5578<bin_client> read(7, "", 8192)      = 0
+5578<bin_client> clock_nanosleep(CLOCK_REALTIME, 0, {tv_sec=1, tv_nsec=0},  <unfinished ...>
+5580<bin_client> <... epoll_wait resumed>[], 3, 197) = 0
+5580<bin_client> openat(AT_FDCWD, "/dev/tty", O_RDONLY|O_CLOEXEC) = 5
+5580<bin_client> ioctl(5, TIOCGWINSZ, {ws_row=34, ws_col=119, ws_xpixel=0, ws_ypixel=0}) = 0
+5580<bin_client> close(5)               = 0
+5580<bin_client> write(1, "\33[39m\33[49m\33[0m\33[?25l", 20) = 20
+5580<bin_client> epoll_wait(3, [{events=EPOLLIN, data={u32=0, u64=0}}], 3, 197) = 1
+5580<bin_client> read(0, "\33[<35;68;15M", 1024) = 12
+5580<bin_client> openat(AT_FDCWD, "/dev/tty", O_RDONLY|O_CLOEXEC) = 5
+5580<bin_client> ioctl(5, TIOCGWINSZ, {ws_row=34, ws_col=119, ws_xpixel=0, ws_ypixel=0}) = 0
+5580<bin_client> close(5)               = 0
+5580<bin_client> write(1, "\33[39m\33[49m\33[0m\33[?25l", 20) = 20
+5580<bin_client> epoll_wait(3, [{events=EPOLLIN, data={u32=0, u64=0}}], 3, 141) = 1
+5580<bin_client> read(0, "\33[<35;68;14M", 1024) = 12
+5580<bin_client> openat(AT_FDCWD, "/dev/tty", O_RDONLY|O_CLOEXEC) = 5
+5580<bin_client> ioctl(5, TIOCGWINSZ, {ws_row=34, ws_col=119, ws_xpixel=0, ws_ypixel=0}) = 0
+5580<bin_client> close(5)               = 0
+5580<bin_client> write(1, "\33[39m\33[49m\33[0m\33[?25l", 20) = 20
+5580<bin_client> epoll_wait(3, [{events=EPOLLIN, data={u32=0, u64=0}}], 3, 133) = 1
+5580<bin_client> read(0, "\33[<35;69;12M", 1024) = 12
+5580<bin_client> openat(AT_FDCWD, "/dev/tty", O_RDONLY|O_CLOEXEC) = 5
+5580<bin_client> ioctl(5, TIOCGWINSZ, {ws_row=34, ws_col=119, ws_xpixel=0, ws_ypixel=0}) = 0
+5580<bin_client> close(5)               = 0
+5580<bin_client> write(1, "\33[39m\33[49m\33[0m\33[?25l", 20) = 20
+5580<bin_client> epoll_wait(3, [{events=EPOLLIN, data={u32=0, u64=0}}], 3, 125) = 1
+5580<bin_client> read(0, "\33[<35;69;9M", 1024) = 11
+5580<bin_client> openat(AT_FDCWD, "/dev/tty", O_RDONLY|O_CLOEXEC) = 5
+5580<bin_client> ioctl(5, TIOCGWINSZ, {ws_row=34, ws_col=119, ws_xpixel=0, ws_ypixel=0}) = 0
+5580<bin_client> close(5)               = 0
+5580<bin_client> write(1, "\33[39m\33[49m\33[0m\33[?25l", 20) = 20
+5580<bin_client> epoll_wait(3, [{events=EPOLLIN, data={u32=0, u64=0}}], 3, 115) = 1
+5580<bin_client> read(0, "\33[<35;70;4M", 1024) = 11
+5580<bin_client> openat(AT_FDCWD, "/dev/tty", O_RDONLY|O_CLOEXEC) = 5
+5580<bin_client> ioctl(5, TIOCGWINSZ, {ws_row=34, ws_col=119, ws_xpixel=0, ws_ypixel=0}) = 0
+5580<bin_client> close(5)               = 0
+5580<bin_client> write(1, "\33[39m\33[49m\33[0m\33[?25l", 20) = 20
+5580<bin_client> epoll_wait(3, [], 3, 104) = 0
+5580<bin_client> openat(AT_FDCWD, "/dev/tty", O_RDONLY|O_CLOEXEC) = 5
+5580<bin_client> ioctl(5, TIOCGWINSZ, {ws_row=34, ws_col=119, ws_xpixel=0, ws_ypixel=0}) = 0
+5580<bin_client> close(5)               = 0
+5580<bin_client> write(1, "\33[39m\33[49m\33[0m\33[?25l", 20) = 20
+5580<bin_client> epoll_wait(3, [], 3, 197) = 0
+5580<bin_client> openat(AT_FDCWD, "/dev/tty", O_RDONLY|O_CLOEXEC) = 5
+5580<bin_client> ioctl(5, TIOCGWINSZ, {ws_row=34, ws_col=119, ws_xpixel=0, ws_ypixel=0}) = 0
+5580<bin_client> close(5)               = 0
+5580<bin_client> write(1, "\33[39m\33[49m\33[0m\33[?25l", 20) = 20
+5580<bin_client> epoll_wait(3, [], 3, 197) = 0
+5580<bin_client> openat(AT_FDCWD, "/dev/tty", O_RDONLY|O_CLOEXEC) = 5
+5580<bin_client> ioctl(5, TIOCGWINSZ, {ws_row=34, ws_col=119, ws_xpixel=0, ws_ypixel=0}) = 0
+5580<bin_client> close(5)               = 0
+5580<bin_client> write(1, "\33[39m\33[49m\33[0m\33[?25l", 20) = 20
+5580<bin_client> epoll_wait(3, [], 3, 197) = 0
+5580<bin_client> openat(AT_FDCWD, "/dev/tty", O_RDONLY|O_CLOEXEC) = 5
+5580<bin_client> ioctl(5, TIOCGWINSZ, {ws_row=34, ws_col=119, ws_xpixel=0, ws_ypixel=0}) = 0
+5580<bin_client> close(5)               = 0
+5580<bin_client> write(1, "\33[39m\33[49m\33[0m\33[?25l", 20) = 20
+5580<bin_client> epoll_wait(3,  <unfinished ...>
+5578<bin_client> <... clock_nanosleep resumed>0x7fbcc6ffb900) = 0
+5578<bin_client> read(7, "", 8192)      = 0
+5578<bin_client> clock_nanosleep(CLOCK_REALTIME, 0, {tv_sec=1, tv_nsec=0},  <unfinished ...>
+5580<bin_client> <... epoll_wait resumed>[], 3, 197) = 0
+5580<bin_client> openat(AT_FDCWD, "/dev/tty", O_RDONLY|O_CLOEXEC) = 5
+5580<bin_client> ioctl(5, TIOCGWINSZ, {ws_row=34, ws_col=119, ws_xpixel=0, ws_ypixel=0}) = 0
+5580<bin_client> close(5)               = 0
+5580<bin_client> write(1, "\33[39m\33[49m\33[0m\33[?25l", 20) = 20
+5580<bin_client> epoll_wait(3, [], 3, 197) = 0
+5580<bin_client> openat(AT_FDCWD, "/dev/tty", O_RDONLY|O_CLOEXEC) = 5
+5580<bin_client> ioctl(5, TIOCGWINSZ, {ws_row=34, ws_col=119, ws_xpixel=0, ws_ypixel=0}) = 0
+5580<bin_client> close(5)               = 0
+5580<bin_client> write(1, "\33[39m\33[49m\33[0m\33[?25l", 20) = 20
+5580<bin_client> epoll_wait(3, [], 3, 197) = 0
+5580<bin_client> openat(AT_FDCWD, "/dev/tty", O_RDONLY|O_CLOEXEC) = 5
+5580<bin_client> ioctl(5, TIOCGWINSZ, {ws_row=34, ws_col=119, ws_xpixel=0, ws_ypixel=0}) = 0
+5580<bin_client> close(5)               = 0
+5580<bin_client> write(1, "\33[39m\33[49m\33[0m\33[?25l", 20) = 20
+5580<bin_client> epoll_wait(3, [], 3, 197) = 0
+5580<bin_client> openat(AT_FDCWD, "/dev/tty", O_RDONLY|O_CLOEXEC) = 5
+5580<bin_client> ioctl(5, TIOCGWINSZ, {ws_row=34, ws_col=119, ws_xpixel=0, ws_ypixel=0}) = 0
+5580<bin_client> close(5)               = 0
+5580<bin_client> write(1, "\33[39m\33[49m\33[0m\33[?25l", 20) = 20
+5580<bin_client> epoll_wait(3, [], 3, 197) = 0
+5580<bin_client> openat(AT_FDCWD, "/dev/tty", O_RDONLY|O_CLOEXEC) = 5
+5580<bin_client> ioctl(5, TIOCGWINSZ, {ws_row=34, ws_col=119, ws_xpixel=0, ws_ypixel=0}) = 0
+5580<bin_client> close(5)               = 0
+5580<bin_client> write(1, "\33[39m\33[49m\33[0m\33[?25l", 20) = 20
+5580<bin_client> epoll_wait(3,  <unfinished ...>
+5578<bin_client> <... clock_nanosleep resumed>0x7fbcc6ffb900) = 0
+5578<bin_client> read(7, "", 8192)      = 0
+5578<bin_client> clock_nanosleep(CLOCK_REALTIME, 0, {tv_sec=1, tv_nsec=0},  <unfinished ...>
+5580<bin_client> <... epoll_wait resumed>[], 3, 197) = 0
+5580<bin_client> openat(AT_FDCWD, "/dev/tty", O_RDONLY|O_CLOEXEC) = 5
+5580<bin_client> ioctl(5, TIOCGWINSZ, {ws_row=34, ws_col=119, ws_xpixel=0, ws_ypixel=0}) = 0
+5580<bin_client> close(5)               = 0
+5580<bin_client> write(1, "\33[39m\33[49m\33[0m\33[?25l", 20) = 20
+5580<bin_client> epoll_wait(3, [], 3, 197) = 0
+5580<bin_client> openat(AT_FDCWD, "/dev/tty", O_RDONLY|O_CLOEXEC) = 5
+5580<bin_client> ioctl(5, TIOCGWINSZ, {ws_row=34, ws_col=119, ws_xpixel=0, ws_ypixel=0}) = 0
+5580<bin_client> close(5)               = 0
+5580<bin_client> write(1, "\33[39m\33[49m\33[0m\33[?25l", 20) = 20
+5580<bin_client> epoll_wait(3, [], 3, 197) = 0
+5580<bin_client> openat(AT_FDCWD, "/dev/tty", O_RDONLY|O_CLOEXEC) = 5
+5580<bin_client> ioctl(5, TIOCGWINSZ, {ws_row=34, ws_col=119, ws_xpixel=0, ws_ypixel=0}) = 0
+5580<bin_client> close(5)               = 0
+5580<bin_client> write(1, "\33[39m\33[49m\33[0m\33[?25l", 20) = 20
+5580<bin_client> epoll_wait(3, [], 3, 197) = 0
+5580<bin_client> openat(AT_FDCWD, "/dev/tty", O_RDONLY|O_CLOEXEC) = 5
+5580<bin_client> ioctl(5, TIOCGWINSZ, {ws_row=34, ws_col=119, ws_xpixel=0, ws_ypixel=0}) = 0
+5580<bin_client> close(5)               = 0
+5580<bin_client> write(1, "\33[39m\33[49m\33[0m\33[?25l", 20) = 20
+5580<bin_client> epoll_wait(3, [], 3, 197) = 0
+5580<bin_client> openat(AT_FDCWD, "/dev/tty", O_RDONLY|O_CLOEXEC) = 5
+5580<bin_client> ioctl(5, TIOCGWINSZ, {ws_row=34, ws_col=119, ws_xpixel=0, ws_ypixel=0}) = 0
+5580<bin_client> close(5)               = 0
+5580<bin_client> write(1, "\33[39m\33[49m\33[0m\33[?25l", 20) = 20
+5580<bin_client> epoll_wait(3,  <unfinished ...>
+5578<bin_client> <... clock_nanosleep resumed>0x7fbcc6ffb900) = 0
+5578<bin_client> read(7, "", 8192)      = 0
+5578<bin_client> clock_nanosleep(CLOCK_REALTIME, 0, {tv_sec=1, tv_nsec=0},  <unfinished ...>
+5580<bin_client> <... epoll_wait resumed>[], 3, 197) = 0
+5580<bin_client> openat(AT_FDCWD, "/dev/tty", O_RDONLY|O_CLOEXEC) = 5
+5580<bin_client> ioctl(5, TIOCGWINSZ, {ws_row=34, ws_col=119, ws_xpixel=0, ws_ypixel=0}) = 0
+5580<bin_client> close(5)               = 0
+5580<bin_client> write(1, "\33[39m\33[49m\33[0m\33[?25l", 20) = 20
+5580<bin_client> epoll_wait(3, [], 3, 197) = 0
+5580<bin_client> openat(AT_FDCWD, "/dev/tty", O_RDONLY|O_CLOEXEC) = 5
+5580<bin_client> ioctl(5, TIOCGWINSZ, {ws_row=34, ws_col=119, ws_xpixel=0, ws_ypixel=0}) = 0
+5580<bin_client> close(5)               = 0
+5580<bin_client> write(1, "\33[39m\33[49m\33[0m\33[?25l", 20) = 20
+5580<bin_client> epoll_wait(3, [], 3, 197) = 0
+5580<bin_client> openat(AT_FDCWD, "/dev/tty", O_RDONLY|O_CLOEXEC) = 5
+5580<bin_client> ioctl(5, TIOCGWINSZ, {ws_row=34, ws_col=119, ws_xpixel=0, ws_ypixel=0}) = 0
+5580<bin_client> close(5)               = 0
+5580<bin_client> write(1, "\33[39m\33[49m\33[0m\33[?25l", 20) = 20
+5580<bin_client> epoll_wait(3, [], 3, 197) = 0
+5580<bin_client> openat(AT_FDCWD, "/dev/tty", O_RDONLY|O_CLOEXEC) = 5
+5580<bin_client> ioctl(5, TIOCGWINSZ, {ws_row=34, ws_col=119, ws_xpixel=0, ws_ypixel=0}) = 0
+5580<bin_client> close(5)               = 0
+5580<bin_client> write(1, "\33[39m\33[49m\33[0m\33[?25l", 20) = 20
+5580<bin_client> epoll_wait(3, [], 3, 197) = 0
+5580<bin_client> openat(AT_FDCWD, "/dev/tty", O_RDONLY|O_CLOEXEC) = 5
+5580<bin_client> ioctl(5, TIOCGWINSZ, {ws_row=34, ws_col=119, ws_xpixel=0, ws_ypixel=0}) = 0
+5580<bin_client> close(5)               = 0
+5580<bin_client> write(1, "\33[39m\33[49m\33[0m\33[?25l", 20) = 20
+5580<bin_client> epoll_wait(3,  <unfinished ...>
+5578<bin_client> <... clock_nanosleep resumed>0x7fbcc6ffb900) = 0
+5578<bin_client> read(7, "", 8192)      = 0
+5578<bin_client> clock_nanosleep(CLOCK_REALTIME, 0, {tv_sec=1, tv_nsec=0},  <unfinished ...>
+5580<bin_client> <... epoll_wait resumed>[], 3, 197) = 0
+5580<bin_client> openat(AT_FDCWD, "/dev/tty", O_RDONLY|O_CLOEXEC) = 5
+5580<bin_client> ioctl(5, TIOCGWINSZ, {ws_row=34, ws_col=119, ws_xpixel=0, ws_ypixel=0}) = 0
+5580<bin_client> close(5)               = 0
+5580<bin_client> write(1, "\33[39m\33[49m\33[0m\33[?25l", 20) = 20
+5580<bin_client> epoll_wait(3, [], 3, 197) = 0
+5580<bin_client> openat(AT_FDCWD, "/dev/tty", O_RDONLY|O_CLOEXEC) = 5
+5580<bin_client> ioctl(5, TIOCGWINSZ, {ws_row=34, ws_col=119, ws_xpixel=0, ws_ypixel=0}) = 0
+5580<bin_client> close(5)               = 0
+5580<bin_client> write(1, "\33[39m\33[49m\33[0m\33[?25l", 20) = 20
+5580<bin_client> epoll_wait(3, [], 3, 197) = 0
+5580<bin_client> openat(AT_FDCWD, "/dev/tty", O_RDONLY|O_CLOEXEC) = 5
+5580<bin_client> ioctl(5, TIOCGWINSZ, {ws_row=34, ws_col=119, ws_xpixel=0, ws_ypixel=0}) = 0
+5580<bin_client> close(5)               = 0
+5580<bin_client> write(1, "\33[39m\33[49m\33[0m\33[?25l", 20) = 20
+5580<bin_client> epoll_wait(3, [], 3, 197) = 0
+5580<bin_client> openat(AT_FDCWD, "/dev/tty", O_RDONLY|O_CLOEXEC) = 5
+5580<bin_client> ioctl(5, TIOCGWINSZ, {ws_row=34, ws_col=119, ws_xpixel=0, ws_ypixel=0}) = 0
+5580<bin_client> close(5)               = 0
+5580<bin_client> write(1, "\33[39m\33[49m\33[0m\33[?25l", 20) = 20
+5580<bin_client> epoll_wait(3, [], 3, 197) = 0
+5580<bin_client> openat(AT_FDCWD, "/dev/tty", O_RDONLY|O_CLOEXEC) = 5
+5580<bin_client> ioctl(5, TIOCGWINSZ, {ws_row=34, ws_col=119, ws_xpixel=0, ws_ypixel=0}) = 0
+5580<bin_client> close(5)               = 0
+5580<bin_client> write(1, "\33[39m\33[49m\33[0m\33[?25l", 20) = 20
+5580<bin_client> epoll_wait(3,  <unfinished ...>
+5578<bin_client> <... clock_nanosleep resumed>0x7fbcc6ffb900) = 0
+5578<bin_client> read(7, "", 8192)      = 0
+5578<bin_client> clock_nanosleep(CLOCK_REALTIME, 0, {tv_sec=1, tv_nsec=0},  <unfinished ...>
+5580<bin_client> <... epoll_wait resumed>[], 3, 197) = 0
+5580<bin_client> openat(AT_FDCWD, "/dev/tty", O_RDONLY|O_CLOEXEC) = 5
+5580<bin_client> ioctl(5, TIOCGWINSZ, {ws_row=34, ws_col=119, ws_xpixel=0, ws_ypixel=0}) = 0
+5580<bin_client> close(5)               = 0
+5580<bin_client> write(1, "\33[39m\33[49m\33[0m\33[?25l", 20) = 20
+5580<bin_client> epoll_wait(3, [], 3, 197) = 0
+5580<bin_client> openat(AT_FDCWD, "/dev/tty", O_RDONLY|O_CLOEXEC) = 5
+5580<bin_client> ioctl(5, TIOCGWINSZ, {ws_row=34, ws_col=119, ws_xpixel=0, ws_ypixel=0}) = 0
+5580<bin_client> close(5)               = 0
+5580<bin_client> write(1, "\33[39m\33[49m\33[0m\33[?25l", 20) = 20
+5580<bin_client> epoll_wait(3, [], 3, 197) = 0
+5580<bin_client> openat(AT_FDCWD, "/dev/tty", O_RDONLY|O_CLOEXEC) = 5
+5580<bin_client> ioctl(5, TIOCGWINSZ, {ws_row=34, ws_col=119, ws_xpixel=0, ws_ypixel=0}) = 0
+5580<bin_client> close(5)               = 0
+5580<bin_client> write(1, "\33[39m\33[49m\33[0m\33[?25l", 20) = 20
+5580<bin_client> epoll_wait(3, [], 3, 197) = 0
+5580<bin_client> openat(AT_FDCWD, "/dev/tty", O_RDONLY|O_CLOEXEC) = 5
+5580<bin_client> ioctl(5, TIOCGWINSZ, {ws_row=34, ws_col=119, ws_xpixel=0, ws_ypixel=0}) = 0
+5580<bin_client> close(5)               = 0
+5580<bin_client> write(1, "\33[39m\33[49m\33[0m\33[?25l", 20) = 20
+5580<bin_client> epoll_wait(3, [], 3, 197) = 0
+5580<bin_client> openat(AT_FDCWD, "/dev/tty", O_RDONLY|O_CLOEXEC) = 5
+5580<bin_client> ioctl(5, TIOCGWINSZ, {ws_row=34, ws_col=119, ws_xpixel=0, ws_ypixel=0}) = 0
+5580<bin_client> close(5)               = 0
+5580<bin_client> write(1, "\33[39m\33[49m\33[0m\33[?25l", 20) = 20
+5580<bin_client> epoll_wait(3,  <unfinished ...>
+5578<bin_client> <... clock_nanosleep resumed>0x7fbcc6ffb900) = 0
+5578<bin_client> read(7, "", 8192)      = 0
+5578<bin_client> clock_nanosleep(CLOCK_REALTIME, 0, {tv_sec=1, tv_nsec=0},  <unfinished ...>
+5580<bin_client> <... epoll_wait resumed>[], 3, 197) = 0
+5580<bin_client> openat(AT_FDCWD, "/dev/tty", O_RDONLY|O_CLOEXEC) = 5
+5580<bin_client> ioctl(5, TIOCGWINSZ, {ws_row=34, ws_col=119, ws_xpixel=0, ws_ypixel=0}) = 0
+5580<bin_client> close(5)               = 0
+5580<bin_client> write(1, "\33[39m\33[49m\33[0m\33[?25l", 20) = 20
+5580<bin_client> epoll_wait(3, [], 3, 197) = 0
+5580<bin_client> openat(AT_FDCWD, "/dev/tty", O_RDONLY|O_CLOEXEC) = 5
+5580<bin_client> ioctl(5, TIOCGWINSZ, {ws_row=34, ws_col=119, ws_xpixel=0, ws_ypixel=0}) = 0
+5580<bin_client> close(5)               = 0
+5580<bin_client> write(1, "\33[39m\33[49m\33[0m\33[?25l", 20) = 20
+5580<bin_client> epoll_wait(3, [], 3, 197) = 0
+5580<bin_client> openat(AT_FDCWD, "/dev/tty", O_RDONLY|O_CLOEXEC) = 5
+5580<bin_client> ioctl(5, TIOCGWINSZ, {ws_row=34, ws_col=119, ws_xpixel=0, ws_ypixel=0}) = 0
+5580<bin_client> close(5)               = 0
+5580<bin_client> write(1, "\33[39m\33[49m\33[0m\33[?25l", 20) = 20
+5580<bin_client> epoll_wait(3, [], 3, 197) = 0
+5580<bin_client> openat(AT_FDCWD, "/dev/tty", O_RDONLY|O_CLOEXEC) = 5
+5580<bin_client> ioctl(5, TIOCGWINSZ, {ws_row=34, ws_col=119, ws_xpixel=0, ws_ypixel=0}) = 0
+5580<bin_client> close(5)               = 0
+5580<bin_client> write(1, "\33[39m\33[49m\33[0m\33[?25l", 20) = 20
+5580<bin_client> epoll_wait(3, [], 3, 197) = 0
+5580<bin_client> openat(AT_FDCWD, "/dev/tty", O_RDONLY|O_CLOEXEC) = 5
+5580<bin_client> ioctl(5, TIOCGWINSZ, {ws_row=34, ws_col=119, ws_xpixel=0, ws_ypixel=0}) = 0
+5580<bin_client> close(5)               = 0
+5580<bin_client> write(1, "\33[39m\33[49m\33[0m\33[?25l", 20) = 20
+5580<bin_client> epoll_wait(3,  <unfinished ...>
+5578<bin_client> <... clock_nanosleep resumed>0x7fbcc6ffb900) = 0
+5578<bin_client> read(7, "", 8192)      = 0
+5578<bin_client> clock_nanosleep(CLOCK_REALTIME, 0, {tv_sec=1, tv_nsec=0},  <unfinished ...>
+5580<bin_client> <... epoll_wait resumed>[], 3, 197) = 0
+5580<bin_client> openat(AT_FDCWD, "/dev/tty", O_RDONLY|O_CLOEXEC) = 5
+5580<bin_client> ioctl(5, TIOCGWINSZ, {ws_row=34, ws_col=119, ws_xpixel=0, ws_ypixel=0}) = 0
+5580<bin_client> close(5)               = 0
+5580<bin_client> write(1, "\33[39m\33[49m\33[0m\33[?25l", 20) = 20
+5580<bin_client> epoll_wait(3, [], 3, 197) = 0
+5580<bin_client> openat(AT_FDCWD, "/dev/tty", O_RDONLY|O_CLOEXEC) = 5
+5580<bin_client> ioctl(5, TIOCGWINSZ, {ws_row=34, ws_col=119, ws_xpixel=0, ws_ypixel=0}) = 0
+5580<bin_client> close(5)               = 0
+5580<bin_client> write(1, "\33[39m\33[49m\33[0m\33[?25l", 20) = 20
+5580<bin_client> epoll_wait(3, [], 3, 197) = 0
+5580<bin_client> openat(AT_FDCWD, "/dev/tty", O_RDONLY|O_CLOEXEC) = 5
+5580<bin_client> ioctl(5, TIOCGWINSZ, {ws_row=34, ws_col=119, ws_xpixel=0, ws_ypixel=0}) = 0
+5580<bin_client> close(5)               = 0
+5580<bin_client> write(1, "\33[39m\33[49m\33[0m\33[?25l", 20) = 20
+5580<bin_client> epoll_wait(3, [], 3, 197) = 0
+5580<bin_client> openat(AT_FDCWD, "/dev/tty", O_RDONLY|O_CLOEXEC) = 5
+5580<bin_client> ioctl(5, TIOCGWINSZ, {ws_row=34, ws_col=119, ws_xpixel=0, ws_ypixel=0}) = 0
+5580<bin_client> close(5)               = 0
+5580<bin_client> write(1, "\33[39m\33[49m\33[0m\33[?25l", 20) = 20
+5580<bin_client> epoll_wait(3, [{events=EPOLLIN, data={u32=0, u64=0}}], 3, 197) = 1
+5580<bin_client> read(0, "\33[<35;69;34M", 1024) = 12
+5580<bin_client> openat(AT_FDCWD, "/dev/tty", O_RDONLY|O_CLOEXEC) = 5
+5580<bin_client> ioctl(5, TIOCGWINSZ, {ws_row=34, ws_col=119, ws_xpixel=0, ws_ypixel=0}) = 0
+5580<bin_client> close(5)               = 0
+5580<bin_client> write(1, "\33[39m\33[49m\33[0m\33[?25l", 20) = 20
+5580<bin_client> epoll_wait(3, [], 3, 7) = 0
+5580<bin_client> openat(AT_FDCWD, "/dev/tty", O_RDONLY|O_CLOEXEC) = 5
+5580<bin_client> ioctl(5, TIOCGWINSZ, {ws_row=34, ws_col=119, ws_xpixel=0, ws_ypixel=0}) = 0
+5580<bin_client> close(5)               = 0
+5580<bin_client> write(1, "\33[39m\33[49m\33[0m\33[?25l", 20) = 20
+5580<bin_client> epoll_wait(3,  <unfinished ...>
+5578<bin_client> <... clock_nanosleep resumed>0x7fbcc6ffb900) = 0
+5578<bin_client> read(7, "", 8192)      = 0
+5578<bin_client> clock_nanosleep(CLOCK_REALTIME, 0, {tv_sec=1, tv_nsec=0},  <unfinished ...>
+5580<bin_client> <... epoll_wait resumed>[], 3, 197) = 0
+5580<bin_client> openat(AT_FDCWD, "/dev/tty", O_RDONLY|O_CLOEXEC) = 5
+5580<bin_client> ioctl(5, TIOCGWINSZ, {ws_row=34, ws_col=119, ws_xpixel=0, ws_ypixel=0}) = 0
+5580<bin_client> close(5)               = 0
+5580<bin_client> write(1, "\33[39m\33[49m\33[0m\33[?25l", 20) = 20
+5580<bin_client> epoll_wait(3, [{events=EPOLLIN, data={u32=0, u64=0}}], 3, 197) = 1
+5580<bin_client> read(0, "\33[<35;69;34M", 1024) = 12
+5580<bin_client> openat(AT_FDCWD, "/dev/tty", O_RDONLY|O_CLOEXEC) = 5
+5580<bin_client> ioctl(5, TIOCGWINSZ, {ws_row=34, ws_col=119, ws_xpixel=0, ws_ypixel=0}) = 0
+5580<bin_client> close(5)               = 0
+5580<bin_client> write(1, "\33[39m\33[49m\33[0m\33[?25l", 20) = 20
+5580<bin_client> epoll_wait(3, [{events=EPOLLIN, data={u32=0, u64=0}}], 3, 88) = 1
+5580<bin_client> read(0, "\33[<35;69;34M", 1024) = 12
+5580<bin_client> openat(AT_FDCWD, "/dev/tty", O_RDONLY|O_CLOEXEC) = 5
+5580<bin_client> ioctl(5, TIOCGWINSZ, {ws_row=34, ws_col=119, ws_xpixel=0, ws_ypixel=0}) = 0
+5580<bin_client> close(5)               = 0
+5580<bin_client> write(1, "\33[39m\33[49m\33[0m\33[?25l", 20) = 20
+5580<bin_client> epoll_wait(3, [], 3, 65) = 0
+5580<bin_client> openat(AT_FDCWD, "/dev/tty", O_RDONLY|O_CLOEXEC) = 5
+5580<bin_client> ioctl(5, TIOCGWINSZ, {ws_row=34, ws_col=119, ws_xpixel=0, ws_ypixel=0}) = 0
+5580<bin_client> close(5)               = 0
+5580<bin_client> write(1, "\33[39m\33[49m\33[0m\33[?25l", 20) = 20
+5580<bin_client> epoll_wait(3, [], 3, 197) = 0
+5580<bin_client> openat(AT_FDCWD, "/dev/tty", O_RDONLY|O_CLOEXEC) = 5
+5580<bin_client> ioctl(5, TIOCGWINSZ, {ws_row=34, ws_col=119, ws_xpixel=0, ws_ypixel=0}) = 0
+5580<bin_client> close(5)               = 0
+5580<bin_client> write(1, "\33[39m\33[49m\33[0m\33[?25l", 20) = 20
+5580<bin_client> epoll_wait(3, [], 3, 197) = 0
+5580<bin_client> openat(AT_FDCWD, "/dev/tty", O_RDONLY|O_CLOEXEC) = 5
+5580<bin_client> ioctl(5, TIOCGWINSZ, {ws_row=34, ws_col=119, ws_xpixel=0, ws_ypixel=0}) = 0
+5580<bin_client> close(5)               = 0
+5580<bin_client> write(1, "\33[39m\33[49m\33[0m\33[?25l", 20) = 20
+5580<bin_client> epoll_wait(3, [], 3, 197) = 0
+5580<bin_client> openat(AT_FDCWD, "/dev/tty", O_RDONLY|O_CLOEXEC) = 5
+5580<bin_client> ioctl(5, TIOCGWINSZ, {ws_row=34, ws_col=119, ws_xpixel=0, ws_ypixel=0}) = 0
+5580<bin_client> close(5)               = 0
+5580<bin_client> write(1, "\33[39m\33[49m\33[0m\33[?25l", 20) = 20
+5580<bin_client> epoll_wait(3,  <unfinished ...>
+5578<bin_client> <... clock_nanosleep resumed>0x7fbcc6ffb900) = 0
+5578<bin_client> read(7, "", 8192)      = 0
+5578<bin_client> clock_nanosleep(CLOCK_REALTIME, 0, {tv_sec=1, tv_nsec=0},  <unfinished ...>
+5580<bin_client> <... epoll_wait resumed>[], 3, 197) = 0
+5580<bin_client> openat(AT_FDCWD, "/dev/tty", O_RDONLY|O_CLOEXEC) = 5
+5580<bin_client> ioctl(5, TIOCGWINSZ, {ws_row=34, ws_col=119, ws_xpixel=0, ws_ypixel=0}) = 0
+5580<bin_client> close(5)               = 0
+5580<bin_client> write(1, "\33[39m\33[49m\33[0m\33[?25l", 20) = 20
+5580<bin_client> epoll_wait(3, [{events=EPOLLIN, data={u32=0, u64=0}}], 3, 197) = 1
+5580<bin_client> read(0, "\33[<35;69;34M", 1024) = 12
+5580<bin_client> openat(AT_FDCWD, "/dev/tty", O_RDONLY|O_CLOEXEC) = 5
+5580<bin_client> ioctl(5, TIOCGWINSZ, {ws_row=34, ws_col=119, ws_xpixel=0, ws_ypixel=0}) = 0
+5580<bin_client> close(5)               = 0
+5580<bin_client> write(1, "\33[39m\33[49m\33[0m\33[?25l", 20) = 20
+5580<bin_client> epoll_wait(3, [{events=EPOLLIN, data={u32=0, u64=0}}], 3, 194) = 1
+5580<bin_client> read(0, "\33[<35;69;34M", 1024) = 12
+5580<bin_client> openat(AT_FDCWD, "/dev/tty", O_RDONLY|O_CLOEXEC) = 5
+5580<bin_client> ioctl(5, TIOCGWINSZ, {ws_row=34, ws_col=119, ws_xpixel=0, ws_ypixel=0}) = 0
+5580<bin_client> close(5)               = 0
+5580<bin_client> write(1, "\33[39m\33[49m\33[0m\33[?25l", 20) = 20
+5580<bin_client> epoll_wait(3, [{events=EPOLLIN, data={u32=0, u64=0}}], 3, 189) = 1
+5580<bin_client> read(0, "\33[<35;68;34M", 1024) = 12
+5580<bin_client> openat(AT_FDCWD, "/dev/tty", O_RDONLY|O_CLOEXEC) = 5
+5580<bin_client> ioctl(5, TIOCGWINSZ, {ws_row=34, ws_col=119, ws_xpixel=0, ws_ypixel=0}) = 0
+5580<bin_client> close(5)               = 0
+5580<bin_client> write(1, "\33[39m\33[49m\33[0m\33[?25l", 20) = 20
+5580<bin_client> epoll_wait(3, [{events=EPOLLIN, data={u32=0, u64=0}}], 3, 181) = 1
+5580<bin_client> read(0, "\33[<35;67;34M", 1024) = 12
+5580<bin_client> openat(AT_FDCWD, "/dev/tty", O_RDONLY|O_CLOEXEC) = 5
+5580<bin_client> ioctl(5, TIOCGWINSZ, {ws_row=34, ws_col=119, ws_xpixel=0, ws_ypixel=0}) = 0
+5580<bin_client> close(5)               = 0
+5580<bin_client> write(1, "\33[39m\33[49m\33[0m\33[?25l", 20) = 20
+5580<bin_client> epoll_wait(3, [{events=EPOLLIN, data={u32=0, u64=0}}], 3, 173) = 1
+5580<bin_client> read(0, "\33[<35;66;34M", 1024) = 12
+5580<bin_client> openat(AT_FDCWD, "/dev/tty", O_RDONLY|O_CLOEXEC) = 5
+5580<bin_client> ioctl(5, TIOCGWINSZ, {ws_row=34, ws_col=119, ws_xpixel=0, ws_ypixel=0}) = 0
+5580<bin_client> close(5)               = 0
+5580<bin_client> write(1, "\33[39m\33[49m\33[0m\33[?25l", 20) = 20
+5580<bin_client> epoll_wait(3, [{events=EPOLLIN, data={u32=0, u64=0}}], 3, 165) = 1
+5580<bin_client> read(0, "\33[<35;66;34M", 1024) = 12
+5580<bin_client> openat(AT_FDCWD, "/dev/tty", O_RDONLY|O_CLOEXEC) = 5
+5580<bin_client> ioctl(5, TIOCGWINSZ, {ws_row=34, ws_col=119, ws_xpixel=0, ws_ypixel=0}) = 0
+5580<bin_client> close(5)               = 0
+5580<bin_client> write(1, "\33[39m\33[49m\33[0m\33[?25l", 20) = 20
+5580<bin_client> epoll_wait(3, [{events=EPOLLIN, data={u32=0, u64=0}}], 3, 155) = 1
+5580<bin_client> read(0, "\33[<35;65;34M", 1024) = 12
+5580<bin_client> openat(AT_FDCWD, "/dev/tty", O_RDONLY|O_CLOEXEC) = 5
+5580<bin_client> ioctl(5, TIOCGWINSZ, {ws_row=34, ws_col=119, ws_xpixel=0, ws_ypixel=0}) = 0
+5580<bin_client> close(5)               = 0
+5580<bin_client> write(1, "\33[39m\33[49m\33[0m\33[?25l", 20) = 20
+5580<bin_client> epoll_wait(3, [{events=EPOLLIN, data={u32=0, u64=0}}], 3, 145) = 1
+5580<bin_client> read(0, "\33[<35;64;34M", 1024) = 12
+5580<bin_client> openat(AT_FDCWD, "/dev/tty", O_RDONLY|O_CLOEXEC) = 5
+5580<bin_client> ioctl(5, TIOCGWINSZ, {ws_row=34, ws_col=119, ws_xpixel=0, ws_ypixel=0}) = 0
+5580<bin_client> close(5)               = 0
+5580<bin_client> write(1, "\33[39m\33[49m\33[0m\33[?25l", 20) = 20
+5580<bin_client> epoll_wait(3, [{events=EPOLLIN, data={u32=0, u64=0}}], 3, 134) = 1
+5580<bin_client> read(0, "\33[<35;59;34M", 1024) = 12
+5580<bin_client> openat(AT_FDCWD, "/dev/tty", O_RDONLY|O_CLOEXEC) = 5
+5580<bin_client> ioctl(5, TIOCGWINSZ, {ws_row=34, ws_col=119, ws_xpixel=0, ws_ypixel=0}) = 0
+5580<bin_client> close(5)               = 0
+5580<bin_client> write(1, "\33[39m\33[49m\33[0m\33[?25l", 20) = 20
+5580<bin_client> epoll_wait(3, [{events=EPOLLIN, data={u32=0, u64=0}}], 3, 60) = 1
+5580<bin_client> read(0, "\33[<35;59;34M", 1024) = 12
+5580<bin_client> openat(AT_FDCWD, "/dev/tty", O_RDONLY|O_CLOEXEC) = 5
+5580<bin_client> ioctl(5, TIOCGWINSZ, {ws_row=34, ws_col=119, ws_xpixel=0, ws_ypixel=0}) = 0
+5580<bin_client> close(5)               = 0
+5580<bin_client> write(1, "\33[39m\33[49m\33[0m\33[?25l", 20) = 20
+5580<bin_client> epoll_wait(3, [{events=EPOLLIN, data={u32=0, u64=0}}], 3, 50) = 1
+5580<bin_client> read(0, "\33[<35;60;32M", 1024) = 12
+5580<bin_client> openat(AT_FDCWD, "/dev/tty", O_RDONLY|O_CLOEXEC) = 5
+5580<bin_client> ioctl(5, TIOCGWINSZ, {ws_row=34, ws_col=119, ws_xpixel=0, ws_ypixel=0}) = 0
+5580<bin_client> close(5)               = 0
+5580<bin_client> write(1, "\33[39m\33[49m\33[0m\33[?25l", 20) = 20
+5580<bin_client> epoll_wait(3, [{events=EPOLLIN, data={u32=0, u64=0}}], 3, 40) = 1
+5580<bin_client> read(0, "\33[<35;60;31M", 1024) = 12
+5580<bin_client> openat(AT_FDCWD, "/dev/tty", O_RDONLY|O_CLOEXEC) = 5
+5580<bin_client> ioctl(5, TIOCGWINSZ, {ws_row=34, ws_col=119, ws_xpixel=0, ws_ypixel=0}) = 0
+5580<bin_client> close(5)               = 0
+5580<bin_client> write(1, "\33[39m\33[49m\33[0m\33[?25l", 20) = 20
+5580<bin_client> epoll_wait(3, [{events=EPOLLIN, data={u32=0, u64=0}}], 3, 30) = 1
+5580<bin_client> read(0, "\33[<35;61;27M", 1024) = 12
+5580<bin_client> openat(AT_FDCWD, "/dev/tty", O_RDONLY|O_CLOEXEC) = 5
+5580<bin_client> ioctl(5, TIOCGWINSZ, {ws_row=34, ws_col=119, ws_xpixel=0, ws_ypixel=0}) = 0
+5580<bin_client> close(5)               = 0
+5580<bin_client> write(1, "\33[39m\33[49m\33[0m\33[?25l", 20) = 20
+5580<bin_client> epoll_wait(3, [{events=EPOLLIN, data={u32=0, u64=0}}], 3, 21) = 1
+5580<bin_client> read(0, "\33[<35;62;25M", 1024) = 12
+5580<bin_client> openat(AT_FDCWD, "/dev/tty", O_RDONLY|O_CLOEXEC) = 5
+5580<bin_client> ioctl(5, TIOCGWINSZ, {ws_row=34, ws_col=119, ws_xpixel=0, ws_ypixel=0}) = 0
+5580<bin_client> close(5)               = 0
+5580<bin_client> write(1, "\33[39m\33[49m\33[0m\33[?25l", 20) = 20
+5580<bin_client> epoll_wait(3, [{events=EPOLLIN, data={u32=0, u64=0}}], 3, 13) = 1
+5580<bin_client> read(0, "\33[<35;63;24M", 1024) = 12
+5580<bin_client> openat(AT_FDCWD, "/dev/tty", O_RDONLY|O_CLOEXEC) = 5
+5580<bin_client> ioctl(5, TIOCGWINSZ, {ws_row=34, ws_col=119, ws_xpixel=0, ws_ypixel=0}) = 0
+5580<bin_client> close(5)               = 0
+5580<bin_client> write(1, "\33[39m\33[49m\33[0m\33[?25l", 20) = 20
+5580<bin_client> epoll_wait(3, [{events=EPOLLIN, data={u32=0, u64=0}}], 3, 5) = 1
+5580<bin_client> read(0, "\33[<35;64;23M", 1024) = 12
+5580<bin_client> openat(AT_FDCWD, "/dev/tty", O_RDONLY|O_CLOEXEC) = 5
+5580<bin_client> ioctl(5, TIOCGWINSZ, {ws_row=34, ws_col=119, ws_xpixel=0, ws_ypixel=0}) = 0
+5580<bin_client> close(5)               = 0
+5580<bin_client> write(1, "\33[39m\33[49m\33[0m\33[?25l", 20) = 20
+5580<bin_client> epoll_wait(3, [{events=EPOLLIN, data={u32=0, u64=0}}], 3, 100) = 1
+5580<bin_client> read(0, "\33[<35;64;23M", 1024) = 12
+5580<bin_client> openat(AT_FDCWD, "/dev/tty", O_RDONLY|O_CLOEXEC) = 5
+5580<bin_client> ioctl(5, TIOCGWINSZ, {ws_row=34, ws_col=119, ws_xpixel=0, ws_ypixel=0}) = 0
+5580<bin_client> close(5)               = 0
+5580<bin_client> write(1, "\33[39m\33[49m\33[0m\33[?25l", 20) = 20
+5580<bin_client> epoll_wait(3, [{events=EPOLLIN, data={u32=0, u64=0}}], 3, 197) = 1
+5580<bin_client> read(0, "\33[<35;65;23M", 1024) = 12
+5580<bin_client> openat(AT_FDCWD, "/dev/tty", O_RDONLY|O_CLOEXEC) = 5
+5580<bin_client> ioctl(5, TIOCGWINSZ, {ws_row=34, ws_col=119, ws_xpixel=0, ws_ypixel=0}) = 0
+5580<bin_client> close(5)               = 0
+5580<bin_client> write(1, "\33[39m\33[49m\33[0m\33[?25l", 20) = 20
+5580<bin_client> epoll_wait(3, [{events=EPOLLIN, data={u32=0, u64=0}}], 3, 187) = 1
+5580<bin_client> read(0, "\33[<35;65;23M", 1024) = 12
+5580<bin_client> openat(AT_FDCWD, "/dev/tty", O_RDONLY|O_CLOEXEC) = 5
+5580<bin_client> ioctl(5, TIOCGWINSZ, {ws_row=34, ws_col=119, ws_xpixel=0, ws_ypixel=0}) = 0
+5580<bin_client> close(5)               = 0
+5580<bin_client> write(1, "\33[39m\33[49m\33[0m\33[?25l", 20) = 20
+5580<bin_client> epoll_wait(3, [{events=EPOLLIN, data={u32=0, u64=0}}], 3, 177) = 1
+5580<bin_client> read(0, "\33[<35;65;23M", 1024) = 12
+5580<bin_client> openat(AT_FDCWD, "/dev/tty", O_RDONLY|O_CLOEXEC) = 5
+5580<bin_client> ioctl(5, TIOCGWINSZ, {ws_row=34, ws_col=119, ws_xpixel=0, ws_ypixel=0}) = 0
+5580<bin_client> close(5)               = 0
+5580<bin_client> write(1, "\33[39m\33[49m\33[0m\33[?25l", 20) = 20
+5580<bin_client> epoll_wait(3, [{events=EPOLLIN, data={u32=0, u64=0}}], 3, 135) = 1
+5580<bin_client> read(0, "\33[<35;64;23M", 1024) = 12
+5580<bin_client> openat(AT_FDCWD, "/dev/tty", O_RDONLY|O_CLOEXEC) = 5
+5580<bin_client> ioctl(5, TIOCGWINSZ, {ws_row=34, ws_col=119, ws_xpixel=0, ws_ypixel=0}) = 0
+5580<bin_client> close(5)               = 0
+5580<bin_client> write(1, "\33[39m\33[49m\33[0m\33[?25l", 20) = 20
+5580<bin_client> epoll_wait(3, [{events=EPOLLIN, data={u32=0, u64=0}}], 3, 127) = 1
+5580<bin_client> read(0, "\33[<35;64;23M", 1024) = 12
+5580<bin_client> openat(AT_FDCWD, "/dev/tty", O_RDONLY|O_CLOEXEC) = 5
+5580<bin_client> ioctl(5, TIOCGWINSZ, {ws_row=34, ws_col=119, ws_xpixel=0, ws_ypixel=0}) = 0
+5580<bin_client> close(5)               = 0
+5580<bin_client> write(1, "\33[39m\33[49m\33[0m\33[?25l", 20) = 20
+5580<bin_client> epoll_wait(3, [{events=EPOLLIN, data={u32=0, u64=0}}], 3, 119) = 1
+5580<bin_client> read(0, "\33[<35;63;23M", 1024) = 12
+5580<bin_client> openat(AT_FDCWD, "/dev/tty", O_RDONLY|O_CLOEXEC) = 5
+5580<bin_client> ioctl(5, TIOCGWINSZ, {ws_row=34, ws_col=119, ws_xpixel=0, ws_ypixel=0}) = 0
+5580<bin_client> close(5)               = 0
+5580<bin_client> write(1, "\33[39m\33[49m\33[0m\33[?25l", 20) = 20
+5580<bin_client> epoll_wait(3, [{events=EPOLLIN, data={u32=0, u64=0}}], 3, 109) = 1
+5580<bin_client> read(0, "\33[<35;62;23M", 1024) = 12
+5580<bin_client> openat(AT_FDCWD, "/dev/tty", O_RDONLY|O_CLOEXEC) = 5
+5580<bin_client> ioctl(5, TIOCGWINSZ, {ws_row=34, ws_col=119, ws_xpixel=0, ws_ypixel=0}) = 0
+5580<bin_client> close(5)               = 0
+5580<bin_client> write(1, "\33[39m\33[49m\33[0m\33[?25l", 20) = 20
+5580<bin_client> epoll_wait(3, [{events=EPOLLIN, data={u32=0, u64=0}}], 3, 98) = 1
+5580<bin_client> read(0, "\33[<35;62;23M", 1024) = 12
+5580<bin_client> openat(AT_FDCWD, "/dev/tty", O_RDONLY|O_CLOEXEC) = 5
+5580<bin_client> ioctl(5, TIOCGWINSZ, {ws_row=34, ws_col=119, ws_xpixel=0, ws_ypixel=0}) = 0
+5580<bin_client> close(5)               = 0
+5580<bin_client> write(1, "\33[39m\33[49m\33[0m\33[?25l", 20) = 20
+5580<bin_client> epoll_wait(3, [], 3, 88) = 0
+5580<bin_client> openat(AT_FDCWD, "/dev/tty", O_RDONLY|O_CLOEXEC) = 5
+5580<bin_client> ioctl(5, TIOCGWINSZ, {ws_row=34, ws_col=119, ws_xpixel=0, ws_ypixel=0}) = 0
+5580<bin_client> close(5)               = 0
+5580<bin_client> write(1, "\33[39m\33[49m\33[0m\33[?25l", 20) = 20
+5580<bin_client> epoll_wait(3, [{events=EPOLLIN, data={u32=0, u64=0}}], 3, 197) = 1
+5580<bin_client> read(0, "\33[<35;61;23M", 1024) = 12
+5580<bin_client> openat(AT_FDCWD, "/dev/tty", O_RDONLY|O_CLOEXEC) = 5
+5580<bin_client> ioctl(5, TIOCGWINSZ, {ws_row=34, ws_col=119, ws_xpixel=0, ws_ypixel=0}) = 0
+5580<bin_client> close(5)               = 0
+5580<bin_client> write(1, "\33[39m\33[49m\33[0m\33[?25l", 20) = 20
+5580<bin_client> epoll_wait(3, [{events=EPOLLIN, data={u32=0, u64=0}}], 3, 24) = 1
+5580<bin_client> read(0, "\33[<35;61;23M", 1024) = 12
+5580<bin_client> openat(AT_FDCWD, "/dev/tty", O_RDONLY|O_CLOEXEC) = 5
+5580<bin_client> ioctl(5, TIOCGWINSZ, {ws_row=34, ws_col=119, ws_xpixel=0, ws_ypixel=0}) = 0
+5580<bin_client> close(5)               = 0
+5580<bin_client> write(1, "\33[39m\33[49m\33[0m\33[?25l", 20) = 20
+5580<bin_client> epoll_wait(3, [{events=EPOLLIN, data={u32=0, u64=0}}], 3, 17) = 1
+5580<bin_client> read(0, "\33[<35;60;23M", 1024) = 12
+5580<bin_client> openat(AT_FDCWD, "/dev/tty", O_RDONLY|O_CLOEXEC) = 5
+5580<bin_client> ioctl(5, TIOCGWINSZ, {ws_row=34, ws_col=119, ws_xpixel=0, ws_ypixel=0}) = 0
+5580<bin_client> close(5)               = 0
+5580<bin_client> write(1, "\33[39m\33[49m\33[0m\33[?25l", 20) = 20
+5580<bin_client> epoll_wait(3, [], 3, 1) = 0
+5580<bin_client> openat(AT_FDCWD, "/dev/tty", O_RDONLY|O_CLOEXEC) = 5
+5580<bin_client> ioctl(5, TIOCGWINSZ, {ws_row=34, ws_col=119, ws_xpixel=0, ws_ypixel=0}) = 0
+5580<bin_client> close(5)               = 0
+5580<bin_client> write(1, "\33[39m\33[49m\33[0m\33[?25l", 20) = 20
+5580<bin_client> epoll_wait(3, [{events=EPOLLIN, data={u32=0, u64=0}}], 3, 197) = 1
+5580<bin_client> read(0, "\33[<35;59;23M", 1024) = 12
+5580<bin_client> openat(AT_FDCWD, "/dev/tty", O_RDONLY|O_CLOEXEC) = 5
+5580<bin_client> ioctl(5, TIOCGWINSZ, {ws_row=34, ws_col=119, ws_xpixel=0, ws_ypixel=0}) = 0
+5580<bin_client> close(5)               = 0
+5580<bin_client> write(1, "\33[39m\33[49m\33[0m\33[?25l", 20) = 20
+5580<bin_client> epoll_wait(3, [{events=EPOLLIN, data={u32=0, u64=0}}], 3, 194) = 1
+5580<bin_client> read(0, "\33[<35;57;24M", 1024) = 12
+5580<bin_client> openat(AT_FDCWD, "/dev/tty", O_RDONLY|O_CLOEXEC) = 5
+5580<bin_client> ioctl(5, TIOCGWINSZ, {ws_row=34, ws_col=119, ws_xpixel=0, ws_ypixel=0}) = 0
+5580<bin_client> close(5)               = 0
+5580<bin_client> write(1, "\33[39m\33[49m\33[0m\33[?25l", 20) = 20
+5580<bin_client> epoll_wait(3, [{events=EPOLLIN, data={u32=0, u64=0}}], 3, 186) = 1
+5580<bin_client> read(0, "\33[<35;52;26M", 1024) = 12
+5580<bin_client> openat(AT_FDCWD, "/dev/tty", O_RDONLY|O_CLOEXEC) = 5
+5580<bin_client> ioctl(5, TIOCGWINSZ, {ws_row=34, ws_col=119, ws_xpixel=0, ws_ypixel=0}) = 0
+5580<bin_client> close(5)               = 0
+5580<bin_client> write(1, "\33[39m\33[49m\33[0m\33[?25l", 20) = 20
+5580<bin_client> epoll_wait(3, [{events=EPOLLIN, data={u32=0, u64=0}}], 3, 177) = 1
+5580<bin_client> read(0, "\33[<35;47;28M", 1024) = 12
+5580<bin_client> openat(AT_FDCWD, "/dev/tty", O_RDONLY|O_CLOEXEC) = 5
+5580<bin_client> ioctl(5, TIOCGWINSZ, {ws_row=34, ws_col=119, ws_xpixel=0, ws_ypixel=0}) = 0
+5580<bin_client> close(5)               = 0
+5580<bin_client> write(1, "\33[39m\33[49m\33[0m\33[?25l", 20) = 20
+5580<bin_client> epoll_wait(3, [{events=EPOLLIN, data={u32=0, u64=0}}], 3, 167) = 1
+5580<bin_client> read(0, "\33[<35;42;30M", 1024) = 12
+5580<bin_client> openat(AT_FDCWD, "/dev/tty", O_RDONLY|O_CLOEXEC) = 5
+5580<bin_client> ioctl(5, TIOCGWINSZ, {ws_row=34, ws_col=119, ws_xpixel=0, ws_ypixel=0}) = 0
+5580<bin_client> close(5)               = 0
+5580<bin_client> write(1, "\33[39m\33[49m\33[0m\33[?25l", 20) = 20
+5580<bin_client> epoll_wait(3, [{events=EPOLLIN, data={u32=0, u64=0}}], 3, 156) = 1
+5580<bin_client> read(0, "\33[<35;38;32M", 1024) = 12
+5580<bin_client> openat(AT_FDCWD, "/dev/tty", O_RDONLY|O_CLOEXEC) = 5
+5580<bin_client> ioctl(5, TIOCGWINSZ, {ws_row=34, ws_col=119, ws_xpixel=0, ws_ypixel=0}) = 0
+5580<bin_client> close(5)               = 0
+5580<bin_client> write(1, "\33[39m\33[49m\33[0m\33[?25l", 20) = 20
+5580<bin_client> epoll_wait(3, [{events=EPOLLIN, data={u32=0, u64=0}}], 3, 146) = 1
+5580<bin_client> read(0, "\33[<35;34;34M", 1024) = 12
+5580<bin_client> openat(AT_FDCWD, "/dev/tty", O_RDONLY|O_CLOEXEC) = 5
+5580<bin_client> ioctl(5, TIOCGWINSZ, {ws_row=34, ws_col=119, ws_xpixel=0, ws_ypixel=0}) = 0
+5580<bin_client> close(5)               = 0
+5580<bin_client> write(1, "\33[39m\33[49m\33[0m\33[?25l", 20) = 20
+5580<bin_client> epoll_wait(3, [{events=EPOLLIN, data={u32=0, u64=0}}], 3, 138) = 1
+5580<bin_client> read(0, "\33[<35;34;34M", 1024) = 12
+5580<bin_client> openat(AT_FDCWD, "/dev/tty", O_RDONLY|O_CLOEXEC) = 5
+5580<bin_client> ioctl(5, TIOCGWINSZ, {ws_row=34, ws_col=119, ws_xpixel=0, ws_ypixel=0}) = 0
+5580<bin_client> close(5)               = 0
+5580<bin_client> write(1, "\33[39m\33[49m\33[0m\33[?25l", 20) = 20
+5580<bin_client> epoll_wait(3, [], 3, 121) = 0
+5580<bin_client> openat(AT_FDCWD, "/dev/tty", O_RDONLY|O_CLOEXEC) = 5
+5580<bin_client> ioctl(5, TIOCGWINSZ, {ws_row=34, ws_col=119, ws_xpixel=0, ws_ypixel=0}) = 0
+5580<bin_client> close(5)               = 0
+5580<bin_client> write(1, "\33[39m\33[49m\33[0m\33[?25l", 20) = 20
+5580<bin_client> epoll_wait(3, [{events=EPOLLIN, data={u32=0, u64=0}}], 3, 197) = 1
+5580<bin_client> read(0, "\33[<35;34;34M", 1024) = 12
+5580<bin_client> openat(AT_FDCWD, "/dev/tty", O_RDONLY|O_CLOEXEC) = 5
+5580<bin_client> ioctl(5, TIOCGWINSZ, {ws_row=34, ws_col=119, ws_xpixel=0, ws_ypixel=0}) = 0
+5580<bin_client> close(5)               = 0
+5580<bin_client> write(1, "\33[39m\33[49m\33[0m\33[?25l", 20) = 20
+5580<bin_client> epoll_wait(3, [{events=EPOLLIN, data={u32=0, u64=0}}], 3, 90) = 1
+5580<bin_client> read(0, "\33[<35;35;33M", 1024) = 12
+5580<bin_client> openat(AT_FDCWD, "/dev/tty", O_RDONLY|O_CLOEXEC) = 5
+5580<bin_client> ioctl(5, TIOCGWINSZ, {ws_row=34, ws_col=119, ws_xpixel=0, ws_ypixel=0}) = 0
+5580<bin_client> close(5)               = 0
+5580<bin_client> write(1, "\33[39m\33[49m\33[0m\33[?25l", 20) = 20
+5580<bin_client> epoll_wait(3, [{events=EPOLLIN, data={u32=0, u64=0}}], 3, 82) = 1
+5580<bin_client> read(0, "\33[<35;35;33M", 1024) = 12
+5580<bin_client> openat(AT_FDCWD, "/dev/tty", O_RDONLY|O_CLOEXEC) = 5
+5580<bin_client> ioctl(5, TIOCGWINSZ, {ws_row=34, ws_col=119, ws_xpixel=0, ws_ypixel=0}) = 0
+5580<bin_client> close(5)               = 0
+5580<bin_client> write(1, "\33[39m\33[49m\33[0m\33[?25l", 20) = 20
+5580<bin_client> epoll_wait(3, [{events=EPOLLIN, data={u32=0, u64=0}}], 3, 58) = 1
+5580<bin_client> read(0, "\33[<35;35;33M", 1024) = 12
+5580<bin_client> openat(AT_FDCWD, "/dev/tty", O_RDONLY|O_CLOEXEC) = 5
+5580<bin_client> ioctl(5, TIOCGWINSZ, {ws_row=34, ws_col=119, ws_xpixel=0, ws_ypixel=0}) = 0
+5580<bin_client> close(5)               = 0
+5578<bin_client> <... clock_nanosleep resumed>0x7fbcc6ffb900) = 0
+5578<bin_client> read(7, "", 8192)      = 0
+5578<bin_client> futex(0x555c2f60b540, FUTEX_WAIT_BITSET_PRIVATE, 2, NULL, FUTEX_BITSET_MATCH_ANY <unfinished ...>
+5580<bin_client> futex(0x555c2f60b540, FUTEX_WAKE_PRIVATE, 1) = 1
+5578<bin_client> <... futex resumed>)   = 0
+5578<bin_client> futex(0x555c2f60b540, FUTEX_WAKE_PRIVATE, 1) = 0
+5578<bin_client> clock_nanosleep(CLOCK_REALTIME, 0, {tv_sec=1, tv_nsec=0},  <unfinished ...>
+5580<bin_client> write(1, "\33[39m\33[49m\33[0m\33[?25l", 20) = 20
+5580<bin_client> epoll_wait(3, [{events=EPOLLIN, data={u32=0, u64=0}}], 3, 50) = 1
+5580<bin_client> read(0, "\33[<35;35;33M", 1024) = 12
+5580<bin_client> openat(AT_FDCWD, "/dev/tty", O_RDONLY|O_CLOEXEC) = 5
+5580<bin_client> ioctl(5, TIOCGWINSZ, {ws_row=34, ws_col=119, ws_xpixel=0, ws_ypixel=0}) = 0
+5580<bin_client> close(5)               = 0
+5580<bin_client> write(1, "\33[39m\33[49m\33[0m\33[?25l", 20) = 20
+5580<bin_client> epoll_wait(3, [{events=EPOLLIN, data={u32=0, u64=0}}], 3, 41) = 1
+5580<bin_client> read(0, "\33[<35;35;33M", 1024) = 12
+5580<bin_client> openat(AT_FDCWD, "/dev/tty", O_RDONLY|O_CLOEXEC) = 5
+5580<bin_client> ioctl(5, TIOCGWINSZ, {ws_row=34, ws_col=119, ws_xpixel=0, ws_ypixel=0}) = 0
+5580<bin_client> close(5)               = 0
+5580<bin_client> write(1, "\33[39m\33[49m\33[0m\33[?25l", 20) = 20
+5580<bin_client> epoll_wait(3, [{events=EPOLLIN, data={u32=0, u64=0}}], 3, 25) = 1
+5580<bin_client> read(0, "\33[<35;35;33M", 1024) = 12
+5580<bin_client> openat(AT_FDCWD, "/dev/tty", O_RDONLY|O_CLOEXEC) = 5
+5580<bin_client> ioctl(5, TIOCGWINSZ, {ws_row=34, ws_col=119, ws_xpixel=0, ws_ypixel=0}) = 0
+5580<bin_client> close(5)               = 0
+5580<bin_client> write(1, "\33[39m\33[49m\33[0m\33[?25l", 20) = 20
+5580<bin_client> epoll_wait(3, [{events=EPOLLIN, data={u32=0, u64=0}}], 3, 9) = 1
+5580<bin_client> read(0, "\33[<35;35;34M", 1024) = 12
+5580<bin_client> openat(AT_FDCWD, "/dev/tty", O_RDONLY|O_CLOEXEC) = 5
+5580<bin_client> ioctl(5, TIOCGWINSZ, {ws_row=34, ws_col=119, ws_xpixel=0, ws_ypixel=0}) = 0
+5580<bin_client> close(5)               = 0
+5580<bin_client> write(1, "\33[39m\33[49m\33[0m\33[?25l", 20) = 20
+5580<bin_client> epoll_wait(3, [], 3, 2) = 0
+5580<bin_client> openat(AT_FDCWD, "/dev/tty", O_RDONLY|O_CLOEXEC) = 5
+5580<bin_client> ioctl(5, TIOCGWINSZ, {ws_row=34, ws_col=119, ws_xpixel=0, ws_ypixel=0}) = 0
+5580<bin_client> close(5)               = 0
+5580<bin_client> write(1, "\33[39m\33[49m\33[0m\33[?25l", 20) = 20
+5580<bin_client> epoll_wait(3, [{events=EPOLLIN, data={u32=0, u64=0}}], 3, 197) = 1
+5580<bin_client> read(0, "\33[<35;35;34M", 1024) = 12
+5580<bin_client> openat(AT_FDCWD, "/dev/tty", O_RDONLY|O_CLOEXEC) = 5
+5580<bin_client> ioctl(5, TIOCGWINSZ, {ws_row=34, ws_col=119, ws_xpixel=0, ws_ypixel=0}) = 0
+5580<bin_client> close(5)               = 0
+5580<bin_client> write(1, "\33[39m\33[49m\33[0m\33[?25l", 20) = 20
+5580<bin_client> epoll_wait(3, [{events=EPOLLIN, data={u32=0, u64=0}}], 3, 193) = 1
+5580<bin_client> read(0, "\33[<35;35;34M", 1024) = 12
+5580<bin_client> openat(AT_FDCWD, "/dev/tty", O_RDONLY|O_CLOEXEC) = 5
+5580<bin_client> ioctl(5, TIOCGWINSZ, {ws_row=34, ws_col=119, ws_xpixel=0, ws_ypixel=0}) = 0
+5580<bin_client> close(5)               = 0
+5580<bin_client> write(1, "\33[39m\33[49m\33[0m\33[?25l", 20) = 20
+5580<bin_client> epoll_wait(3, [{events=EPOLLIN, data={u32=0, u64=0}}], 3, 184) = 1
+5580<bin_client> read(0, "\33[<35;35;34M", 1024) = 12
+5580<bin_client> openat(AT_FDCWD, "/dev/tty", O_RDONLY|O_CLOEXEC) = 5
+5580<bin_client> ioctl(5, TIOCGWINSZ, {ws_row=34, ws_col=119, ws_xpixel=0, ws_ypixel=0}) = 0
+5580<bin_client> close(5)               = 0
+5580<bin_client> write(1, "\33[39m\33[49m\33[0m\33[?25l", 20) = 20
+5580<bin_client> epoll_wait(3, [{events=EPOLLIN, data={u32=0, u64=0}}], 3, 173) = 1
+5580<bin_client> read(0, "\33[<35;34;34M", 1024) = 12
+5580<bin_client> openat(AT_FDCWD, "/dev/tty", O_RDONLY|O_CLOEXEC) = 5
+5580<bin_client> ioctl(5, TIOCGWINSZ, {ws_row=34, ws_col=119, ws_xpixel=0, ws_ypixel=0}) = 0
+5580<bin_client> close(5)               = 0
+5580<bin_client> write(1, "\33[39m\33[49m\33[0m\33[?25l", 20) = 20
+5580<bin_client> epoll_wait(3, [{events=EPOLLIN, data={u32=0, u64=0}}], 3, 164) = 1
+5580<bin_client> read(0, "\33[<35;34;34M", 1024) = 12
+5580<bin_client> openat(AT_FDCWD, "/dev/tty", O_RDONLY|O_CLOEXEC) = 5
+5580<bin_client> ioctl(5, TIOCGWINSZ, {ws_row=34, ws_col=119, ws_xpixel=0, ws_ypixel=0}) = 0
+5580<bin_client> close(5)               = 0
+5580<bin_client> write(1, "\33[39m\33[49m\33[0m\33[?25l", 20) = 20
+5580<bin_client> epoll_wait(3, [{events=EPOLLIN, data={u32=0, u64=0}}], 3, 97) = 1
+5580<bin_client> read(0, "\33[<35;35;34M", 1024) = 12
+5580<bin_client> openat(AT_FDCWD, "/dev/tty", O_RDONLY|O_CLOEXEC) = 5
+5580<bin_client> ioctl(5, TIOCGWINSZ, {ws_row=34, ws_col=119, ws_xpixel=0, ws_ypixel=0}) = 0
+5580<bin_client> close(5)               = 0
+5580<bin_client> write(1, "\33[39m\33[49m\33[0m\33[?25l", 20) = 20
+5580<bin_client> epoll_wait(3, [{events=EPOLLIN, data={u32=0, u64=0}}], 3, 88) = 1
+5580<bin_client> read(0, "\33[<35;35;34M", 1024) = 12
+5580<bin_client> openat(AT_FDCWD, "/dev/tty", O_RDONLY|O_CLOEXEC) = 5
+5580<bin_client> ioctl(5, TIOCGWINSZ, {ws_row=34, ws_col=119, ws_xpixel=0, ws_ypixel=0}) = 0
+5580<bin_client> close(5)               = 0
+5580<bin_client> write(1, "\33[39m\33[49m\33[0m\33[?25l", 20) = 20
+5580<bin_client> epoll_wait(3, [{events=EPOLLIN, data={u32=0, u64=0}}], 3, 77) = 1
+5580<bin_client> read(0, "\33[<35;36;33M", 1024) = 12
+5580<bin_client> openat(AT_FDCWD, "/dev/tty", O_RDONLY|O_CLOEXEC) = 5
+5580<bin_client> ioctl(5, TIOCGWINSZ, {ws_row=34, ws_col=119, ws_xpixel=0, ws_ypixel=0}) = 0
+5580<bin_client> close(5)               = 0
+5580<bin_client> write(1, "\33[39m\33[49m\33[0m\33[?25l", 20) = 20
+5580<bin_client> epoll_wait(3, [{events=EPOLLIN, data={u32=0, u64=0}}], 3, 67) = 1
+5580<bin_client> read(0, "\33[<35;39;31M", 1024) = 12
+5580<bin_client> openat(AT_FDCWD, "/dev/tty", O_RDONLY|O_CLOEXEC) = 5
+5580<bin_client> ioctl(5, TIOCGWINSZ, {ws_row=34, ws_col=119, ws_xpixel=0, ws_ypixel=0}) = 0
+5580<bin_client> close(5)               = 0
+5580<bin_client> write(1, "\33[39m\33[49m\33[0m\33[?25l", 20) = 20
+5580<bin_client> epoll_wait(3, [{events=EPOLLIN, data={u32=0, u64=0}}], 3, 59) = 1
+5580<bin_client> read(0, "\33[<35;41;30M", 1024) = 12
+5580<bin_client> openat(AT_FDCWD, "/dev/tty", O_RDONLY|O_CLOEXEC) = 5
+5580<bin_client> ioctl(5, TIOCGWINSZ, {ws_row=34, ws_col=119, ws_xpixel=0, ws_ypixel=0}) = 0
+5580<bin_client> close(5)               = 0
+5580<bin_client> write(1, "\33[39m\33[49m\33[0m\33[?25l", 20) = 20
+5580<bin_client> epoll_wait(3, [{events=EPOLLIN, data={u32=0, u64=0}}], 3, 50) = 1
+5580<bin_client> read(0, "\33[<35;44;30M", 1024) = 12
+5580<bin_client> openat(AT_FDCWD, "/dev/tty", O_RDONLY|O_CLOEXEC) = 5
+5580<bin_client> ioctl(5, TIOCGWINSZ, {ws_row=34, ws_col=119, ws_xpixel=0, ws_ypixel=0}) = 0
+5580<bin_client> close(5)               = 0
+5580<bin_client> write(1, "\33[39m\33[49m\33[0m\33[?25l", 20) = 20
+5580<bin_client> epoll_wait(3, [{events=EPOLLIN, data={u32=0, u64=0}}], 3, 43) = 1
+5580<bin_client> read(0, "\33[<35;46;29M", 1024) = 12
+5580<bin_client> openat(AT_FDCWD, "/dev/tty", O_RDONLY|O_CLOEXEC) = 5
+5580<bin_client> ioctl(5, TIOCGWINSZ, {ws_row=34, ws_col=119, ws_xpixel=0, ws_ypixel=0}) = 0
+5580<bin_client> close(5)               = 0
+5580<bin_client> write(1, "\33[39m\33[49m\33[0m\33[?25l", 20) = 20
+5580<bin_client> epoll_wait(3, [{events=EPOLLIN, data={u32=0, u64=0}}], 3, 35) = 1
+5580<bin_client> read(0, "\33[<35;47;29M", 1024) = 12
+5580<bin_client> openat(AT_FDCWD, "/dev/tty", O_RDONLY|O_CLOEXEC) = 5
+5580<bin_client> ioctl(5, TIOCGWINSZ, {ws_row=34, ws_col=119, ws_xpixel=0, ws_ypixel=0}) = 0
+5580<bin_client> close(5)               = 0
+5580<bin_client> write(1, "\33[39m\33[49m\33[0m\33[?25l", 20) = 20
+5580<bin_client> epoll_wait(3, [{events=EPOLLIN, data={u32=0, u64=0}}], 3, 27) = 1
+5580<bin_client> read(0, "\33[<35;48;29M", 1024) = 12
+5580<bin_client> openat(AT_FDCWD, "/dev/tty", O_RDONLY|O_CLOEXEC) = 5
+5580<bin_client> ioctl(5, TIOCGWINSZ, {ws_row=34, ws_col=119, ws_xpixel=0, ws_ypixel=0}) = 0
+5580<bin_client> close(5)               = 0
+5580<bin_client> write(1, "\33[39m\33[49m\33[0m\33[?25l", 20) = 20
+5580<bin_client> epoll_wait(3, [{events=EPOLLIN, data={u32=0, u64=0}}], 3, 18) = 1
+5580<bin_client> read(0, "\33[<35;48;28M", 1024) = 12
+5580<bin_client> openat(AT_FDCWD, "/dev/tty", O_RDONLY|O_CLOEXEC) = 5
+5580<bin_client> ioctl(5, TIOCGWINSZ, {ws_row=34, ws_col=119, ws_xpixel=0, ws_ypixel=0}) = 0
+5580<bin_client> close(5)               = 0
+5580<bin_client> write(1, "\33[39m\33[49m\33[0m\33[?25l", 20) = 20
+5580<bin_client> epoll_wait(3, [{events=EPOLLIN, data={u32=0, u64=0}}], 3, 9) = 1
+5580<bin_client> read(0, "\33[<35;49;28M", 1024) = 12
+5580<bin_client> openat(AT_FDCWD, "/dev/tty", O_RDONLY|O_CLOEXEC) = 5
+5580<bin_client> ioctl(5, TIOCGWINSZ, {ws_row=34, ws_col=119, ws_xpixel=0, ws_ypixel=0}) = 0
+5580<bin_client> close(5)               = 0
+5580<bin_client> write(1, "\33[39m\33[49m\33[0m\33[?25l", 20) = 20
+5580<bin_client> epoll_wait(3, [{events=EPOLLIN, data={u32=0, u64=0}}], 3, 100) = 1
+5580<bin_client> read(0, "\33[<35;49;28M", 1024) = 12
+5580<bin_client> openat(AT_FDCWD, "/dev/tty", O_RDONLY|O_CLOEXEC) = 5
+5580<bin_client> ioctl(5, TIOCGWINSZ, {ws_row=34, ws_col=119, ws_xpixel=0, ws_ypixel=0}) = 0
+5580<bin_client> close(5)               = 0
+5580<bin_client> write(1, "\33[39m\33[49m\33[0m\33[?25l", 20) = 20
+5580<bin_client> epoll_wait(3, [{events=EPOLLIN, data={u32=0, u64=0}}], 3, 197) = 1
+5580<bin_client> read(0, "\33[<35;50;28M", 1024) = 12
+5580<bin_client> openat(AT_FDCWD, "/dev/tty", O_RDONLY|O_CLOEXEC) = 5
+5580<bin_client> ioctl(5, TIOCGWINSZ, {ws_row=34, ws_col=119, ws_xpixel=0, ws_ypixel=0}) = 0
+5580<bin_client> close(5)               = 0
+5580<bin_client> write(1, "\33[39m\33[49m\33[0m\33[?25l", 20) = 20
+5580<bin_client> epoll_wait(3, [{events=EPOLLIN, data={u32=0, u64=0}}], 3, 188) = 1
+5580<bin_client> read(0, "\33[<35;51;28M", 1024) = 12
+5580<bin_client> openat(AT_FDCWD, "/dev/tty", O_RDONLY|O_CLOEXEC) = 5
+5580<bin_client> ioctl(5, TIOCGWINSZ, {ws_row=34, ws_col=119, ws_xpixel=0, ws_ypixel=0}) = 0
+5580<bin_client> close(5)               = 0
+5580<bin_client> write(1, "\33[39m\33[49m\33[0m\33[?25l", 20) = 20
+5580<bin_client> epoll_wait(3, [{events=EPOLLIN, data={u32=0, u64=0}}], 3, 172) = 1
+5580<bin_client> read(0, "\33[<35;51;28M", 1024) = 12
+5580<bin_client> openat(AT_FDCWD, "/dev/tty", O_RDONLY|O_CLOEXEC) = 5
+5580<bin_client> ioctl(5, TIOCGWINSZ, {ws_row=34, ws_col=119, ws_xpixel=0, ws_ypixel=0}) = 0
+5580<bin_client> close(5)               = 0
+5580<bin_client> write(1, "\33[39m\33[49m\33[0m\33[?25l", 20) = 20
+5580<bin_client> epoll_wait(3, [{events=EPOLLIN, data={u32=0, u64=0}}], 3, 164) = 1
+5580<bin_client> read(0, "\33[<0;51;28M", 1024) = 11
+5580<bin_client> openat(AT_FDCWD, "/dev/tty", O_RDONLY|O_CLOEXEC) = 5
+5580<bin_client> ioctl(5, TIOCGWINSZ, {ws_row=34, ws_col=119, ws_xpixel=0, ws_ypixel=0}) = 0
+5580<bin_client> close(5)               = 0
+5580<bin_client> write(1, "\33[39m\33[49m\33[0m\33[?25l", 20) = 20
+5580<bin_client> epoll_wait(3, [{events=EPOLLIN, data={u32=0, u64=0}}], 3, 147) = 1
+5580<bin_client> read(0, "\33[<0;51;28m", 1024) = 11
+5580<bin_client> openat(AT_FDCWD, "/dev/tty", O_RDONLY|O_CLOEXEC) = 5
+5580<bin_client> ioctl(5, TIOCGWINSZ, {ws_row=34, ws_col=119, ws_xpixel=0, ws_ypixel=0}) = 0
+5580<bin_client> close(5)               = 0
+5580<bin_client> write(1, "\33[39m\33[49m\33[0m\33[?25l", 20) = 20
+5580<bin_client> epoll_wait(3, [{events=EPOLLIN, data={u32=0, u64=0}}], 3, 60) = 1
+5580<bin_client> read(0, "\33[<35;51;28M", 1024) = 12
+5580<bin_client> openat(AT_FDCWD, "/dev/tty", O_RDONLY|O_CLOEXEC) = 5
+5580<bin_client> ioctl(5, TIOCGWINSZ, {ws_row=34, ws_col=119, ws_xpixel=0, ws_ypixel=0}) = 0
+5580<bin_client> close(5)               = 0
+5580<bin_client> write(1, "\33[39m\33[49m\33[0m\33[?25l", 20) = 20
+5580<bin_client> epoll_wait(3, [], 3, 50) = 0
+5580<bin_client> openat(AT_FDCWD, "/dev/tty", O_RDONLY|O_CLOEXEC) = 5
+5580<bin_client> ioctl(5, TIOCGWINSZ, {ws_row=34, ws_col=119, ws_xpixel=0, ws_ypixel=0}) = 0
+5580<bin_client> close(5)               = 0
+5580<bin_client> write(1, "\33[39m\33[49m\33[0m\33[?25l", 20) = 20
+5580<bin_client> epoll_wait(3, [{events=EPOLLIN, data={u32=0, u64=0}}], 3, 197) = 1
+5580<bin_client> read(0, "\33[<35;51;27M", 1024) = 12
+5580<bin_client> openat(AT_FDCWD, "/dev/tty", O_RDONLY|O_CLOEXEC) = 5
+5580<bin_client> ioctl(5, TIOCGWINSZ, {ws_row=34, ws_col=119, ws_xpixel=0, ws_ypixel=0}) = 0
+5580<bin_client> close(5)               = 0
+5580<bin_client> write(1, "\33[39m\33[49m\33[0m\33[?25l", 20) = 20
+5580<bin_client> epoll_wait(3, [{events=EPOLLIN, data={u32=0, u64=0}}], 3, 171) = 1
+5580<bin_client> read(0, "\33[<35;51;27M", 1024) = 12
+5580<bin_client> openat(AT_FDCWD, "/dev/tty", O_RDONLY|O_CLOEXEC) = 5
+5580<bin_client> ioctl(5, TIOCGWINSZ, {ws_row=34, ws_col=119, ws_xpixel=0, ws_ypixel=0}) = 0
+5580<bin_client> close(5)               = 0
+5580<bin_client> write(1, "\33[39m\33[49m\33[0m\33[?25l", 20) = 20
+5580<bin_client> epoll_wait(3, [{events=EPOLLIN, data={u32=0, u64=0}}], 3, 161) = 1
+5580<bin_client> read(0, "\33[<35;51;27M", 1024) = 12
+5580<bin_client> openat(AT_FDCWD, "/dev/tty", O_RDONLY|O_CLOEXEC) = 5
+5580<bin_client> ioctl(5, TIOCGWINSZ, {ws_row=34, ws_col=119, ws_xpixel=0, ws_ypixel=0}) = 0
+5580<bin_client> close(5)               = 0
+5580<bin_client> write(1, "\33[39m\33[49m\33[0m\33[?25l", 20) = 20
+5580<bin_client> epoll_wait(3, [{events=EPOLLIN, data={u32=0, u64=0}}], 3, 151) = 1
+5580<bin_client> read(0, "\33[<35;51;27M", 1024) = 12
+5580<bin_client> openat(AT_FDCWD, "/dev/tty", O_RDONLY|O_CLOEXEC) = 5
+5580<bin_client> ioctl(5, TIOCGWINSZ, {ws_row=34, ws_col=119, ws_xpixel=0, ws_ypixel=0}) = 0
+5580<bin_client> close(5)               = 0
+5580<bin_client> write(1, "\33[39m\33[49m\33[0m\33[?25l", 20) = 20
+5580<bin_client> epoll_wait(3, [{events=EPOLLIN, data={u32=0, u64=0}}], 3, 125) = 1
+5580<bin_client> read(0, "\33[<35;51;27M", 1024) = 12
+5580<bin_client> openat(AT_FDCWD, "/dev/tty", O_RDONLY|O_CLOEXEC) = 5
+5580<bin_client> ioctl(5, TIOCGWINSZ, {ws_row=34, ws_col=119, ws_xpixel=0, ws_ypixel=0}) = 0
+5580<bin_client> close(5)               = 0
+5580<bin_client> write(1, "\33[39m\33[49m\33[0m\33[?25l", 20) = 20
+5580<bin_client> epoll_wait(3, [{events=EPOLLIN, data={u32=0, u64=0}}], 3, 110) = 1
+5580<bin_client> read(0, "\33[<35;52;27M", 1024) = 12
+5580<bin_client> openat(AT_FDCWD, "/dev/tty", O_RDONLY|O_CLOEXEC) = 5
+5580<bin_client> ioctl(5, TIOCGWINSZ, {ws_row=34, ws_col=119, ws_xpixel=0, ws_ypixel=0}) = 0
+5580<bin_client> close(5)               = 0
+5580<bin_client> write(1, "\33[39m\33[49m\33[0m\33[?25l", 20) = 20
+5580<bin_client> epoll_wait(3, [{events=EPOLLIN, data={u32=0, u64=0}}], 3, 101) = 1
+5580<bin_client> read(0, "\33[<35;52;27M", 1024) = 12
+5580<bin_client> openat(AT_FDCWD, "/dev/tty", O_RDONLY|O_CLOEXEC) = 5
+5580<bin_client> ioctl(5, TIOCGWINSZ, {ws_row=34, ws_col=119, ws_xpixel=0, ws_ypixel=0}) = 0
+5580<bin_client> close(5)               = 0
+5580<bin_client> write(1, "\33[39m\33[49m\33[0m\33[?25l", 20) = 20
+5580<bin_client> epoll_wait(3, [{events=EPOLLIN, data={u32=0, u64=0}}], 3, 93) = 1
+5580<bin_client> read(0, "\33[<35;52;27M", 1024) = 12
+5580<bin_client> openat(AT_FDCWD, "/dev/tty", O_RDONLY|O_CLOEXEC) = 5
+5580<bin_client> ioctl(5, TIOCGWINSZ, {ws_row=34, ws_col=119, ws_xpixel=0, ws_ypixel=0}) = 0
+5580<bin_client> close(5)               = 0
+5580<bin_client> write(1, "\33[39m\33[49m\33[0m\33[?25l", 20) = 20
+5580<bin_client> epoll_wait(3, [{events=EPOLLIN, data={u32=0, u64=0}}], 3, 85) = 1
+5580<bin_client> read(0, "\33[<35;52;27M", 1024) = 12
+5580<bin_client> openat(AT_FDCWD, "/dev/tty", O_RDONLY|O_CLOEXEC) = 5
+5580<bin_client> ioctl(5, TIOCGWINSZ, {ws_row=34, ws_col=119, ws_xpixel=0, ws_ypixel=0}) = 0
+5580<bin_client> close(5)               = 0
+5580<bin_client> write(1, "\33[39m\33[49m\33[0m\33[?25l", 20) = 20
+5580<bin_client> epoll_wait(3, [], 3, 69) = 0
+5580<bin_client> openat(AT_FDCWD, "/dev/tty", O_RDONLY|O_CLOEXEC) = 5
+5580<bin_client> ioctl(5, TIOCGWINSZ, {ws_row=34, ws_col=119, ws_xpixel=0, ws_ypixel=0}) = 0
+5580<bin_client> close(5)               = 0
+5580<bin_client> write(1, "\33[39m\33[49m\33[0m\33[?25l", 20) = 20
+5580<bin_client> epoll_wait(3, [], 3, 197) = 0
+5580<bin_client> openat(AT_FDCWD, "/dev/tty", O_RDONLY|O_CLOEXEC) = 5
+5580<bin_client> ioctl(5, TIOCGWINSZ, {ws_row=34, ws_col=119, ws_xpixel=0, ws_ypixel=0}) = 0
+5580<bin_client> close(5)               = 0
+5580<bin_client> write(1, "\33[39m\33[49m\33[0m\33[?25l", 20) = 20
+5580<bin_client> epoll_wait(3,  <unfinished ...>
+5578<bin_client> <... clock_nanosleep resumed>0x7fbcc6ffb900) = 0
+5578<bin_client> read(7, "", 8192)      = 0
+5578<bin_client> clock_nanosleep(CLOCK_REALTIME, 0, {tv_sec=1, tv_nsec=0},  <unfinished ...>
+5580<bin_client> <... epoll_wait resumed>[], 3, 197) = 0
+5580<bin_client> openat(AT_FDCWD, "/dev/tty", O_RDONLY|O_CLOEXEC) = 5
+5580<bin_client> ioctl(5, TIOCGWINSZ, {ws_row=34, ws_col=119, ws_xpixel=0, ws_ypixel=0}) = 0
+5580<bin_client> close(5)               = 0
+5580<bin_client> write(1, "\33[39m\33[49m\33[0m\33[?25l", 20) = 20
+5580<bin_client> epoll_wait(3, [], 3, 197) = 0
+5580<bin_client> openat(AT_FDCWD, "/dev/tty", O_RDONLY|O_CLOEXEC) = 5
+5580<bin_client> ioctl(5, TIOCGWINSZ, {ws_row=34, ws_col=119, ws_xpixel=0, ws_ypixel=0}) = 0
+5580<bin_client> close(5)               = 0
+5580<bin_client> write(1, "\33[39m\33[49m\33[0m\33[?25l", 20) = 20
+5580<bin_client> epoll_wait(3, [], 3, 196) = 0
+5580<bin_client> openat(AT_FDCWD, "/dev/tty", O_RDONLY|O_CLOEXEC) = 5
+5580<bin_client> ioctl(5, TIOCGWINSZ, {ws_row=34, ws_col=119, ws_xpixel=0, ws_ypixel=0}) = 0
+5580<bin_client> close(5)               = 0
+5580<bin_client> write(1, "\33[39m\33[49m\33[0m\33[?25l", 20) = 20
+5580<bin_client> epoll_wait(3, [], 3, 197) = 0
+5580<bin_client> openat(AT_FDCWD, "/dev/tty", O_RDONLY|O_CLOEXEC) = 5
+5580<bin_client> ioctl(5, TIOCGWINSZ, {ws_row=34, ws_col=119, ws_xpixel=0, ws_ypixel=0}) = 0
+5580<bin_client> close(5)               = 0
+5580<bin_client> write(1, "\33[39m\33[49m\33[0m\33[?25l", 20) = 20
+5580<bin_client> epoll_wait(3, [], 3, 197) = 0
+5580<bin_client> openat(AT_FDCWD, "/dev/tty", O_RDONLY|O_CLOEXEC) = 5
+5580<bin_client> ioctl(5, TIOCGWINSZ, {ws_row=34, ws_col=119, ws_xpixel=0, ws_ypixel=0}) = 0
+5580<bin_client> close(5)               = 0
+5580<bin_client> write(1, "\33[39m\33[49m\33[0m\33[?25l", 20) = 20
+5580<bin_client> epoll_wait(3,  <unfinished ...>
+5578<bin_client> <... clock_nanosleep resumed>0x7fbcc6ffb900) = 0
+5578<bin_client> read(7, "", 8192)      = 0
+5578<bin_client> clock_nanosleep(CLOCK_REALTIME, 0, {tv_sec=1, tv_nsec=0},  <unfinished ...>
+5580<bin_client> <... epoll_wait resumed>[], 3, 197) = 0
+5580<bin_client> openat(AT_FDCWD, "/dev/tty", O_RDONLY|O_CLOEXEC) = 5
+5580<bin_client> ioctl(5, TIOCGWINSZ, {ws_row=34, ws_col=119, ws_xpixel=0, ws_ypixel=0}) = 0
+5580<bin_client> close(5)               = 0
+5580<bin_client> write(1, "\33[39m\33[49m\33[0m\33[?25l", 20) = 20
+5580<bin_client> epoll_wait(3, [], 3, 197) = 0
+5580<bin_client> openat(AT_FDCWD, "/dev/tty", O_RDONLY|O_CLOEXEC) = 5
+5580<bin_client> ioctl(5, TIOCGWINSZ, {ws_row=34, ws_col=119, ws_xpixel=0, ws_ypixel=0}) = 0
+5580<bin_client> close(5)               = 0
+5580<bin_client> write(1, "\33[39m\33[49m\33[0m\33[?25l", 20) = 20
+5580<bin_client> epoll_wait(3, [], 3, 196) = 0
+5580<bin_client> openat(AT_FDCWD, "/dev/tty", O_RDONLY|O_CLOEXEC) = 5
+5580<bin_client> ioctl(5, TIOCGWINSZ, {ws_row=34, ws_col=119, ws_xpixel=0, ws_ypixel=0}) = 0
+5580<bin_client> close(5)               = 0
+5580<bin_client> write(1, "\33[39m\33[49m\33[0m\33[?25l", 20) = 20
+5580<bin_client> epoll_wait(3, [], 3, 197) = 0
+5580<bin_client> openat(AT_FDCWD, "/dev/tty", O_RDONLY|O_CLOEXEC) = 5
+5580<bin_client> ioctl(5, TIOCGWINSZ, {ws_row=34, ws_col=119, ws_xpixel=0, ws_ypixel=0}) = 0
+5580<bin_client> close(5)               = 0
+5580<bin_client> write(1, "\33[39m\33[49m\33[0m\33[?25l", 20) = 20
+5580<bin_client> epoll_wait(3, [], 3, 197) = 0
+5580<bin_client> openat(AT_FDCWD, "/dev/tty", O_RDONLY|O_CLOEXEC) = 5
+5580<bin_client> ioctl(5, TIOCGWINSZ, {ws_row=34, ws_col=119, ws_xpixel=0, ws_ypixel=0}) = 0
+5580<bin_client> close(5)               = 0
+5580<bin_client> write(1, "\33[39m\33[49m\33[0m\33[?25l", 20) = 20
+5580<bin_client> epoll_wait(3,  <unfinished ...>
+5578<bin_client> <... clock_nanosleep resumed>0x7fbcc6ffb900) = 0
+5578<bin_client> read(7, "", 8192)      = 0
+5578<bin_client> clock_nanosleep(CLOCK_REALTIME, 0, {tv_sec=1, tv_nsec=0},  <unfinished ...>
+5580<bin_client> <... epoll_wait resumed>[], 3, 197) = 0
+5580<bin_client> openat(AT_FDCWD, "/dev/tty", O_RDONLY|O_CLOEXEC) = 5
+5580<bin_client> ioctl(5, TIOCGWINSZ, {ws_row=34, ws_col=119, ws_xpixel=0, ws_ypixel=0}) = 0
+5580<bin_client> close(5)               = 0
+5580<bin_client> write(1, "\33[39m\33[49m\33[0m\33[?25l", 20) = 20
+5580<bin_client> epoll_wait(3, [{events=EPOLLIN, data={u32=0, u64=0}}], 3, 197) = 1
+5580<bin_client> read(0, "\33", 1024)   = 1
+5580<bin_client> ioctl(0, TCGETS, {c_iflag=IUTF8, c_oflag=NL0|CR0|TAB0|BS0|VT0|FF0|ONLCR, c_cflag=B38400|CS8|CREAD, c_lflag=ECHOE|ECHOK|ECHOCTL|ECHOKE, ...}) = 0
+5580<bin_client> ioctl(0, TCGETS, {c_iflag=IUTF8, c_oflag=NL0|CR0|TAB0|BS0|VT0|FF0|ONLCR, c_cflag=B38400|CS8|CREAD, c_lflag=ECHOE|ECHOK|ECHOCTL|ECHOKE, ...}) = 0
+5580<bin_client> ioctl(0, TCSETS, {c_iflag=ICRNL|IXON|IUTF8, c_oflag=NL0|CR0|TAB0|BS0|VT0|FF0|OPOST|ONLCR, c_cflag=B38400|CS8|CREAD, c_lflag=ISIG|ICANON|ECHO|ECHOE|ECHOK|IEXTEN|ECHOCTL|ECHOKE, ...}) = 0
+5580<bin_client> ioctl(0, TCGETS, {c_iflag=ICRNL|IXON|IUTF8, c_oflag=NL0|CR0|TAB0|BS0|VT0|FF0|OPOST|ONLCR, c_cflag=B38400|CS8|CREAD, c_lflag=ISIG|ICANON|ECHO|ECHOE|ECHOK|IEXTEN|ECHOCTL|ECHOKE, ...}) = 0
+5580<bin_client> write(1, "\33[?1049l\33[?1006l\33[?1015l\33[?1003l"..., 48) = 48
+5580<bin_client> write(1, "\33[?25h", 6) = 6
+5580<bin_client> munmap(0x7fbcc7967000, 163840) = 0
+5580<bin_client> munmap(0x7fbcc793f000, 163840) = 0
+5580<bin_client> sigaltstack({ss_sp=NULL, ss_flags=SS_DISABLE, ss_size=8192}, NULL) = 0
+5580<bin_client> munmap(0x7fbcc798f000, 12288) = 0
+5580<bin_client> rt_sigprocmask(SIG_BLOCK, ~[RT_1], NULL, 8) = 0
+5580<bin_client> madvise(0x7fbcc69fa000, 2076672, MADV_DONTNEED) = 0
+5580<bin_client> exit(0)                = ?
+5571<bin_client> <... futex resumed>)   = 0
+5580<bin_client> +++ exited with 0 +++
+5571<bin_client> write(2, "--- Sending \"Quit\" command...\n", 30) = 30
+5571<bin_client> write(2, "thread '", 8) = 8
+5571<bin_client> write(2, "main", 4)    = 4
+5571<bin_client> write(2, "' panicked at '", 15) = 15
+5571<bin_client> write(2, "called `Result::unwrap()` on an "..., 63) = 63
+5571<bin_client> write(2, "', ", 3)     = 3
+5571<bin_client> write(2, "bin_client/./src/main.rs", 24) = 24
+5571<bin_client> write(2, ":", 1)       = 1
+5571<bin_client> write(2, "517", 3)     = 3
+5571<bin_client> write(2, ":", 1)       = 1
+5571<bin_client> write(2, "29", 2)      = 2
+5571<bin_client> write(2, "\n", 1)      = 1
+5571<bin_client> close(6)               = 0
+5573<bin_wallet> <... read resumed>"", 8192) = 0
+5573<bin_wallet> write(2, "thread '", 8 <unfinished ...>
+5571<bin_client> sigaltstack({ss_sp=NULL, ss_flags=SS_DISABLE, ss_size=8192},  <unfinished ...>
+5573<bin_wallet> <... write resumed>)   = 8
+5579<bin_client> <... read resumed>"thread '", 8192) = 8
+5573<bin_wallet> write(2, "main", 4 <unfinished ...>
+5571<bin_client> <... sigaltstack resumed>NULL) = 0
+5573<bin_wallet> <... write resumed>)   = 4
+5573<bin_wallet> write(2, "' panicked at '", 15 <unfinished ...>
+5571<bin_client> munmap(0x7fbcc7ab2000, 12288 <unfinished ...>
+5579<bin_client> read(10,  <unfinished ...>
+5573<bin_wallet> <... write resumed>)   = 15
+5579<bin_client> <... read resumed>"main' panicked at '", 8192) = 19
+5573<bin_wallet> write(2, "called `Result::unwrap()` on an "..., 99 <unfinished ...>
+5571<bin_client> <... munmap resumed>)  = 0
+5579<bin_client> read(10,  <unfinished ...>
+5573<bin_wallet> <... write resumed>)   = 99
+5573<bin_wallet> write(2, "', ", 3 <unfinished ...>
+5579<bin_client> <... read resumed>"called `Result::unwrap()` on an "..., 8192) = 99
+5573<bin_wallet> <... write resumed>)   = 3
+5571<bin_client> exit_group(101 <unfinished ...>
+5579<bin_client> read(10,  <unfinished ...>
+5573<bin_wallet> write(2, "bin_wallet/./src/main.rs", 24) = 24
+5571<bin_client> <... exit_group resumed>) = ?
+5579<bin_client> <... read resumed> <unfinished ...>) = ?
+5578<bin_client> <... clock_nanosleep resumed> <unfinished ...>) = ?
+5573<bin_wallet> write(2, ":", 1 <unfinished ...>
+5576<bin_client> <... read resumed> <unfinished ...>) = ?
+5573<bin_wallet> <... write resumed>)   = 1
+5579<bin_client> +++ exited with 101 +++
+5578<bin_client> +++ exited with 101 +++
+5576<bin_client> +++ exited with 101 +++
+5573<bin_wallet> write(2, "128", 3)     = 3
+5573<bin_wallet> write(2, ":", 1)       = 1
+5573<bin_wallet> write(2, "84", 2)      = 2
+5573<bin_wallet> write(2, "\n", 1)      = 1
+5573<bin_wallet> write(2, "note: run with `RUST_BACKTRACE=1"..., 78) = 78
+5573<bin_wallet> futex(0x7f4d329a8210, FUTEX_WAKE_PRIVATE, 2147483647 <unfinished ...>
+5571<bin_client> +++ exited with 101 +++
+5573<bin_wallet> <... futex resumed>)   = 202
+5573<bin_wallet> +++ killed by SIGSYS (core dumped) +++

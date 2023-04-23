@@ -181,6 +181,18 @@ fn main() {
 
     // sandboxing the bin_client (For part B). Leave it blank for part A.
     // ###
+    
+         // Please fill in the blank
+         // If the first param is provided, read the seccomp config and apply it
+         let json_input = read_string_from_file(client_seccomp_path.as_str());
+         let filter_map: BpfMap = seccompiler::compile_from_json(
+             json_input.as_bytes(),
+             std::env::consts::ARCH.try_into().unwrap(),
+         )
+         .unwrap();
+         let filter = filter_map.get("main_thread").unwrap() ;
+         seccompiler::apply_filter(filter).unwrap();
+     
 
     // Please fill in the blank
     // Clear reply from bin_wallet process.
