@@ -19,7 +19,7 @@ use serde::{Serialize, Deserialize};
 use seccompiler::{BpfMap};
 
 // Read a string from a file (to help you debug)
-fn _read_string_from_file(filepath: &str) -> String {
+fn read_string_from_file(filepath: &str) -> String {
     let contents = fs::read_to_string(filepath)
         .expect(&("Cannot read ".to_owned() + filepath));
     contents
@@ -100,7 +100,7 @@ fn main() {
     if let Some(policy_path) = maybe_policy_path {
         // Please fill in the blank
         // If the first param is provided, read the seccomp config and apply it
-        let json_input = _read_string_from_file(&policy_path);
+        let json_input = read_string_from_file(&policy_path);
         let filter_map: BpfMap = seccompiler::compile_from_json(
             json_input.as_bytes(),
             std::env::consts::ARCH.try_into().unwrap(),

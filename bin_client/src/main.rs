@@ -180,7 +180,19 @@ fn main() {
     bin_wallet_process_stdin.write_all(format!("{}\n", wallet_init_msg_serialised).as_bytes()).unwrap();
 
     // sandboxing the bin_client (For part B). Leave it blank for part A.
-    // ###
+    let maybe_policy_path = std::env::args().nth(1);
+    if let Some(policy_path) = maybe_policy_path {
+        // Please fill in the blank
+        // If the first param is provided, read the seccomp config and apply it
+        let json_input = read_string_from_file(&policy_path);
+        let filter_map: BpfMap = seccompiler::compile_from_json(
+            json_input.as_bytes(),
+            std::env::consts::ARCH.try_into().unwrap(),
+        )
+        .unwrap();
+        let filter = filter_map.get("main_thread").unwrap() ;
+        seccompiler::apply_filter(filter).unwrap();
+    }
 
     // Please fill in the blank
     // Clear reply from bin_wallet process.
